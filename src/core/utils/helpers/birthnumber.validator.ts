@@ -4,7 +4,6 @@ import {
   isValidModulo11,
 } from './birthnumberCZSKvalidator'
 
-
 // TODO Lukas Z, add spec/test for isBirthNumberValid
 export const isBirthNumberValid = (birthnumber: string, birthdate: string, gender: string): boolean => {
   if (!isValidFormat(birthnumber) || !isValidModulo11(birthnumber)) return false

@@ -1,6 +1,5 @@
 import { isValidFormat, isValidModulo11, parse } from './birthnumberCZSKvalidator'
 
-
 describe('Birthnumber validator, parser', () => {
   it('should test valid format', () => {
     expect(isValidFormat('7711309782')).toEqual(true)
@@ -23,7 +22,6 @@ describe('Birthnumber validator, parser', () => {
     // testing
     expect(isValidFormat('2210702220')).toEqual(false)
 
-
     expect(isValidFormat('1234560ds7f89')).toEqual(false)
     expect(isValidFormat('123456/7f89')).toEqual(false)
   })
@@ -38,7 +36,6 @@ describe('Birthnumber validator, parser', () => {
     // num digits lower then 10, hence true by default
     expect(isValidModulo11('771130978')).toEqual(true)
   })
-
 
   it('should parse birthumber correctly', () => {
     let date = parse('7401040020')

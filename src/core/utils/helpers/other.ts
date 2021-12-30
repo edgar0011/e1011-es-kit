@@ -3,9 +3,13 @@ import { memoizeWith, identity } from 'ramda'
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const nestedTernary = (condition: boolean, branchA: any, branchB: any): any => (condition ? branchA : branchB)
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 export const memoize = memoizeWith(identity)
 
 // Beware fellow developer, this is to be used with caution and precison
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 export const memoizeComplex = memoizeWith((...args) => JSON.stringify(args))
 
 export const debounce = (func: () => void, wait = 100, immediate = false): () => void => {

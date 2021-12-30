@@ -4,7 +4,6 @@ import {
   normalizeString, findStringInText,
 } from './textValueOperation'
 
-
 describe('textValueOperation', () => {
   it('should convert text to lower case', () => {
     const str = 'Helo World'

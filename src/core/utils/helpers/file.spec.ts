@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-
 import { cleanCsvLines } from './file'
 
 const testData = `
@@ -14,7 +13,6 @@ describe('cleanCsvLines', () => {
   it('should clean empty lines', () => {
     const str = testData
     const data = cleanCsvLines(str)
-
 
     let lineDelimiter = '\r\n'
     let lines: string[] = data.split(lineDelimiter)

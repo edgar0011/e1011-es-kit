@@ -5,7 +5,6 @@ type ItemLikeObject = {
   id?: string | number
 }
 
-
 export function keyExtractorFunction<Item extends ItemLikeObject>(item: Item, index: number): string {
   return String(item?.key ?? item?.id ?? index)
 }
