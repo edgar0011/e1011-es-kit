@@ -3,7 +3,7 @@
   "version": "1.1.2",
   "main": "dist/lib/cjs/index.js",
   "module": "dist/lib/esm/index.js",
-  "typings": "dist/types/index.d.ts",
+  "typings": "dist/types/src/index.d.ts",
   "license": "MIT",
   "repository": {
     "type": "git",
