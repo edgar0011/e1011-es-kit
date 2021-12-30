@@ -1,4 +1,4 @@
-import { delay } from './helpers'
+import { delay } from './other'
 import { duplicatesInArray } from './objectOperations'
 
 describe('Should find duplicates in array', () => {
