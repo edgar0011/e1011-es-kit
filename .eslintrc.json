@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "@earlorg/eslint-config/base",
+    "@earlorg/eslint-config/base-react-jsx",
+    "@earlorg/eslint-config/base-typescript",
+    "@earlorg/eslint-config/perf-react-jsx"
+
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
+      },
+      "babel-module": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
+      }
+    }
+  },
+  "rules": {
+    // note you must disable the base rule as it can report incorrect errors
+    // https://stackoverflow.com/questions/63818415/react-was-used-before-it-was-defined/64024916#64024916
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["off"],
+    "@typescript-eslint/no-explicit-any": "off",
+    "prefer-arrow-callback": "off",
+    "quotes": ["error", "single", { "avoidEscape": true }]
+  }
+}

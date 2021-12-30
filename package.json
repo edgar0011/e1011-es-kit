@@ -1,0 +1,122 @@
+{
+  "name": "@earlorg/react-kit",
+  "version": "1.1.0",
+  "main": "dist/lib/cjs/index.js",
+  "module": "dist/lib/esm/index.js",
+  "typings": "dist/types/index.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edgar0011/react-kit"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": "./dist/lib/cjs/index.js",
+    "./hooks": {
+      "import": "./dist/hooks/esm/index.js",
+      "require": "./dist/hooks/index.js"
+    },
+    "./utils": {
+      "import": "./dist/utils/esm/index.js",
+      "require": "./dist/utils/index.js"
+    }
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "prepublish": "yarn clean && yarn build:lib",
+    "clean": "rimraf ./dist ./es ./coverage",
+    "build:lib": "yarn tsc && rollup --config",
+    "build": "yarn lint && yarn build:lib",
+    "watch": "rollup --config --watch",
+    "lint": "eslint src",
+    "lint:ts": "eslint src --ext js,jsx,ts,tsx",
+    "lint:quiet": "eslint src --quiet",
+    "lint:ts:quiet": "eslint src --ext js,jsx,ts,tsx --quiet",
+    "lint:fix": "yarn lint --fix",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "tsc": "tsc",
+    "prepush": "yarn lint:ts && yarn test && yarn tsc"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/eslint-parser": "^7.16.3",
+    "@babel/eslint-plugin": "^7.14.5",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/plugin-proposal-decorators": "^7.16.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.0",
+    "@babel/plugin-proposal-private-methods": "^7.16.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.16.0",
+    "@babel/plugin-syntax-optional-chaining": "^7.8.3",
+    "@babel/plugin-transform-async-to-generator": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-typescript": "^7.16.0",
+    "@earlorg/eslint-config": "^1.5.5",
+    "@types/jest": "^27.0.3",
+    "@types/lodash-es": "^4.17.5",
+    "@types/ramda": "^0.27.62",
+    "@types/react": "^17.0.38",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "babel-jest": "^27.3.1",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-babel-module": "^5.3.1",
+    "husky": "^7.0.4",
+    "jest": "^27.3.1",
+    "prettier": "^2.4.1",
+    "prettier-eslint": "^13.0.0",
+    "prettier-eslint-cli": "^5.0.1",
+    "rollup": "^2.60.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.7",
+    "i18next": "^21.6.4",
+    "lodash-es": "^4.17.21",
+    "ramda": "^0.27.1",
+    "react": "^17.0.2",
+    "react-i18next": "^11.15.2"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!lodash-es)"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|css|pdf)$": "<rootDir>/test/file-mock.js",
+      "^lodash-es$": "lodash",
+      "^lodash-es/(.*)": "lodash/$1"
+    },
+    "verbose": true,
+    "transform": {
+      "^.+\\.jsx$": "babel-jest",
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.ts$": "babel-jest",
+      "^.+\\.tsx$": "babel-jest"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx"
+    ],
+    "coverageDirectory": "report",
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
+  }
+}
