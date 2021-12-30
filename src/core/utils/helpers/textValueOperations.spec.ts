@@ -2,9 +2,9 @@ import {
   toLowerCase, toUpperCase, fileNameExt,
   removeWhitespaces,
   normalizeString, findStringInText,
-} from './textValueOperation'
+} from './textValueOperations'
 
-describe('textValueOperation', () => {
+describe('textValueOperations', () => {
   it('should convert text to lower case', () => {
     const str = 'Helo World'
     expect(toLowerCase(str)).toEqual(str.toLowerCase())

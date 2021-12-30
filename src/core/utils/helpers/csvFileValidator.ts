@@ -1,4 +1,4 @@
-import { fileNameExt } from './textValueOperation'
+import { fileNameExt } from './textValueOperations'
 
 export const parseCSVdata = (data: string, columnDelimiter = ';'): {
   firstLine: string
