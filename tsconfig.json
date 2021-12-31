@@ -36,12 +36,7 @@
   ],
   "typeRoots": ["./node_modules/@types", "./types"],
   "include": [
-    "./src/**/*.*",
-    "./src/**/*.d.ts",
-    "./src/**/.d.ts",
-    "./src/core/**/*.*",
-    "./src/core/**/*.d.ts",
-    "./src/core/**/.d.ts",
+    "./src",
     "./types"
   ],
 }

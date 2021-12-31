@@ -25,6 +25,8 @@ const commonConfig = {
     'lodash-es',
     'i18next',
     'react-i18next',
+    'styled-components',
+    'sanitize-html',
   ],
   watch: {
     include: 'src/**',
@@ -74,6 +76,22 @@ export default [
       },
       {
         dir: 'dist/utils/esm',
+        format: 'es',
+        sourcemap: true,
+      },
+    ],
+    ...commonConfig,
+  },
+  {
+    input: ['src/core/ui/index.ts'],
+    output: [
+      {
+        dir: 'dist/ui',
+        format: 'cjs',
+        sourcemap: true,
+      },
+      {
+        dir: 'dist/ui/esm',
         format: 'es',
         sourcemap: true,
       },

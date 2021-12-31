@@ -21,6 +21,10 @@
     "./utils": {
       "import": "./dist/utils/esm/index.js",
       "require": "./dist/utils/index.js"
+    },
+    "./ui": {
+      "import": "./dist/ui/esm/index.js",
+      "require": "./dist/ui/index.js"
     }
   },
   "scripts": {
@@ -54,12 +58,15 @@
     "@babel/plugin-syntax-optional-chaining": "^7.8.3",
     "@babel/plugin-transform-async-to-generator": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.0",
-    "@earlorg/eslint-config": "^1.5.5",
+    "@earlorg/eslint-config": "^1.1.2",
     "@types/jest": "^27.0.3",
     "@types/lodash-es": "^4.17.5",
     "@types/ramda": "^0.27.62",
     "@types/react": "^17.0.38",
+    "@types/sanitize-html": "^2.6.1",
+    "@types/styled-components": "^5.1.19",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "babel-jest": "^27.3.1",
@@ -87,7 +94,9 @@
     "lodash-es": "^4.17.21",
     "ramda": "^0.27.1",
     "react": "^17.0.2",
-    "react-i18next": "^11.15.2"
+    "react-i18next": "^11.15.2",
+    "sanitize-html": "^2.6.1",
+    "styled-components": "^5.3.3"
   },
   "jest": {
     "moduleDirectories": [
