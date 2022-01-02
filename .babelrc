@@ -11,6 +11,7 @@
     "@babel/preset-typescript"
   ],
   "plugins": [
+    "react-html-attrs",
     "@babel/plugin-proposal-optional-chaining",
     "@babel/plugin-syntax-optional-chaining",
     "@babel/plugin-proposal-nullish-coalescing-operator",
@@ -19,7 +20,8 @@
     ["@babel/plugin-proposal-class-properties", { "loose": true }],
     ["@babel/plugin-proposal-private-methods", { "loose": true }],
     ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
-    "@babel/plugin-transform-async-to-generator"
+    "@babel/plugin-transform-async-to-generator",
+    ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
 
   ],
 
@@ -27,6 +29,7 @@
     "production": {
       "plugins": [
         "transform-remove-console",
+        "react-html-attrs",
         "@babel/plugin-proposal-optional-chaining",
         "@babel/plugin-syntax-optional-chaining",
         "@babel/plugin-proposal-nullish-coalescing-operator",
@@ -35,12 +38,14 @@
         ["@babel/plugin-proposal-class-properties", { "loose": true }],
         ["@babel/plugin-proposal-private-methods", { "loose": true }],
         ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
-        "@babel/plugin-transform-async-to-generator"
+        "@babel/plugin-transform-async-to-generator",
+        ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
       ]
     },
     "test": {
       "plugins": [
         "transform-remove-console",
+        "react-html-attrs",
         "@babel/plugin-proposal-optional-chaining",
         "@babel/plugin-syntax-optional-chaining",
         "@babel/plugin-proposal-nullish-coalescing-operator",
@@ -49,7 +54,8 @@
         ["@babel/plugin-proposal-class-properties", { "loose": true }],
         ["@babel/plugin-proposal-private-methods", { "loose": true }],
         ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
-        "@babel/plugin-transform-async-to-generator"
+        "@babel/plugin-transform-async-to-generator",
+        ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
       ]
     },
   }
