@@ -1,4 +1,5 @@
-let defaultFontSize = 16
+// eslint-disable-next-line import/no-mutable-exports
+export let defaultFontSize = 16
 export const setDefaultFontSize = (fontSize: number) => {
   defaultFontSize = fontSize
 }
