@@ -89,12 +89,12 @@ export const getTimeFromNowOriginal = (value: string, language: string): string 
 
 export const getTimeFromNow = (
   value: Date | string | number,
-  valueFormat: Partial<DateTimeFormat>,
+  valueFormat?: Partial<DateTimeFormat>,
 ): string => getDateTime({ ...valueFormat, from: true, value })
 
 export const getTimeTo = (
   value: Date | string | number,
-  valueFormat: Partial<DateTimeFormat>,
+  valueFormat?: Partial<DateTimeFormat>,
 ): string => getDateTime({ ...valueFormat, to: true, value })
 
 export const getDateTime = ({
