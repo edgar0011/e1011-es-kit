@@ -1,6 +1,6 @@
 {
   "name": "@earlorg/react-kit",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "main": "dist/lib/cjs/index.js",
   "module": "dist/lib/esm/index.js",
   "typings": "dist/types/src/index.d.ts",
