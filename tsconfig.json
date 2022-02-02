@@ -32,7 +32,8 @@
     "declarationMap": true,
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.*"
   ],
   "typeRoots": ["./node_modules/@types", "./types"],
   "include": [

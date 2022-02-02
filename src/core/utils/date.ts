@@ -11,6 +11,8 @@ export type DateTimeFormat = {
   relativeTime?: Record<string, string>
   from?: boolean
   to?: boolean
+  shouldSubtractDay?: boolean
+  shouldAddDay?: boolean
   showPreffix?: boolean
 }
 
@@ -105,6 +107,8 @@ export const getDateTime = ({
   relativeTime,
   from,
   to,
+  shouldAddDay = false,
+  shouldSubtractDay = false,
   showPreffix = false,
 }: DateTimeFormat): string => {
   dayjs.updateLocale('en', {
@@ -113,33 +117,17 @@ export const getDateTime = ({
       ...relativeTime,
     },
   })
-  console.log('value')
-  console.log(value)
-
-  console.log('valueFormat')
-  console.log(valueFormat)
-
-  console.log('formatString')
-  console.log(formatString)
-
-  console.log('language')
-  console.log(language)
-
-  console.log('from')
-  console.log(from)
-  console.log('to')
-  console.log(to)
 
   dayjs.locale(language)
-  console.log('dayjs.locale()')
-  console.log(dayjs.locale())
 
   if (!from && to) {
-    return dayjs(new Date()).locale(language).to(value, !showPreffix)
+    const dateTo = dayjs(value, valueFormat || undefined).add(shouldAddDay ? 1 : 0, 'day')
+    return dayjs(new Date()).locale(language).to(dateTo, !showPreffix)
   }
 
   if (from && !to) {
-    return dayjs(value, valueFormat || undefined).locale(language).fromNow(!showPreffix)
+    const dateTo = dayjs(value, valueFormat || undefined).subtract(shouldSubtractDay ? 1 : 0, 'day')
+    return dayjs(dateTo, valueFormat || undefined).locale(language).fromNow(!showPreffix)
   }
 
   return dayjs(value, valueFormat || undefined).locale(language).format(formatString)

@@ -44,7 +44,7 @@
     },
     "test": {
       "plugins": [
-        // "transform-remove-console",
+        "transform-remove-console",
         "react-html-attrs",
         "@babel/plugin-proposal-optional-chaining",
         "@babel/plugin-syntax-optional-chaining",

@@ -39,7 +39,7 @@
     "lint:quiet": "eslint src --quiet",
     "lint:ts:quiet": "eslint src --ext js,jsx,ts,tsx --quiet",
     "lint:fix": "yarn lint --fix",
-    "test": "jest",
+    "test": "jest ./src --verbose",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "tsc": "tsc",
@@ -107,7 +107,8 @@
       "node_modules"
     ],
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!lodash-es)"
+      "<rootDir>/node_modules/(?!lodash-es)",
+      "<rootDir>/dist"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|css|pdf)$": "<rootDir>/test/file-mock.js",
