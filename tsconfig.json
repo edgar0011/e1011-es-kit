@@ -4,7 +4,8 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "es6"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -30,6 +31,7 @@
     "outDir": "./dist/lib",
     "declaration": true,
     "declarationMap": true,
+    "sourceMap": true,
   },
   "exclude": [
     "node_modules",
