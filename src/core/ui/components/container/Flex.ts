@@ -22,6 +22,7 @@ export type FlexProps = {
   minHeight?: string
   gap?: string
   css?: string
+  borderRadius?: string
 };
 
 export const Flex = memo(styled.div<FlexProps>`
@@ -37,15 +38,16 @@ export const Flex = memo(styled.div<FlexProps>`
   text-align: ${({ alignText }: Partial<FlexProps>) => alignText || 'left'};
   justify-content: ${({ justify }: Partial<FlexProps>) => justify || 'flex-start'};
   align-items: ${({ align }: Partial<FlexProps>) => align || 'flex-start'};
-  align-self: ${({ alignSelf }: Partial<FlexProps>) => alignSelf || 'center'};
+  align-self: ${({ alignSelf }: Partial<FlexProps>) => alignSelf || 'auto'};
   margin: ${({ margin }: Partial<FlexProps>) => margin || '0'};
   padding: ${({ padding }: Partial<FlexProps>) => padding || '0'};
   width: ${({ width }: Partial<FlexProps>) => width || 'auto'};
   height: ${({ height }: Partial<FlexProps>) => height || 'auto'};
   max-width: ${({ maxWidth }: Partial<FlexProps>) => maxWidth || 'auto'};
   max-height: ${({ maxHeight }: Partial<FlexProps>) => maxHeight || 'auto'};
-  min-width: ${({ minWidth }: Partial<FlexProps>) => minWidth || 'auto'};
+  min-width: ${({ minWidth }: Partial<FlexProps>) => ((minWidth || minWidth === '0') ? minWidth : 'auto')};
   min-height: ${({ minHeight }: Partial<FlexProps>) => minHeight || 'auto'};
+  border-radius: ${({ borderRadius }: Partial<FlexProps>) => borderRadius || 'initial'};
 `)
 
 // default flex centralized, 100% width and height
