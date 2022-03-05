@@ -223,7 +223,8 @@ export const CheckBox: FC<CheckBoxProps>
         {sanitizedHtmlLabel && <span dangerouslySetInnerHTML={sanitizedHtmlLabel} />}
       </StyledLabel>
       {helpText && <p className={`help ${error ? 'is-danger' : ''}`}>{helpText}</p>}
-    </FieldWrapper>)
+    </FieldWrapper>
+  )
 })
 
 const InputComponent = styled.input``

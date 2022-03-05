@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState, useLayoutEffect, memo, ReactNode } from 'react'
+import React, { FC, useRef, useState, useLayoutEffect, memo, ReactNode, useEffect } from 'react'
 import styled from 'styled-components'
 
 type StyledContainerProps = { height: number; className: string; [key: string]: any }
@@ -20,13 +20,19 @@ const StyledContainer: FC<StyledContainerProps> = styled.div<StyledContainerProp
 `
 
 export type ContainerProps = {
-  collapsed?: boolean
-  collapseHandler?: ReactNode
+  collapsed: boolean
+  collapseHandler?: (collapsed: boolean) => void
   children?: ReactNode
 }
-export const Container: FC<ContainerProps> = memo(function Container({ collapsed, children }: ContainerProps) {
+export const Container: FC<ContainerProps> = memo(({
+  collapsed = false, collapseHandler, children,
+}: ContainerProps) => {
   const containerRef = useRef<HTMLDivElement>()
   const [contentHeight, setContentHeight] = useState(0)
+
+  useEffect(() => {
+    collapseHandler?.(collapsed)
+  }, [collapseHandler, collapsed])
 
   useLayoutEffect(() => {
     if (containerRef?.current) {
@@ -40,3 +46,5 @@ export const Container: FC<ContainerProps> = memo(function Container({ collapsed
     </StyledContainer>
   )
 })
+
+Container.displayName = 'Container'
