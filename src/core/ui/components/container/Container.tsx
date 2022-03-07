@@ -1,47 +1,73 @@
-import React, { FC, useRef, useState, useLayoutEffect, memo, ReactNode, useEffect } from 'react'
+import React, { FC, useRef, useState, memo, ReactNode, useEffect } from 'react'
 import styled from 'styled-components'
 
-type StyledContainerProps = { height: number; className: string; [key: string]: any }
+type StyledContainerProps = { propName: string; className: string; [key: string]: any }
 
-const StyledContainer: FC<StyledContainerProps> = styled.div<StyledContainerProps>`
-  transition: opacity 0.2s ease-in-out, height 0.2s ease-in-out, max-height 0.2s ease-in-out;
-  will-change: opacity, height, max-height;
-  height: 0;
-  max-height: 0;
+const elementPropNameMap: Record<string, string> = {
+  width: 'scrollWidth',
+  height: 'scrollHeight',
+}
+
+const propNameFunc = ({ propName }: { propName: StyledContainerProps['propName']}) => propName
+
+const StyledContainer: FC<StyledContainerProps> = memo(styled.div<StyledContainerProps>`
+  transform-origin: 0% 0%;
+  transition: opacity 0.2s ease-in-out, ${propNameFunc} 0.2s ease-in-out, max-${propNameFunc} 0.2s ease-in-out;
+  will-change: opacity, ${propNameFunc}, max-${propNameFunc};
   overflow: hidden;
   opacity: 0;
 
-  &.active {
-    height: ${({ height }: Partial<StyledContainerProps>) => `${height}px`};
-    max-height: ${({ height }: Partial<StyledContainerProps>) => `${height}px`};
-    opacity: 1;
+  &.collapsed {
+    ${propNameFunc}: 0;
+    max-${propNameFunc}: 0;
+    opacity: 0;
   }
 
-`
+  &.expanded {
+    ${propNameFunc}: ${({ contentProp }: Partial<StyledContainerProps>) => `${contentProp}px`};
+    max-${propNameFunc}: ${({ contentProp }: Partial<StyledContainerProps>) => `${contentProp}px`};
+    opacity: 1;
+  }
+`)
 
 export type ContainerProps = {
   collapsed: boolean
   collapseHandler?: (collapsed: boolean) => void
   children?: ReactNode
+  propName?: string
 }
 export const Container: FC<ContainerProps> = memo(({
-  collapsed = false, collapseHandler, children,
+  collapsed = false, collapseHandler, children, propName = 'height',
 }: ContainerProps) => {
   const containerRef = useRef<HTMLDivElement>()
-  const [contentHeight, setContentHeight] = useState(0)
+  const [contentProp, setContentProp] = useState(0)
 
   useEffect(() => {
     collapseHandler?.(collapsed)
   }, [collapseHandler, collapsed])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (containerRef?.current) {
-      setContentHeight(containerRef.current.scrollHeight)
+      setContentProp((containerRef.current as any)[elementPropNameMap[propName]])
     }
-  }, [containerRef])
+  }, [containerRef, propName])
+
+  let resolvedClassName = ''
+
+  if (collapsed && contentProp && contentProp !== undefined && contentProp !== null) {
+    resolvedClassName = 'collapsed'
+  }
+  if (!collapsed && contentProp && contentProp !== undefined && contentProp !== null) {
+    resolvedClassName = 'expanded'
+  }
 
   return (
-    <StyledContainer className={`${!collapsed ? 'active' : ''}`} ref={containerRef} height={contentHeight}>
+    <StyledContainer
+      className={resolvedClassName}
+      ref={containerRef}
+      contentProp={contentProp}
+      propName={propName}
+    >
       {children}
     </StyledContainer>
   )
