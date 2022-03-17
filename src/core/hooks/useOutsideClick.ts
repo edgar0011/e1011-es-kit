@@ -6,18 +6,6 @@ import { handleClickOutside as defaultHandleClickOutside } from '../ui/utils/cli
 type Element = HTMLElement | null | (() => HTMLElement)
 type CallbackFunction = (target: HTMLElement | null) => void
 
-export const defaultHandleClickOutside = (
-  element: Element,
-  callback?: CallbackFunction,
-) => (event: MouseEvent) => {
-  const target = event.target as HTMLElement | null
-  const resolvedElement:HTMLElement | null = typeof element === 'function' ? element() : element
-
-  if (resolvedElement && !resolvedElement.contains(target)) {
-    callback?.(target)
-  }
-}
-
 export function useOutsideClick(
   element: Element,
   callback?: CallbackFunction,
