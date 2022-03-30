@@ -31,7 +31,7 @@ const StyledContainer: FC<StyledContainerProps> = memo(styled.div<StyledContaine
 `)
 
 export type ContainerProps = {
-  collapsed: boolean
+  collapsed?: boolean
   collapseHandler?: (collapsed: boolean) => void
   children?: ReactNode
   propName?: string
