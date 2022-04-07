@@ -17,13 +17,13 @@ const StyledContainer: FC<StyledContainerProps> = memo(styled.div<StyledContaine
   overflow: hidden;
   opacity: 0;
 
-  &.collapsed {
+  &.Collapsible__container__collapsed {
     ${propNameFunc}: 0;
     max-${propNameFunc}: 0;
     opacity: 0;
   }
 
-  &.expanded {
+  &.Collapsible__container__expanded {
     ${propNameFunc}: ${({ contentProp }: Partial<StyledContainerProps>) => `${contentProp}px`};
     max-${propNameFunc}: ${({ contentProp }: Partial<StyledContainerProps>) => `${contentProp}px`};
     opacity: 1;
@@ -57,10 +57,10 @@ export const Container: FC<ContainerProps> = memo(({
   let resolvedClassName = ''
 
   if (collapsed && contentProp && contentProp !== undefined && contentProp !== null) {
-    resolvedClassName = 'collapsed'
+    resolvedClassName = 'Collapsible__container__collapsed'
   }
   if (!collapsed && contentProp && contentProp !== undefined && contentProp !== null) {
-    resolvedClassName = 'expanded'
+    resolvedClassName = 'Collapsible__container__expanded'
   }
 
   return (
