@@ -31,7 +31,7 @@
     "prepare": "husky install",
     "prepublish": "yarn clean && yarn build:lib",
     "clean": "rimraf ./dist ./es ./coverage",
-    "build:lib": "yarn tsc && rollup --config",
+    "build:lib": "yarn tsc && BABEL_ENV=production NODE_ENV=production rollup --config --prod --mini",
     "build": "yarn lint && yarn build:lib",
     "watch": "rollup --config --watch",
     "lint": "eslint src",

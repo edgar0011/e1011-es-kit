@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { FC, ReactNode, memo, useMemo, useCallback, ComponentType } from 'react'
+import React, { FC, ReactNode, memo, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
 import sanitize from 'sanitize-html'
 
 // import { Select as ReactSelect } from 'components/elements/Select/Select'
 
-export type IconComponentType = ComponentType<{ iconName: string; color: string}>
+export type IconComponentType = FC<{ iconName: string; color: string}>
 
 let iconComponent: IconComponentType
 
