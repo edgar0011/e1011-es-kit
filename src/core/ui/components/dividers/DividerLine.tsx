@@ -1,5 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { memo, FC } from 'react'
 import styled from 'styled-components'
+
+const lineGrayColor = '#999999'
 
 type DividerProps = {
   orientation?: string
@@ -10,13 +13,11 @@ type DividerProps = {
   color?: string
   opacity?: number
   left?: string
-  zIndex?: number
 }
 
 export const DividerLine: FC<DividerProps> = memo(styled(({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   orientation, vertical, horizontal, length, color, opacity, zIndex,
-  // eslint-disable-next-line react/jsx-props-no-spreading
   ...rest }) => <div {...rest} />)<DividerProps>`
   position:relative;
   display:block;
@@ -33,17 +34,15 @@ export const DividerLine: FC<DividerProps> = memo(styled(({
       margin: ${margin || '0 auto'};`)
 };
   transition: opacity, width, height 250ms ease-in-out;
-  background-color: ${({ color }) => color || '#BCBDCE'};
+  background-color: ${({ color }) => color || lineGrayColor};
   opacity: ${({ opacity = 1 }) => opacity};
   z-index: ${({ zIndex }) => zIndex};
 `)
 
 export const DividerVertical: FC<DividerProps>
-  // eslint-disable-next-line react/jsx-props-no-spreading
   = memo((props) => <DividerLine vertical length='100%' {...props} />)
 DividerVertical.displayName = 'DividerVertical'
 
 export const DividerHorizontal: FC<DividerProps>
-  // eslint-disable-next-line react/jsx-props-no-spreading
   = memo((props) => <DividerLine horizontal length='100%' {...props} />)
 DividerHorizontal.displayName = 'DividerHorizontal'
