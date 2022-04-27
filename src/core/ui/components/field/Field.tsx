@@ -6,7 +6,11 @@ import styled from 'styled-components'
 
 import type { FieldError, IconComponentType } from './types'
 
-const textPrimaryColor = '#000000'
+let iconColor: string | (() => string) = () => '#000000'
+
+export const setIconColor = (color: string | (() => string)): void => {
+  iconColor = color
+}
 
 let IconComponent: IconComponentType = memo(function IconComponent() { return <span /> })
 
@@ -289,7 +293,7 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
             >
               <IconComponent
                 iconName={iconLeft}
-                color={textPrimaryColor}
+                color={iconColor}
               />
             </span>
           )}
@@ -300,7 +304,7 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
             >
               <IconComponent
                 iconName={iconRight}
-                color={textPrimaryColor}
+                color={iconColor}
               />
             </span>
           )}
