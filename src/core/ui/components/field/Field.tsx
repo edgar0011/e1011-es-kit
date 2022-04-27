@@ -1,29 +1,28 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { FC, ReactNode, memo, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
-import sanitize from 'sanitize-html'
 
-// import { Select as ReactSelect } from 'components/elements/Select/Select'
+import type { FieldError, IconComponentType } from './types'
 
-export type IconComponentType = FC<{ iconName: string; color: string}>
+const textPrimaryColor = '#000000'
 
-let iconComponent: IconComponentType
+let IconComponent: IconComponentType = memo(function IconComponent() { return <span /> })
 
 export const setIconComponent = (component: IconComponentType): void => {
-  iconComponent = component
+  IconComponent = component
 }
 
-type FileWrapperProps = {
+export type FileWrapperProps = {
   className?: string
   error?: boolean
   disabled?: boolean
   userDisabled?: boolean
-  multiInput?: boolean
   css?: string
 }
 
-const FieldWrapper: FC<FileWrapperProps> = styled.div<FileWrapperProps>`
+export const FieldWrapper: FC<FileWrapperProps> = styled.div<FileWrapperProps>`
   opacity: ${({ disabled, userDisabled }) => (disabled || userDisabled ? 0.5 : 1)};
   pointer-events: ${({ disabled, userDisabled }) => (disabled || userDisabled ? 'none' : 'auto')};
   flex: 1 1 auto;
@@ -42,9 +41,13 @@ const FieldWrapper: FC<FileWrapperProps> = styled.div<FileWrapperProps>`
 
   .mainControl {
     flex: 1;
-    box-shadow: ${({ multiInput }) => (multiInput
-    ? 'none' : '0 0 8px 2px rgba(0, 0, 0, 0.1)')};
     border-radius: 6px;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.06);
+    will-change: box-shadow;
+    transition: box-shadow 250ms ease-in-out;
+    &:hover {
+      box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+    }
   }
   button {
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
@@ -94,7 +97,6 @@ const FieldWrapper: FC<FileWrapperProps> = styled.div<FileWrapperProps>`
   }
 `
 
-export type FieldError = any | Record<string, any> | undefined
 export interface FieldProps {
   label?: string
   name?: string
@@ -102,6 +104,7 @@ export interface FieldProps {
   min?: number | string | Date | any
   max?: number | string | Date | any
   value?: string | number | readonly string[] | undefined
+  defaultValue?: string | number | readonly string[] | undefined
   placeholder?: string
   inputRef?: ReactHookFormRef
   error?: boolean
@@ -130,17 +133,10 @@ export interface FieldProps {
   [key: string]: any
 }
 
-// const defaultIsSelected: (option?: unknown, value?: string | number | readonly string[] | undefined) => boolean
-//   = (option, value) => value !== null && value !== undefined && (
-//     (typeof option === 'object' && (option as OptionObj)?.value === value)
-//     || option === value)
-
 interface SelectProps extends FieldProps {
-  // isSelected?: (option?: unknown, value?: string | number | readonly string[] | undefined) => boolean
   id?: string
 }
 
-// type Option = React.DetailedHTMLProps<React.OptionHTMLAttributes<HTMLOptionElement>, HTMLOptionElement>
 type OptionObj = { label: string | number | undefined; value: string | number | undefined }
 type Option = OptionObj | string | number
 
@@ -149,7 +145,6 @@ export const Select: FC<SelectProps>
   function Select({ options, value, inputRef, ...props }: SelectProps) {
     return (
       <div className='select'>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <select {...props} ref={inputRef} defaultValue={value}>
           {options?.map((option: Option) => (
             <option
@@ -165,68 +160,6 @@ export const Select: FC<SelectProps>
   },
 )
 
-type CheckBoxLabelProps = { className: string; inLine?: boolean; htmlFor: string | undefined }
-
-const StyledLabel: FC<CheckBoxLabelProps> = styled.label<CheckBoxLabelProps>`
-  display: flex;
-  flex-direction: ${({ inLine = true }) => (inLine ? 'row' : 'column-reverse')};
-  gap: 0.5rem;
-  // align-items: baseline;
-  input[type="checkbox"] {
-    min-width: 1rem;
-    min-height: 1rem;
-    margin: 0.2rem;
-  }
-  .label {
-    font-size: ${({ inLine = true }) => (inLine ? '1rem !important' : 'inherit')};
-  }
-
-`
-
-export type CheckBoxProps = {
-  label?: string
-  htmlLabel?: string
-  className?: string
-  css?: string
-  disabled?: boolean
-  value?: any
-  name?: string
-  error?: boolean
-  errors?: FieldError
-  helpText?: string
-  inLine?: boolean
-  [key: string]: any
-}
-
-export const CheckBox: FC<CheckBoxProps>
-= memo<CheckBoxProps>(function Checkbox({
-  name, label, value, className, css, disabled, inputRef,
-  htmlLabel, error, helpText, inLine, ...props }: CheckBoxProps) {
-  const sanitizedHtmlLabel = useMemo(() => (htmlLabel ? ({ __html: sanitize(htmlLabel) }) : null), [htmlLabel])
-  return (
-    <FieldWrapper className={`field ${className}`} error={error} disabled={disabled} css={css}>
-      <StyledLabel className='checkbox' htmlFor={name} inLine={inLine}>
-        <input
-          id={name}
-          name={name}
-          type='checkbox'
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...props}
-          ref={inputRef}
-          disabled={disabled}
-          value={value}
-          checked={value}
-          aria-labelledby={name}
-        />
-        {label && (<span className='label'>{label}</span>)}
-        {/* eslint-disable-next-line react/no-danger */}
-        {sanitizedHtmlLabel && <span dangerouslySetInnerHTML={sanitizedHtmlLabel} />}
-      </StyledLabel>
-      {helpText && <p className={`help ${error ? 'is-danger' : ''}`}>{helpText}</p>}
-    </FieldWrapper>
-  )
-})
-
 const InputComponent = styled.input``
 const TextAreaComponent = styled.textarea``
 const StyledFieldLabel = styled.label`
@@ -238,6 +171,7 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
   name,
   type = 'text',
   value,
+  defaultValue,
   placeholder,
   inputRef,
   error,
@@ -259,7 +193,6 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
   leftIconClick,
   options,
   css,
-  multiInput,
   ...props
 }: FieldProps) => {
   let Component: FC<any> = InputComponent
@@ -283,20 +216,25 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
       event.target.value = onChangeInner((event.target.value as string)) as string
       onChange && onChange(event as unknown)
     } else {
-      console.log('calling Field onChange')
-      console.log('calling Field onChange, event: ', event)
+      console.log('calling RHF onChange')
+      console.log('calling RHF onChange, event: ', event)
       onChange && onChange(event as unknown)
     }
   }, [onChangeInner, onChange, userDisabled])
 
-  const Icon: IconComponentType = iconComponent
+  const valueProps = useMemo(() => {
+    if (value === undefined) {
+      return { defaultValue }
+    }
+    return { value }
+  }, [value, defaultValue])
+
   return (
     <FieldWrapper
       className={`field ${className}`}
       error={error}
       disabled={disabled}
       userDisabled={userDisabled}
-      multiInput={multiInput}
       css={css}
     >
       <StyledFieldLabel htmlFor={name} className='label'>{label}</StyledFieldLabel>
@@ -323,7 +261,6 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
                 onKeyDown={handleFocus}
                 autoComplete='off'
                 disabled={disabled}
-                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...props}
               />
             )
@@ -335,25 +272,36 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
                 className={`input ${error ? 'is-danger' : ''}`}
                 type={type}
                 placeholder={placeholder}
-                value={value}
+                {...valueProps}
                 onChange={handleChange}
                 onBlur={onBlur}
                 onFocus={handleFocus}
                 onKeyDown={handleFocus}
                 autoComplete='off'
                 disabled={disabled}
-                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...props}
               />))}
 
           {iconLeft && !withoutComponent && (
-            <span className={`icon is-small is-left ${leftIconClick ? 'is-action' : ''}`} onClick={leftIconClick}>
-              <Icon iconName={iconLeft} color='#DBDBDB' />
+            <span
+              className={`iconLeft icon is-small is-left ${leftIconClick ? 'is-action' : ''}`}
+              onClick={leftIconClick}
+            >
+              <IconComponent
+                iconName={iconLeft}
+                color={textPrimaryColor}
+              />
             </span>
           )}
           {iconRight && (
-            <span className={`icon is-small is-right ${rightIconClick ? 'is-action' : ''}`} onClick={rightIconClick}>
-              <Icon iconName={iconRight} color='#DBDBDB' />
+            <span
+              className={`iconRight icon is-small is-right ${rightIconClick ? 'is-action' : ''}`}
+              onClick={rightIconClick}
+            >
+              <IconComponent
+                iconName={iconRight}
+                color={textPrimaryColor}
+              />
             </span>
           )}
           {children && children}
