@@ -36,7 +36,6 @@ export const DividerLine: FC<DividerProps> = memo(styled(({
   transition: opacity, width, height 250ms ease-in-out;
   background-color: ${({ color }) => color || lineGrayColor};
   opacity: ${({ opacity = 1 }) => opacity};
-  z-index: ${({ zIndex }) => zIndex};
 `)
 
 export const DividerVertical: FC<DividerProps>
