@@ -5,16 +5,19 @@ export const getMatch: (value: string | number) => null | RegExpMatchArray
 
 export const isValidFormat = (value: string | number): boolean => {
   const match = getMatch(value)
+
   return match !== null && !!match[0] && parse(value) !== null
 }
 
 export const isValidModulo11 = (value: string | number): boolean => {
   const validFormat = isValidFormat(value)
+
   if (!validFormat) {
     return false
   }
 
   let stringValue: string
+
   if (typeof value === 'string') {
     stringValue = value.replace('/', '')
   } else {
@@ -27,6 +30,7 @@ export const isValidModulo11 = (value: string | number): boolean => {
 
   const controlDigit = stringValue.substr(9, 1)
   let mod = parseInt(stringValue.substr(0, 9), 10) % 11
+
   if (mod === 10) {
     mod = 0
   }
@@ -50,10 +54,12 @@ const monthRange = {
   },
   getGender(monthHint: number) {
     const range = this.getRange(monthHint)
+
     return range ? range[2] as string : null
   },
   getMonth(monthHint: number) {
     const range = this.getRange(monthHint)
+
     return String(range ? monthHint - (range[3] as number) : null).padStart(2, '0')
   },
 }
@@ -70,6 +76,7 @@ export const parse = (value: string | number | undefined): ParsedBirthNumber | n
     return null
   }
   const match = getMatch(value)
+
   if (!match) {
     return null
   }
@@ -77,6 +84,7 @@ export const parse = (value: string | number | undefined): ParsedBirthNumber | n
   const controlDigit = match[5]
 
   let year = parseInt(match[1], 10)
+
   // eslint-disable-next-line no-nested-ternary
   year += controlDigit === '' ? (year < 54 ? 1900 : 1800) : (year < 54 ? 2000 : 1900)
   const monthHint = parseInt(match[2], 10)
@@ -88,6 +96,7 @@ export const parse = (value: string | number | undefined): ParsedBirthNumber | n
   // console.log(`${year}-${month}-${day}`)
 
   const date = new Date(`${year}-${month}-${day}`)
+
   console.log('year, month, day', year, month, day)
   console.log('date', date)
   if (date instanceof Date && !Number.isNaN(date) && date.getMonth() + 1 === parseInt(month, 10)) {

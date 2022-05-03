@@ -15,6 +15,7 @@ export const isBirthNumberValid = (birthnumber: string, birthdate: string, gende
       return false
     }
     const { year, month, day } = parsedBirthNumber
+
     if (birthdate !== `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`) {
       return false
     }

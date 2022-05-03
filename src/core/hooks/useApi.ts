@@ -42,11 +42,15 @@ export const useApi = (
       setDataFetching((prevState: DataFetching) => ({ ...prevState, loading: true }))
       const data: Data = await caller(...args)
       const returnData = decorator ? decorator(data) : data
+
       onSuccess && onSuccess({ data: returnData, originalData: data.data })
+
       setDataFetching((prevState: DataFetching) => {
         const newState = { ...prevState, loading: false, error: null, data: returnData, originalData: data.data }
+
         return newState
       })
+
       return returnData
     } catch (error: any) {
       onError && onError(error)

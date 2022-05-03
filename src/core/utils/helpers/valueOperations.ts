@@ -24,6 +24,7 @@ export const numberOperation = (
   limit?: Limit,
 ): number => {
   let result = 0
+
   switch (operation) {
     case Operation.ADD: {
       result = value + operand

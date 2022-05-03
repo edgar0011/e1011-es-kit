@@ -200,6 +200,7 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
   ...props
 }: FieldProps) => {
   let Component: FC<any> = InputComponent
+
   if (!children && type === 'textarea') {
     Component = TextAreaComponent
   }

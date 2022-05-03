@@ -122,11 +122,13 @@ export const getDateTime = ({
 
   if (!from && to) {
     const dateTo = dayjs(value, valueFormat || undefined).add(shouldAddDay ? 1 : 0, 'day')
+
     return dayjs(new Date()).locale(language).to(dateTo, !showPreffix)
   }
 
   if (from && !to) {
     const dateTo = dayjs(value, valueFormat || undefined).subtract(shouldSubtractDay ? 1 : 0, 'day')
+
     return dayjs(dateTo, valueFormat || undefined).locale(language).fromNow(!showPreffix)
   }
 

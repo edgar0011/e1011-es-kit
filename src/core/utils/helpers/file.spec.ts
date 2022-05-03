@@ -16,6 +16,7 @@ describe('cleanCsvLines', () => {
 
     let lineDelimiter = '\r\n'
     let lines: string[] = data.split(lineDelimiter)
+
     if (lines.length <= 1) {
       lineDelimiter = '\n'
       lines = data.split(lineDelimiter)

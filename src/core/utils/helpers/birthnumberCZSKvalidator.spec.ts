@@ -39,6 +39,7 @@ describe('Birthnumber validator, parser', () => {
 
   it('should parse birthumber correctly', () => {
     let date = parse('7401040020')
+
     expect(date?.year).toEqual(1974)
     expect(date?.month).toEqual('01')
     expect(date?.day).toEqual('04')

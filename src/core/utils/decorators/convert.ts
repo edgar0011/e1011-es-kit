@@ -27,6 +27,7 @@ export const converting
       // @ts-ignore
       return !original.apply(this, args)
     }
+
     return Object.defineProperty(target, name, {
       ...descriptor,
       value: newValue,

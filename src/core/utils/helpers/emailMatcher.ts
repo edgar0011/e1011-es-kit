@@ -2,6 +2,7 @@ export const regexBuilder
 = (domain: string, prefix = '', suffix = ''): RegExp => {
   const normPrefix = prefix.replace('.', '\\.')
   const normSuffix = suffix.replace('.', '\\.')
+
   if (normPrefix && normSuffix) {
     return new RegExp(
       `^(${normPrefix})+(.+)+(${normSuffix})+@(${domain})$`,
@@ -24,6 +25,7 @@ export const emailMatch = (rgx:RegExp, email:string): boolean => rgx.test(email)
 
 export const emailMatcher = (domain: string, prefix = '', suffix = '', email:string): boolean => {
   const rgx: RegExp = regexBuilder(domain, prefix, suffix)
+
   return emailMatch(rgx, email)
 }
 

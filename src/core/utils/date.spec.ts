@@ -5,6 +5,7 @@ import { getDateTime, getTimeFromNow, getTimeTo } from './date'
 describe('getDateTime', () => {
   it('should format date/time', () => {
     let dateString
+
     dateString = getDateTime({ value: '01/20/2019', valueFormat: 'MM/DD/YYYY', formatString: 'DD/MM/YYYY' })
     console.log(dateString)
     expect(dateString).toEqual('20/01/2019')
@@ -23,6 +24,7 @@ describe('getDateTime', () => {
     expect(dateString).toEqual('12-12 12/05/1988')
 
     const today = new Date()
+
     dateString = getDateTime({ value: today, formatString: 'HH-mm DD.MM.YYYY' })
     console.log('dateString', dateString)
 
@@ -43,6 +45,7 @@ describe('getDateTime', () => {
 
   it('should format date/time from now', () => {
     let dateString = getTimeFromNow(new Date(Date.now() - 60 * 1000), { language: 'cz' })
+
     console.log(dateString)
     expect(dateString).toEqual('nyní')
 
@@ -65,6 +68,7 @@ describe('getDateTime', () => {
 
   it('should format date/time to now', () => {
     let dateString
+
     dateString = getTimeTo(new Date(Date.now() + 60 * 1000), { language: 'cz' })
     console.log(dateString)
     expect(dateString).toEqual('nyní')
@@ -86,8 +90,10 @@ describe('getDateTime', () => {
     expect(dateString).toEqual('za 2 dny')
 
     let when = dayjs('1:36', 'HH:mm').add(1, 'day').toDate()
+
     dateString = getTimeTo(when)
     let dateString2 = getTimeTo('1:36', { valueFormat: 'HH:mm', shouldAddDay: true })
+
     console.log('when', when)
     console.log('dateString', dateString)
     console.log('dateString2', dateString2)

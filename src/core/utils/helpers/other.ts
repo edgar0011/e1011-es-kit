@@ -14,6 +14,7 @@ export const memoizeComplex = memoizeWith((...args) => JSON.stringify(args))
 
 export const debounce = (func: () => void, wait = 100, immediate = false): () => void => {
   let timeout: any
+
   return function debounced(...args) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -27,6 +28,7 @@ export const debounce = (func: () => void, wait = 100, immediate = false): () =>
       }
     }
     const callNow = immediate && !timeout
+
     clearTimeout(timeout)
     timeout = setTimeout(later, wait)
     if (callNow) {

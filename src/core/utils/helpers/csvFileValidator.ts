@@ -7,6 +7,7 @@ export const parseCSVdata = (data: string, columnDelimiter = ';'): {
   numColumns: number
 } => {
   let lines: string[] = data.split('\r\n')
+
   if (lines.length <= 1) {
     lines = data.split('\n')
   }
@@ -59,6 +60,7 @@ export const validateCSVlines = (lines: string[], numColumns: number, columnDeli
   const errors: ErrorMessage[] = []
   // lines without first line of columns (hence the index + 1 in error message)
   let linesNum = lines.length
+
   // eslint-disable-next-line no-cond-assign
   // eslint-disable-next-line no-plusplus
   while (linesNum--) {
@@ -77,6 +79,7 @@ export const validateCSVlines = (lines: string[], numColumns: number, columnDeli
   let lineColumns = null
   let errorLineNumColumns = null
   let errorLineCellNotTrimmed = null
+
   lines.forEach((line, index) => {
     lineColumns = line.split(columnDelimiter)
 
@@ -118,9 +121,11 @@ export const validateCSVFile
     return
   }
   const reader = new FileReader()
+
   reader.readAsText(file)
   reader.onloadend = () => {
     const data = reader.result ? reader.result.toString() : ''
+
     console.log('on File read end')
     console.log('reader', reader)
     console.log('reader.result', reader.result)

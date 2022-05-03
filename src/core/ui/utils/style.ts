@@ -37,6 +37,7 @@ export const convertHex = (hex: string, opacity: number, rgba = false): string =
   const b = parseInt(bValue, 16)
 
   const a = opacity / 100
+
   return rgba
     ? `rgba(${r},${g},${b},${a})`
     : `#${rValue}${gValue}${bValue}${toHex(Math.round(opacity))}`
@@ -64,6 +65,7 @@ export const calculateColors = (startColor: string, endColor: string, num = 10):
   const ratioIterator = (num / (num + 1)) / num
   const ratios = []
   let ratio = ratioIterator
+
   // eslint-disable-next-line no-plusplus
   while (num--) {
     ratios.push(ratio)

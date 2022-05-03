@@ -6,6 +6,7 @@ export const cleanCsvLines = (data:string): string => {
 
   let lineDelimiter = '\r\n'
   let lines: string[] = data.split(lineDelimiter)
+
   if (lines.length <= 1) {
     lineDelimiter = '\n'
     lines = data.split(lineDelimiter)
@@ -15,6 +16,7 @@ export const cleanCsvLines = (data:string): string => {
   console.log(lines)
 
   let linesNum = lines.length
+
   // eslint-disable-next-line no-cond-assign
   // eslint-disable-next-line no-plusplus
   while (linesNum--) {
