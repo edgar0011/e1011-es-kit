@@ -1,9 +1,14 @@
 import { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
-import { useTranslation as useTranslationNextJS } from 'next-i18next'
 
 type tValuFunction = (key: string | undefined, params?: Record<string, any>) => string
 const cache: Map<TFunction, tValuFunction> = new Map()
+
+let resolvedUseTranslation = useTranslation
+
+export const setUseTranslation = (useTrans: any) => {
+  resolvedUseTranslation = useTrans
+}
 
 export const createSafeT = (t: TFunction): tValuFunction => {
   if (cache.has(t)) {
@@ -29,12 +34,7 @@ type safeTF = { t: (key: string | undefined, params?: Record<string, any>) => st
 
 // TODO memoize
 export const useTranslations = (namespaces: string[]): safeTF => {
-  const { t } = useTranslation(namespaces)
-
-  return { t: createSafeT(t) as tValuFunction }
-}
-export const useTranslationsNextJS = (namespaces: string[]): safeTF => {
-  const { t } = useTranslationNextJS(namespaces)
+  const { t } = resolvedUseTranslation(namespaces)
 
   return { t: createSafeT(t) as tValuFunction }
 }
