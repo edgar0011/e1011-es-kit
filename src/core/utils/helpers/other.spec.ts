@@ -1,4 +1,4 @@
-import { memoize, memoizeComplex } from './other'
+import { memoize, memoizeComplex, memoizer } from './other'
 
 describe('memoize', () => {
   it('should memoize function product with text primitive args', () => {
@@ -34,6 +34,28 @@ describe('memoize', () => {
 
     // defacto 2nd
     expect(memoized('Karel', 2)).toEqual('Decorated Karel, 2')
+
+    // 4th
+    expect(memoized('Linda')).toEqual('Decorated Linda, 0')
+
+    expect(tobeMemoized.mock.calls.length).toBe(4)
+  })
+
+  it('should create memoise fc, via memoizer factory', () => {
+    const tobeMemoizedInner = (name: string, index = 0): string => `Decorated ${name}, ${index}`
+    const tobeMemoized = jest.fn(tobeMemoizedInner)
+    // const memoizeFunc = memoizer((name, index) => `${name}-${index}`) versus:
+    const memoizeFunc = memoizer((name) => `${name}`)
+    const memoized = memoizeFunc(tobeMemoized)
+
+    // 1st
+    expect(tobeMemoized('Karel', 1)).toEqual('Decorated Karel, 1')
+
+    // 2nd, 3rd
+    expect(memoized('Karel', 2)).toEqual(tobeMemoized('Karel', 2))
+
+    // defacto 2nd
+    expect(memoized('Karel', 3)).toEqual('Decorated Karel, 2')
 
     // 4th
     expect(memoized('Linda')).toEqual('Decorated Linda, 0')

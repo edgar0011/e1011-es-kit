@@ -12,6 +12,11 @@ export const memoize = memoizeWith(identity)
 // @ts-ignore
 export const memoizeComplex = memoizeWith((...args) => JSON.stringify(args))
 
+export const memoizer
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+= (memoizeFunc = (...args) => JSON.stringify(args)) => memoizeWith((...args) => memoizeFunc(...args))
+
 export const debounce = (func: () => void, wait = 100, immediate = false): () => void => {
   let timeout: any
 
