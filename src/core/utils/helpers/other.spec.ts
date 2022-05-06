@@ -57,6 +57,8 @@ describe('memoize', () => {
     // defacto 2nd
     expect(memoized('Karel', 3)).toEqual('Decorated Karel, 2')
 
+    expect(memoized('Karel', 4)).toEqual('Decorated Karel, 2')
+
     // 4th
     expect(memoized('Linda')).toEqual('Decorated Linda, 0')
 
