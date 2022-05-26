@@ -101,6 +101,7 @@ export const FieldWrapper: FC<FileWrapperProps> = styled.div<FileWrapperProps>`
   }
 `
 
+type EventType = { target: any; type?: any }
 export interface FieldProps {
   label?: string
   name?: string
@@ -123,13 +124,13 @@ export interface FieldProps {
   addon?: ReactNode
   children?: ReactNode
   className?: string
-  onChange?: (value?: unknown) => unknown
+  onChange?: (event?: EventType) => unknown
   // TODO, rename... something like changeHandler or valueDecorator
   onChangeInner?: (value: string | number) => string | number
-  onBlur?: (event?: unknown) => void
-  onFocus?: (event?: unknown) => void
-  rightIconClick?: (event?: unknown) => void
-  leftIconClick?: (event?: unknown) => void
+  onBlur?: (event?: EventType) => void
+  onFocus?: (event?: EventType) => void
+  rightIconClick?: (event?: EventType) => void
+  leftIconClick?: (event?: EventType) => void
   options?: any[] | null
   creatable?: boolean
   async?: boolean
@@ -219,11 +220,11 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
     if (onChangeInner && event?.target) {
       // eslint-disable-next-line no-param-reassign
       event.target.value = onChangeInner((event.target.value as string)) as string
-      onChange && onChange(event as unknown)
+      onChange && onChange(event)
     } else {
       console.log('calling RHF onChange')
       console.log('calling RHF onChange, event: ', event)
-      onChange && onChange(event as unknown)
+      onChange && onChange(event)
     }
   }, [onChangeInner, onChange, userDisabled])
 
