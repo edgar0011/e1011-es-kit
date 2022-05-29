@@ -24,7 +24,7 @@ export const resolveStyleValue = (
 /* eslint-disable no-param-reassign */
 export const toHex = (x: number | string): string => {
   x = x.toString(16)
-  return (x.length === 1) ? `0${x}` : String(x)
+  return x.padStart(2, '0')
 }
 
 export const convertHex = (hex: string, opacity: number, rgba = false): string => {
@@ -36,12 +36,17 @@ export const convertHex = (hex: string, opacity: number, rgba = false): string =
   const g = parseInt(gValue, 16)
   const b = parseInt(bValue, 16)
 
-  const a = opacity / 100
+  const a = opacity <= 1 ? opacity : (opacity / 100)
 
-  return rgba
+  return (rgba
     ? `rgba(${r},${g},${b},${a})`
-    : `#${rValue}${gValue}${bValue}${toHex(Math.round(opacity))}`
+    : `#${rValue}${gValue}${bValue}${toHex(Math.round((opacity <= 1 ? opacity : (opacity / 100)) * 255))}`)
+    .toLowerCase()
 }
+
+export const convertRGB = (
+  r: number, g: number, b: number, opacity: number,
+): string => `#${toHex(r)}${toHex(g)}${toHex(b)}${toHex(Math.round((opacity <= 1 ? opacity : (opacity / 100)) * 255))}`
 
 export const calculatePercColor = (startColor: string, endColor: string, ratio = 0.5): string => {
   if (startColor.indexOf('#') === 0) {
