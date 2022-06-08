@@ -23,7 +23,16 @@ export type FlexProps = {
   gap?: string
   css?: string
   borderRadius?: string
-};
+}
+
+const flexValueMap: Record<string, string> = {
+  start: 'flex-start',
+  'flex-start': 'flex-start',
+  end: 'flex-end',
+  'flex-end': 'flex-end',
+}
+
+const resolveFlexProps = (value?: string): string | undefined => (value ? (flexValueMap[value] || value) : value)
 
 export const Flex = memo(styled.div<FlexProps>`
   display: flex;
@@ -36,8 +45,8 @@ export const Flex = memo(styled.div<FlexProps>`
   flex-wrap: ${({ flexWrap }: Partial<FlexProps>) => flexWrap || 'nowrap'};
   gap: ${({ gap }: Partial<FlexProps>) => (gap !== undefined ? gap : '0')};
   text-align: ${({ alignText }: Partial<FlexProps>) => alignText || 'left'};
-  justify-content: ${({ justify }: Partial<FlexProps>) => justify || 'flex-start'};
-  align-items: ${({ align }: Partial<FlexProps>) => align || 'flex-start'};
+  justify-content: ${({ justify }: Partial<FlexProps>) => resolveFlexProps(justify) || 'flex-start'};
+  align-items: ${({ align }: Partial<FlexProps>) => resolveFlexProps(align) || 'flex-start'};
   align-self: ${({ alignSelf }: Partial<FlexProps>) => alignSelf || 'auto'};
   margin: ${({ margin }: Partial<FlexProps>) => margin || '0'};
   padding: ${({ padding }: Partial<FlexProps>) => padding || '0'};
