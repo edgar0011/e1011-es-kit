@@ -2,7 +2,7 @@ import React, { FC, memo, PropsWithChildren } from 'react'
 
 import { FlexWrapper, FlexProps } from './Flex'
 
-type PlaceholderProps = FlexProps & PropsWithChildren<unknown> & {
+export type PlaceholderProps = FlexProps & PropsWithChildren<unknown> & {
   title?: string
   cssProp?: string
   background?: string
