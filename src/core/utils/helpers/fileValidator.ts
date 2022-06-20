@@ -161,3 +161,91 @@ export const validateCSVFile
     console.log(error)
   }
 }
+
+export const validateSDFFile
+= (file: File, callBack: (errors?: (ErrorMessage | string)[] | null) => void, columnDelimiter = ';'): void => {
+  if (!file) {
+    callBack(['errors.uploadInput.file.empty'])
+    return
+  }
+  if (fileNameExt(file.name) !== 'sdf') {
+    console.log('File invalid')
+    console.log(file)
+    console.log(file.type)
+    callBack(['errors.uploadInput.file.invalid'])
+    return
+  }
+  const reader = new FileReader()
+
+  reader.readAsText(file)
+  reader.onloadend = () => {
+    const data = reader.result ? reader.result.toString() : ''
+
+    console.log('on File read end')
+    console.log('reader', reader)
+    console.log('reader.result', reader.result)
+
+    const { lines } = parseCSVdata(data, columnDelimiter)
+
+    if (lines?.length < 1) {
+      callBack(['errors.uploadInput.file.numLines'])
+      return
+    }
+
+    callBack && callBack(null)
+  }
+
+  reader.onerror = (error) => {
+    console.log('File read error')
+    console.log(error)
+  }
+}
+
+export const validateJSONFile
+= (file: File, callBack: (errors?: (ErrorMessage | string)[] | null) => void, columnDelimiter = ';'): void => {
+  if (!file) {
+    callBack(['errors.uploadInput.file.empty'])
+    return
+  }
+  if (fileNameExt(file.name) !== 'json') {
+    console.log('File invalid')
+    console.log(file)
+    console.log(file.type)
+    callBack(['errors.uploadInput.file.invalid'])
+    return
+  }
+  const reader = new FileReader()
+
+  reader.readAsText(file)
+  reader.onloadend = () => {
+    const data = reader.result ? reader.result.toString() : ''
+
+    console.log('on File read end')
+    console.log('reader', reader)
+    console.log('reader.result', reader.result)
+
+    try {
+      const parsed = JSON.parse(data)
+
+      JSON.stringify(parsed)
+    } catch (error) {
+      console.error(error)
+      callBack(['errors.uploadInput.file.invalid'])
+      return
+    }
+
+    const { lines } = parseCSVdata(data, columnDelimiter)
+
+    if (lines?.length < 1) {
+      callBack(['errors.uploadInput.file.numLines'])
+      return
+    }
+
+    callBack && callBack(null)
+  }
+
+  reader.onerror = (error) => {
+    console.log('File read error')
+    console.log(error)
+  }
+}

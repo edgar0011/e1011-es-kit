@@ -1,6 +1,6 @@
 export * from './birthnumber.validator'
 export * from './birthnumberCZSKvalidator'
-export * from './csvFileValidator'
+export * from './fileValidator'
 export * from './date'
 export * from './deviceInfo'
 export * from './emailMatcher'

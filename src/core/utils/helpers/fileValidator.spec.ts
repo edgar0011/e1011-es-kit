@@ -1,4 +1,4 @@
-import { parseCSVdata, validateCSVlines, validateLineCellTrimmed, validateLineNumColumns } from './csvFileValidator'
+import { parseCSVdata, validateCSVlines, validateLineCellTrimmed, validateLineNumColumns } from './fileValidator'
 
 describe('csvFileValidator', () => {
   describe('parseCSVdata fnc', () => {
