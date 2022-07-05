@@ -52,10 +52,10 @@ export const Flex = memo(styled.div<FlexProps>`
   padding: ${({ padding }: Partial<FlexProps>) => padding || '0'};
   width: ${({ width }: Partial<FlexProps>) => width || 'auto'};
   height: ${({ height }: Partial<FlexProps>) => height || 'auto'};
-  max-width: ${({ maxWidth }: Partial<FlexProps>) => maxWidth || 'auto'};
-  max-height: ${({ maxHeight }: Partial<FlexProps>) => maxHeight || 'auto'};
-  min-width: ${({ minWidth }: Partial<FlexProps>) => ((minWidth || minWidth === '0') ? minWidth : 'auto')};
-  min-height: ${({ minHeight }: Partial<FlexProps>) => minHeight || 'auto'};
+  max-width: ${({ maxWidth }: Partial<FlexProps>) => maxWidth || 'none'};
+  max-height: ${({ maxHeight }: Partial<FlexProps>) => maxHeight || 'none'};
+  min-width: ${({ minWidth }: Partial<FlexProps>) => ((minWidth || minWidth === '0') ? minWidth : '0')};
+  min-height: ${({ minHeight }: Partial<FlexProps>) => minHeight || '0'};
   border-radius: ${({ borderRadius }: Partial<FlexProps>) => borderRadius || 'initial'};
 `)
 
