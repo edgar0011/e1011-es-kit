@@ -66,10 +66,12 @@ export const FlexWrapper = memo(styled(Flex).attrs((props: Partial<FlexProps>) =
     height: props.height || '100%',
     justify: props.justify || 'center',
     align: props.align || 'center',
+    ...props,
   }
 ))``)
 
-export const FlexTight = memo(styled(Flex).attrs({
+export const FlexTight = memo(styled(Flex).attrs((props: Partial<FlexProps>) => ({
   size: 'unset',
   width: 'initial',
-})``)
+  ...props,
+}))``)

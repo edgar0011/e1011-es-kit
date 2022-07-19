@@ -15,7 +15,7 @@ export const removeWhitespaces = (str: string | number): string | number => (str
 // eslint-disable-next-line no-bitwise
 export const fileNameExt = (fileName: string): string => fileName.slice((fileName.lastIndexOf('.') - 1 >>> 0) + 2)
 
-export const normalizeString = (str: string): string => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+export const normalizeString = (str: string): string => str?.normalize('NFD')?.replace?.(/[\u0300-\u036f]/g, '')
 
 export const findStringInText = (str: string, text: string, ci = true, norm = true): boolean => {
   if (!text || !str || !text.trim() || !str.trim()) {

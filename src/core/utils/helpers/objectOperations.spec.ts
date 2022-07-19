@@ -1,5 +1,5 @@
 import { delay } from './other'
-import { duplicatesInArray } from './objectOperations'
+import { duplicatesInArray, formatJsonString } from './objectOperations'
 
 describe('Should find duplicates in array', () => {
   it('Should find duplicates in array', () => {
@@ -24,5 +24,21 @@ describe('Should find duplicates in array', () => {
     console.log(duplicatesMap)
     expect(Object.keys(duplicatesMap as Record<string, number>).length).toEqual(2)
     expect(duplicatesMap).toEqual({ 2: 2, a: 2 })
+  })
+})
+
+describe('formatJsonString', () => {
+  it('Should format object same as JSON.stringify', () => {
+    const g = { name: 'g', values: [1, 2, 3], meta: { context: undefined, wrapped: true } }
+
+    expect(formatJsonString(g)).toEqual(JSON.stringify(g))
+
+    expect(formatJsonString(g, null, 2)).toEqual(JSON.stringify(g, null, 2))
+  })
+
+  it('Should format object for graphql', () => {
+    const g = { name: 'g', values: [1, 2, 3], meta: { context: undefined, wrapped: true, label: 'Data' } }
+
+    console.log(formatJsonString(g, null, 2, { graphQL: true }))
   })
 })
