@@ -19,8 +19,8 @@ type DividerProps = {
 
 export const DividerLine: FC<DividerProps> = memo(styled(({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  orientation, vertical, horizontal, length, color, opacity, zIndex, width, height,
-  ...rest }) => <div {...rest} />)<DividerProps>`
+  orientation, vertical, horizontal, length, color, opacity, zIndex, width, height, ...rest
+}) => <div {...rest} />)<DividerProps>`
   position:relative;
   display:block;
   ${({
