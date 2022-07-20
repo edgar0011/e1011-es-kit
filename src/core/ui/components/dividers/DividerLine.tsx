@@ -21,16 +21,18 @@ export const DividerLine: FC<DividerProps> = memo(styled(({
   ...rest }) => <div {...rest} />)<DividerProps>`
   position:relative;
   display:block;
-  ${({ orientation, vertical, margin, length = '80%', left = '0' }) => (orientation === 'vertical' || vertical
+  ${({
+    orientation, vertical, margin,
+    length = '80%', left = '0', width = '1px', height = '1px' }) => (orientation === 'vertical' || vertical
     ? `
       height: ${length};
       left: ${left};
-      width: 1px;
+      width: ${width};
       margin: ${margin || 'auto 0'};`
     : `
       width: ${length};
       left: ${left};
-      height: 1px;
+      height: ${height};
       margin: ${margin || '0 auto'};`)
 };
   transition: opacity, width, height 250ms ease-in-out;
