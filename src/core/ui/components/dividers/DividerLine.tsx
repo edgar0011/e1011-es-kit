@@ -13,11 +13,13 @@ type DividerProps = {
   color?: string
   opacity?: number
   left?: string
+  width?: string
+  height?: string
 }
 
 export const DividerLine: FC<DividerProps> = memo(styled(({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  orientation, vertical, horizontal, length, color, opacity, zIndex,
+  orientation, vertical, horizontal, length, color, opacity, zIndex, width, height,
   ...rest }) => <div {...rest} />)<DividerProps>`
   position:relative;
   display:block;
