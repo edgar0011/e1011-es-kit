@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import dayjs, { UnitType } from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import updateLocale from 'dayjs/plugin/updateLocale'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -136,15 +136,13 @@ export const getDateTime = ({
 }
 
 export const dateRangeFormat = (
-  dateFrom: Date, dateTo: Date, shortFormat: string, longFormat: string, delimiter = ' - ',
+  dateFrom: Date, dateTo: Date, shortFormat: string, longFormat: string,
+  delimiter = ' - ', datePeriod: UnitType = 'month',
 ) : string => {
   const dayJSFrom = dayjs(dateFrom)
   const dayJSTo = dayjs(dateTo)
 
-  const diffMonths = dayJSFrom.diff(dayJSTo, 'month')
+  const diffMonths = dayJSFrom.diff(dayJSTo, datePeriod)
 
-  if (diffMonths === 0) {
-    return `${dayJSFrom.format(shortFormat)}${delimiter}${dayJSTo.format(longFormat)}`
-  }
-  return `${dayJSFrom.format(longFormat)}${delimiter}${dayJSTo.format(longFormat)}`
+  return `${dayJSFrom.format(diffMonths === 0 ? shortFormat : longFormat)}${delimiter}${dayJSTo.format(longFormat)}`
 }
