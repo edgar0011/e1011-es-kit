@@ -134,3 +134,17 @@ export const getDateTime = ({
 
   return dayjs(value, valueFormat || undefined).locale(language).format(formatString)
 }
+
+export const dateRangeFormat = (
+  dateFrom: Date, dateTo: Date, shortFormat: string, longFormat: string, delimiter = ' - ',
+) : string => {
+  const dayJSFrom = dayjs(dateFrom)
+  const dayJSTo = dayjs(dateTo)
+
+  const diffMonths = dayJSFrom.diff(dayJSTo, 'month')
+
+  if (diffMonths === 0) {
+    return `${dayJSFrom.format(shortFormat)}${delimiter}${dayJSTo.format(longFormat)}`
+  }
+  return `${dayJSFrom.format(longFormat)}${delimiter}${dayJSTo.format(longFormat)}`
+}

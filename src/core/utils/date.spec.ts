@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import { getDateTime, getTimeFromNow, getTimeTo } from './date'
+import { getDateTime, getTimeFromNow, getTimeTo, dateRangeFormat } from './date'
 
 describe('getDateTime', () => {
   it('should format date/time', () => {
@@ -108,5 +108,25 @@ describe('getDateTime', () => {
     console.log('dateString2', dateString2)
 
     expect(dateString).toEqual(dateString2)
+  })
+})
+
+describe('formatting date range', () => {
+  it('should format date range', () => {
+    const dateFrom = new Date(2014, 10, 26)
+    const dateTo = new Date(2014, 10, 28)
+
+    const dateRangeFormatted = dateRangeFormat(dateFrom, dateTo, 'D', 'D MMM YYYY')
+
+    expect(dateRangeFormatted).toEqual('26 - 28 Nov 2014')
+  })
+
+  it('should format date range', () => {
+    const dateFrom = new Date(2014, 10, 26)
+    const dateTo = new Date(2018, 10, 28)
+
+    const dateRangeFormatted = dateRangeFormat(dateFrom, dateTo, 'D', 'D MMM YYYY')
+
+    expect(dateRangeFormatted).toEqual('26 Nov 2014 - 28 Nov 2018')
   })
 })
