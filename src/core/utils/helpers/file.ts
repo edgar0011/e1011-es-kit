@@ -34,3 +34,5 @@ export const cleanCsvLines = (data:string): string => {
   console.log(typeof lines.join(lineDelimiter))
   return lines.join(lineDelimiter)
 }
+
+export const formatFilePath = (filePath?: string): string | undefined => filePath?.split('/')?.pop()
