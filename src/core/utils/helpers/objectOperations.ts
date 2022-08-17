@@ -45,8 +45,13 @@ export const formatJsonString = (
   return `{${strValues.join(', ')}}`
 }
 
+const simpleIdentiy = (value: string | number) => `${value}`
+
 export const formatObj = (
   obj: Record<string, string | number>,
   delimiter = ', ',
-  mapValue?: (value: string | number) => string,
-): string => Object.entries(obj).map(([key, value]) => `${key}: ${mapValue ? mapValue(value) : value}`).join(delimiter)
+  mapValue: ((value: string | number) => string) = simpleIdentiy,
+  mapKey: ((value: string | number) => string) = simpleIdentiy,
+): string => (typeof obj === 'object'
+  ? Object.entries(obj).map(([key, value]) => `${mapKey(key)}: ${mapValue(value)}`).join(delimiter)
+  : '')
