@@ -2,6 +2,7 @@ import {
   toLowerCase, toUpperCase, fileNameExt,
   removeWhitespaces,
   normalizeString, findStringInText,
+  escapeRegExp,
 } from './textValueOperations'
 
 describe('textValueOperations', () => {
@@ -82,5 +83,13 @@ describe('textValueOperations', () => {
     const text = 'řekni Rericha'
 
     expect(findStringInText(str, text, false, false)).toBeFalsy()
+  })
+
+  it('should ecape string', () => {
+    const str = '/John/'
+
+    expect(escapeRegExp(str)).toEqual('\\/John\\/')
+
+    expect('/John/'.includes((str))).toBeTruthy()
   })
 })

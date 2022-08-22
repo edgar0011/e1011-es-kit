@@ -36,3 +36,6 @@ export const findStringInText = (str: string, text: string, ci = true, norm = tr
 
   return text.includes(str)
 }
+
+// eslint-disable-next-line no-useless-escape
+export const escapeRegExp = (str: string): string => str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
