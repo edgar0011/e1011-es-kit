@@ -55,3 +55,16 @@ export const formatObj = (
 ): string => (typeof obj === 'object'
   ? Object.entries(obj).map(([key, value]) => `${mapKey(key)}: ${mapValue(value)}`).join(delimiter)
   : '')
+
+export const chunkArray = (dataArray: any[], chunkSize = 100): (any[])[] => {
+  const result = []
+
+  const len = dataArray.length
+
+  for (let i = 0; i < len; i += chunkSize) {
+    const chunk = dataArray.slice(i, i + chunkSize)
+
+    result.push(chunk)
+  }
+  return result
+}

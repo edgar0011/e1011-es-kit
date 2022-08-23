@@ -1,5 +1,5 @@
 import { delay } from './other'
-import { duplicatesInArray, formatJsonString } from './objectOperations'
+import { duplicatesInArray, formatJsonString, chunkArray } from './objectOperations'
 
 describe('Should find duplicates in array', () => {
   it('Should find duplicates in array', () => {
@@ -40,5 +40,17 @@ describe('formatJsonString', () => {
     const g = { name: 'g', values: [1, 2, 3], meta: { context: undefined, wrapped: true, label: 'Data' } }
 
     console.log(formatJsonString(g, null, 2, { graphQL: true }))
+  })
+})
+
+describe('chunkArray', () => {
+  it('Should slice array', () => {
+    const data = Array(1000).fill(1).map((_, index) => index)
+
+    const chunkSize = 310
+    const chunkedArray = chunkArray(data, chunkSize)
+
+    expect(chunkedArray.length).toEqual(Math.ceil(data.length / chunkSize))
+    expect(chunkedArray.reduce((sum, { length }) => sum + length, 0)).toEqual(data.length)
   })
 })
