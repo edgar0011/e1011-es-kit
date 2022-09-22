@@ -3,6 +3,8 @@ import {
   removeWhitespaces,
   normalizeString, findStringInText,
   escapeRegExp,
+  sanitizeId,
+  sanitizePathId,
 } from './textValueOperations'
 
 describe('textValueOperations', () => {
@@ -91,5 +93,14 @@ describe('textValueOperations', () => {
     expect(escapeRegExp(str)).toEqual('\\/John\\/')
 
     expect('/John/'.includes((str))).toBeTruthy()
+  })
+  it('should sanitize string ofr ID usage', () => {
+    const str = 'John Doe'
+    const str2 = 'John Doe/ 322 csd ds'
+
+    expect(sanitizeId(str)).toEqual('john-doe')
+    expect(sanitizePathId(str)).toEqual('john-doe')
+
+    expect(sanitizePathId(str2)).toEqual('john-doe%2F-322-csd-ds')
   })
 })
