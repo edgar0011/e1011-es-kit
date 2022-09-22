@@ -39,3 +39,16 @@ export const findStringInText = (str: string, text: string, ci = true, norm = tr
 
 // eslint-disable-next-line no-useless-escape
 export const escapeRegExp = (str: string): string => str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
+
+export const truncateText = (text: string, maxNumChars = 0, indicator = '...'): string => {
+  if (!maxNumChars || text.length <= maxNumChars) {
+    return text
+  }
+  return `${text.substr(0, maxNumChars)}${indicator}`
+}
+
+export const sanitizeId
+  = (id: string): string => id && normalizeString(id?.toLocaleLowerCase().replaceAll(/\s/g, '-').replaceAll(/["]/g, ''))
+
+export const sanitizePathId
+  = (id: string): string => id && encodeURIComponent(sanitizeId(id))
