@@ -37,7 +37,7 @@ export const converting
   return descriptor
 }
 export class Model {
-  name: string = 'Model'
+  name = 'Model'
 
   @converting('invert')
   validate(data: Record<string, unknown>) {

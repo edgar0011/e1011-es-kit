@@ -23,6 +23,7 @@ export const regexBuilder
 
 export const emailMatch = (rgx:RegExp, email:string): boolean => rgx.test(email)
 
+// eslint-disable-next-line default-param-last
 export const emailMatcher = (domain: string, prefix = '', suffix = '', email:string): boolean => {
   const rgx: RegExp = regexBuilder(domain, prefix, suffix)
 

@@ -50,9 +50,11 @@ export const numberOperation = (
 }
 
 export const incerementValue
+  // eslint-disable-next-line default-param-last
   = (value: number, inc = 1, limit?: Limit): number => numberOperation(value, inc, Operation.ADD, limit)
 
 export const decrementValue
+  // eslint-disable-next-line default-param-last
   = (value: number, inc = 1, limit?: Limit): number => numberOperation(value, inc, Operation.SUBTRACT, limit)
 
 export const setValue = (

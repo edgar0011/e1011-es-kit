@@ -23,6 +23,15 @@
     "@typescript-eslint/no-use-before-define": ["off"],
     "@typescript-eslint/no-explicit-any": "off",
     "prefer-arrow-callback": "off",
-    "quotes": ["error", "single", { "avoidEscape": true }]
+    "quotes": ["error", "single", { "avoidEscape": true }],
+
+    // exceptions for Styled components
+    // "react/no-unknown-property": ["error", { "ignore": ["css"] }],
+
+    // exception for react functional arrow components
+    "react/function-component-definition": ["error", {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+    }]
   }
 }
