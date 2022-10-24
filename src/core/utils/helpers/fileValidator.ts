@@ -11,8 +11,6 @@ export const parseCSVdata = (data: string, columnDelimiter = ';'): {
   if (lines.length <= 1) {
     lines = data.split('\n')
   }
-  console.log('lines')
-  console.log(lines)
 
   const firstLine: string = lines.shift() as string
   const columns: null | string[] = firstLine ? firstLine.split(columnDelimiter) : null
@@ -29,9 +27,6 @@ export const parseCSVdata = (data: string, columnDelimiter = ';'): {
 export const validateLineNumColumns
   = (lineColumns: Array<string>, numColumns: number, line: string, index: number): ErrorMessage | null => {
     if (lineColumns.length !== numColumns) {
-      console.log('numColumns', numColumns)
-      console.log('line', line)
-      console.log('lineColumns', lineColumns)
       // errors.push(`Line number of cells is not equal to the number of columns: "${line}, index: ${index}"`)
       return {
         message: 'errors.uploadInput.file.line.invalid',
@@ -43,9 +38,6 @@ export const validateLineNumColumns
 export const validateLineCellTrimmed
   = (cell: string, line: string, lineIndex: number, cellIndex: number): ErrorMessage | null => {
     if (cell !== cell.trim()) {
-      console.log('TRIM CELL')
-      console.log(`cell:[${cell}]`)
-      console.log(`cell.trim():[${cell.trim()}]`)
       return {
         message: 'errors.uploadInput.file.cell.invalid',
         params: {
@@ -64,17 +56,10 @@ export const validateCSVlines = (lines: string[], numColumns: number, columnDeli
   // eslint-disable-next-line no-cond-assign
   // eslint-disable-next-line no-plusplus
   while (linesNum--) {
-    console.log('lines[linesNum].trim()')
-    console.log(lines[linesNum].trim())
-
-    console.log("lines[linesNum].split(';').join('').trim()")
-    console.log(lines[linesNum].split(';').join('').trim())
     if (lines[linesNum].trim() === '' || lines[linesNum].split(';').join('').trim() === '') {
       lines.splice(linesNum, 1)
     }
   }
-
-  console.log('PURIFIED:', lines)
 
   let lineColumns = null
   let errorLineNumColumns = null
@@ -114,9 +99,6 @@ export const validateCSVFile
     return
   }
   if (fileNameExt(file.name) !== 'csv' || !['text/csv', 'text/plain', 'application/vnd.ms-excel'].includes(file.type)) {
-    console.log('File invalid')
-    console.log(file)
-    console.log(file.type)
     callBack(['errors.uploadInput.file.invalid'])
     return
   }
@@ -125,10 +107,6 @@ export const validateCSVFile
   reader.readAsText(file)
   reader.onloadend = () => {
     const data = reader.result ? reader.result.toString() : ''
-
-    console.log('on File read end')
-    console.log('reader', reader)
-    console.log('reader.result', reader.result)
 
     const { numColumns, lines } = parseCSVdata(data, columnDelimiter)
 
@@ -147,9 +125,6 @@ export const validateCSVFile
     const flatErrors: string[] = errors.map((errorMsg: ErrorMessage | string) => (
       (errorMsg as ErrorMessage)?.message ? JSON.stringify(errorMsg) : String(errorMsg)))
 
-    console.log('flatErrors')
-    console.log(flatErrors)
-
     const errorsArray: string[] = [...new Set(flatErrors)].map((serialized: string) => JSON.parse(serialized))
 
     // callBack && callBack(errorsArray.length ? errorsArray?.splice?.(0, 6) : null)
@@ -157,8 +132,7 @@ export const validateCSVFile
   }
 
   reader.onerror = (error) => {
-    console.log('File read error')
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -169,9 +143,6 @@ export const validateSDFFile
     return
   }
   if (fileNameExt(file.name) !== 'sdf') {
-    console.log('File invalid')
-    console.log(file)
-    console.log(file.type)
     callBack(['errors.uploadInput.file.invalid'])
     return
   }
@@ -180,10 +151,6 @@ export const validateSDFFile
   reader.readAsText(file)
   reader.onloadend = () => {
     const data = reader.result ? reader.result.toString() : ''
-
-    console.log('on File read end')
-    console.log('reader', reader)
-    console.log('reader.result', reader.result)
 
     const { lines } = parseCSVdata(data, columnDelimiter)
 
@@ -196,8 +163,7 @@ export const validateSDFFile
   }
 
   reader.onerror = (error) => {
-    console.log('File read error')
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -208,9 +174,6 @@ export const validateJSONFile
     return
   }
   if (fileNameExt(file.name) !== 'json') {
-    console.log('File invalid')
-    console.log(file)
-    console.log(file.type)
     callBack(['errors.uploadInput.file.invalid'])
     return
   }
@@ -219,10 +182,6 @@ export const validateJSONFile
   reader.readAsText(file)
   reader.onloadend = () => {
     const data = reader.result ? reader.result.toString() : ''
-
-    console.log('on File read end')
-    console.log('reader', reader)
-    console.log('reader.result', reader.result)
 
     try {
       const parsed = JSON.parse(data)
@@ -245,7 +204,6 @@ export const validateJSONFile
   }
 
   reader.onerror = (error) => {
-    console.log('File read error')
-    console.log(error)
+    console.error(error)
   }
 }

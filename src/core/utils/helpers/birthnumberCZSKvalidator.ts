@@ -97,8 +97,6 @@ export const parse = (value: string | number | undefined): ParsedBirthNumber | n
 
   const date = new Date(`${year}-${month}-${day}`)
 
-  console.log('year, month, day', year, month, day)
-  console.log('date', date)
   if (date instanceof Date && !Number.isNaN(date) && date.getMonth() + 1 === parseInt(month, 10)) {
     return {
       day,

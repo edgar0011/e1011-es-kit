@@ -222,8 +222,6 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
       event.target.value = onChangeInner((event.target.value as string)) as string
       onChange && onChange(event)
     } else {
-      console.log('calling RHF onChange')
-      console.log('calling RHF onChange, event: ', event)
       onChange && onChange(event)
     }
   }, [onChangeInner, onChange, userDisabled])
