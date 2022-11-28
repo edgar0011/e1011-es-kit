@@ -68,3 +68,45 @@ export const chunkArray = (dataArray: any[], chunkSize = 100): (any[])[] => {
   }
   return result
 }
+
+type TreeNode = string | (TreeNode | string[])
+
+// ['app', ['user', 'dashboard', ['ui', ['header', 'footer', 'menu'], 'realTime']]]
+
+export const arrayToObjectTree = (itemsInTree: TreeNode[]) => {
+  let previousParent
+
+  const innerMake = (items: TreeNode[]) => {
+    const treeObject = items.reduce((tree, item, index, array) => {
+      let resolvedTree = { ...tree }
+
+      if (typeof item === 'string') {
+        resolvedTree[item] = { name: item }
+        if (!previousParent) {
+          previousParent = resolvedTree[item]
+        }
+
+        if (index === 0 && Array.isArray(array[1])) {
+          previousParent = resolvedTree[item]
+        }
+      }
+      if (Array.isArray(item)) {
+        let parent = previousParent
+
+        if (index > 1) {
+          resolvedTree[item[0]] = resolvedTree[item[0]] || { name: item[0] }
+          parent = resolvedTree[item[0]]
+
+          resolvedTree = { ...resolvedTree, ...innerMake(item) }
+        } else {
+          parent.children = innerMake(item)
+        }
+      }
+      return resolvedTree
+    }, {})
+
+    return treeObject
+  }
+
+  return innerMake(itemsInTree)
+}

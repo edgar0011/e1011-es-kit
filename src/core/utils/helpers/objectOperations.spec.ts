@@ -1,5 +1,5 @@
 import { delay } from './other'
-import { duplicatesInArray, formatJsonString, chunkArray } from './objectOperations'
+import { duplicatesInArray, formatJsonString, chunkArray, arrayToObjectTree } from './objectOperations'
 
 describe('Should find duplicates in array', () => {
   it('Should find duplicates in array', () => {
@@ -52,5 +52,39 @@ describe('chunkArray', () => {
 
     expect(chunkedArray.length).toEqual(Math.ceil(data.length / chunkSize))
     expect(chunkedArray.reduce((sum, { length }) => sum + length, 0)).toEqual(data.length)
+  })
+})
+
+describe('arrayToObjectTree', () => {
+  it('Should create tree object from array', () => {
+    const data = ['app', ['user', 'dashboard', ['ui', ['header', 'footer', 'menu'], 'realTime']]]
+
+    const tree = arrayToObjectTree(data)
+
+    console.log('arrayToObjectTree, tree:', JSON.stringify(tree, null, 2))
+    expect(tree.app).toBeDefined()
+    expect(tree.app.children.user).toBeDefined()
+    expect(tree.app.children.dashboard).toBeDefined()
+    expect(tree.app.children.ui).toBeDefined()
+    expect(tree.app.children.ui.children.menu).toBeDefined()
+    expect(tree.app.children.realTime).toBeDefined()
+  })
+
+  it('Should create tree object from array, complex', () => {
+    const data = [
+      'app',
+      ['user', 'dashboard', [
+        'ui', [
+          'header', 'footer', 'menu'], ['realTime', ['socket1', 'socket2']]]]]
+
+    const tree = arrayToObjectTree(data)
+
+    console.log('arrayToObjectTree, tree:', JSON.stringify(tree, null, 2))
+    expect(tree.app).toBeDefined()
+    expect(tree.app.children.user).toBeDefined()
+    expect(tree.app.children.dashboard).toBeDefined()
+    expect(tree.app.children.ui).toBeDefined()
+    expect(tree.app.children.ui.children.menu).toBeDefined()
+    expect(tree.app.children.realTime).toBeDefined()
   })
 })
