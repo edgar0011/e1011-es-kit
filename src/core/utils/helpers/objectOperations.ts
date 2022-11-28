@@ -69,16 +69,21 @@ export const chunkArray = (dataArray: any[], chunkSize = 100): (any[])[] => {
   return result
 }
 
-type TreeNode = string | (TreeNode | string[])
+type TreeNodeStr = (string | TreeNodeStr)[]
+
+type TreeNode = {
+  name: string
+  children?: Record<string, TreeNode>
+}
 
 // ['app', ['user', 'dashboard', ['ui', ['header', 'footer', 'menu'], 'realTime']]]
 
-export const arrayToObjectTree = (itemsInTree: TreeNode[]) => {
-  let previousParent
+export const arrayToObjectTree = (itemsInTree: TreeNodeStr[]) => {
+  let previousParent: TreeNode
 
-  const innerMake = (items: TreeNode[]) => {
-    const treeObject = items.reduce((tree, item, index, array) => {
-      let resolvedTree = { ...tree }
+  const innerMake = (items: TreeNodeStr[]): Record<string, TreeNode> => {
+    const treeObject: Record<string, TreeNode> = items.reduce((tree: Record<string, TreeNode>, item, index, array) => {
+      let resolvedTree: Record<string, TreeNode> = { ...tree }
 
       if (typeof item === 'string') {
         resolvedTree[item] = { name: item }
@@ -94,12 +99,12 @@ export const arrayToObjectTree = (itemsInTree: TreeNode[]) => {
         let parent = previousParent
 
         if (index > 1) {
-          resolvedTree[item[0]] = resolvedTree[item[0]] || { name: item[0] }
-          parent = resolvedTree[item[0]]
+          resolvedTree[item[0] as string] = resolvedTree[item[0] as string] || { name: item[0] }
+          parent = resolvedTree[item[0] as string]
 
-          resolvedTree = { ...resolvedTree, ...innerMake(item) }
+          resolvedTree = { ...resolvedTree, ...innerMake(item as TreeNodeStr[]) }
         } else {
-          parent.children = innerMake(item)
+          parent.children = innerMake(item as TreeNodeStr[])
         }
       }
       return resolvedTree

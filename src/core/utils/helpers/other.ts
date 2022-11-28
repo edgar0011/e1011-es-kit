@@ -24,7 +24,7 @@ export const debounce = (func: () => void, wait = 100, immediate = false): () =>
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const context: unknowns = this
+    const context: unknown = this
     const later = () => {
       clearTimeout(timeout)
       timeout = null
