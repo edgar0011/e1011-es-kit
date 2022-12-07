@@ -19,16 +19,16 @@
       "require": "./dist/lib/src/index.js"
     },
     "./hooks": {
-      "import": "./dist/hooks/esm/index.js",
-      "require": "./dist/hooks/index.js"
+      "import": "./dist/hooks/esm/src/core/hooks/index.js",
+      "require": "./dist/hooks/src/core/hooks/index.js"
     },
     "./utils": {
-      "import": "./dist/utils/esm/index.js",
-      "require": "./dist/utils/index.js"
+      "import": "./dist/utils/esm/src/core/utils/index.js",
+      "require": "./dist/utils/src/core/utils/index.js"
     },
     "./ui": {
-      "import": "./dist/ui/esm/index.js",
-      "require": "./dist/ui/index.js"
+      "import": "./dist/ui/esm/src/core/ui/index.js",
+      "require": "./dist/ui/src/core/ui/index.js"
     }
   },
   "scripts": {
