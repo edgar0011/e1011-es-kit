@@ -16,19 +16,23 @@
   "exports": {
     ".": {
       "import": "./dist/lib/esm/src/index.js",
-      "require": "./dist/lib/src/index.js"
+      "require": "./dist/lib/src/index.js",
+      "type": "./dist/types/src/index.d.ts"
     },
     "./hooks": {
       "import": "./dist/hooks/esm/src/core/hooks/index.js",
-      "require": "./dist/hooks/src/core/hooks/index.js"
+      "require": "./dist/hooks/src/core/hooks/index.js",
+      "types": "./dist/types/src/core/hooks/index.d.ts"
     },
     "./utils": {
       "import": "./dist/utils/esm/src/core/utils/index.js",
-      "require": "./dist/utils/src/core/utils/index.js"
+      "require": "./dist/utils/src/core/utils/index.js",
+      "types": "./dist/types/src/core/utils/index.d.ts"
     },
     "./ui": {
       "import": "./dist/ui/esm/src/core/ui/index.js",
-      "require": "./dist/ui/src/core/ui/index.js"
+      "require": "./dist/ui/src/core/ui/index.js",
+      "types": "./dist/types/src/core/ui/index.d.ts"
     }
   },
   "scripts": {
