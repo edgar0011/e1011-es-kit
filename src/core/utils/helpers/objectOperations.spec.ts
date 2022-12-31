@@ -39,7 +39,9 @@ describe('formatJsonString', () => {
   it('Should format object for graphql', () => {
     const g = { name: 'g', values: [1, 2, 3], meta: { context: undefined, wrapped: true, label: 'Data' } }
 
-    console.log(formatJsonString(g, null, 2, { graphQL: true }))
+    const expected = '{name: "g", values: [1,2,3], meta: {context: undefined, wrapped: true, label: "Data"}}'
+
+    expect(formatJsonString(g, null, 2, { graphQL: true })).toEqual(expected)
   })
 })
 
