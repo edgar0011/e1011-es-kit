@@ -8,7 +8,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/edgar0011/es-kit"
+    "url": "https://github.com/edgar0011/e1011-es-kit"
   },
   "files": [
     "dist/**"
