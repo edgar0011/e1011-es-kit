@@ -26,6 +26,7 @@ const commonConfig = {
     'ramda',
     'lodash-es',
     'i18next',
+    'core-js',
     'react-i18next',
     'styled-components',
     'sanitize-html',

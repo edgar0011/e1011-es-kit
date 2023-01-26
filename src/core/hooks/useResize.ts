@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useMemo, useState, useRef } from 'react'
+import { MutableRefObject, useLayoutEffect, useMemo, useState, useRef } from 'react'
 import debounce from 'lodash-es/debounce'
 
 type WrapperSize = {width: undefined | number; height: undefined | number}
@@ -34,7 +34,7 @@ export const useResize = (debounceDelay = 250): [
     })
   }, debounceDelay), [containerRef, debounceDelay])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let resizeObserver: ResizeObserver
     let containerElement: HTMLElement
 

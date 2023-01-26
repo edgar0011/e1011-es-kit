@@ -75,3 +75,14 @@ export const FlexTight = memo(styled(Flex).attrs((props: Partial<FlexProps>) => 
   width: 'initial',
   ...props,
 }))``)
+
+export const FlexTightStyled = memo(styled(Flex).attrs((props: Partial<FlexProps>) => ({
+  size: 'unset',
+  width: 'initial',
+  style: {
+    text: 'blue',
+    padding: '1rem',
+    border: '1px solid green',
+  },
+  ...props,
+}))``)
