@@ -107,7 +107,18 @@
     "i18next": "^21.6.14",
     "lodash-es": "^4.17.21",
     "ramda": "^0.27.1",
-    "react": "^17.0.2",
+    "react": "^17.0.2 || ^18.2.0",
+    "react-i18next": "^11.16.2",
+    "sanitize-html": "^2.6.1",
+    "styled-components": "^5.3.3"
+  },
+  "peerDdependencies": {
+    "core-js": "^3.20.2",
+    "dayjs": "^1.10.7",
+    "i18next": "^21.6.14",
+    "lodash-es": "^4.17.21",
+    "ramda": "^0.27.1",
+    "react": "^17.0.2 || ^18.2.0",
     "react-i18next": "^11.16.2",
     "sanitize-html": "^2.6.1",
     "styled-components": "^5.3.3"
