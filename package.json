@@ -16,7 +16,7 @@
   "exports": {
     ".": {
       "import": "./dist/lib/esm/src/index.js",
-      "require": "./dist/lib/src/index.js",
+      "require": "./dist/lib/cjs/src/index.js",
       "types": "./dist/types/src/index.d.ts"
     },
     "./hooks": {
