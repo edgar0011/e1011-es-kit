@@ -25,6 +25,7 @@ const commonConfig = {
     'react',
     'ramda',
     'lodash-es',
+    'dayjs',
     'i18next',
     'core-js',
     'react-i18next',
