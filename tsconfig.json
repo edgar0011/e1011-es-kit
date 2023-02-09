@@ -18,7 +18,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": false,
-    "noEmit": true,
+    "noEmit": false,
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
