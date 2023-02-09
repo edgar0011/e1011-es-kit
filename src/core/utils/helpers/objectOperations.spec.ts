@@ -1,5 +1,5 @@
 import { delay } from './other'
-import { duplicatesInArray, formatJsonString, chunkArray, arrayToObjectTree } from './objectOperations'
+import { duplicatesInArray, formatJsonString, chunkArray, arrayToObjectTree, TreeNodeStr } from './objectOperations'
 
 describe('Should find duplicates in array', () => {
   it('Should find duplicates in array', () => {
@@ -33,7 +33,7 @@ describe('formatJsonString', () => {
 
     expect(formatJsonString(g)).toEqual(JSON.stringify(g))
 
-    expect(formatJsonString(g, null, 2)).toEqual(JSON.stringify(g, null, 2))
+    expect(formatJsonString(g, undefined, 2)).toEqual(JSON.stringify(g, null, 2))
   })
 
   it('Should format object for graphql', () => {
@@ -41,7 +41,7 @@ describe('formatJsonString', () => {
 
     const expected = '{name: "g", values: [1,2,3], meta: {context: undefined, wrapped: true, label: "Data"}}'
 
-    expect(formatJsonString(g, null, 2, { graphQL: true })).toEqual(expected)
+    expect(formatJsonString(g, undefined, 2, { graphQL: true })).toEqual(expected)
   })
 })
 
@@ -61,15 +61,15 @@ describe('arrayToObjectTree', () => {
   it('Should create tree object from array', () => {
     const data = ['app', ['user', 'dashboard', ['ui', ['header', 'footer', 'menu'], 'realTime']]]
 
-    const tree = arrayToObjectTree(data)
+    const tree = arrayToObjectTree(data as TreeNodeStr[])
 
     console.log('arrayToObjectTree, tree:', JSON.stringify(tree, null, 2))
     expect(tree.app).toBeDefined()
-    expect(tree.app.children.user).toBeDefined()
-    expect(tree.app.children.dashboard).toBeDefined()
-    expect(tree.app.children.ui).toBeDefined()
-    expect(tree.app.children.ui.children.menu).toBeDefined()
-    expect(tree.app.children.realTime).toBeDefined()
+    expect(tree.app.children!.user).toBeDefined()
+    expect(tree.app.children!.dashboard).toBeDefined()
+    expect(tree.app.children!.ui).toBeDefined()
+    expect(tree.app.children!.ui.children!.menu).toBeDefined()
+    expect(tree.app.children!.realTime).toBeDefined()
   })
 
   it('Should create tree object from array, complex', () => {
@@ -79,14 +79,14 @@ describe('arrayToObjectTree', () => {
         'ui', [
           'header', 'footer', 'menu'], ['realTime', ['socket1', 'socket2']]]]]
 
-    const tree = arrayToObjectTree(data)
+    const tree = arrayToObjectTree(data as TreeNodeStr[])
 
     console.log('arrayToObjectTree, tree:', JSON.stringify(tree, null, 2))
     expect(tree.app).toBeDefined()
-    expect(tree.app.children.user).toBeDefined()
-    expect(tree.app.children.dashboard).toBeDefined()
-    expect(tree.app.children.ui).toBeDefined()
-    expect(tree.app.children.ui.children.menu).toBeDefined()
-    expect(tree.app.children.realTime).toBeDefined()
+    expect(tree.app.children!.user).toBeDefined()
+    expect(tree.app.children!.dashboard).toBeDefined()
+    expect(tree.app.children!.ui).toBeDefined()
+    expect(tree.app.children!.ui.children!.menu).toBeDefined()
+    expect(tree.app.children!.realTime).toBeDefined()
   })
 })

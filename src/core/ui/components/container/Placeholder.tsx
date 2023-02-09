@@ -1,4 +1,4 @@
-import React, { FC, memo, PropsWithChildren } from 'react'
+import { FC, memo, PropsWithChildren } from 'react'
 
 import { FlexWrapper, FlexProps } from './Flex'
 

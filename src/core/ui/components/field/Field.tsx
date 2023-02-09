@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { FC, ReactNode, memo, useMemo, useCallback } from 'react'
+import { FC, ReactNode, memo, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
 
 import type { FieldError, IconComponentType } from './types'

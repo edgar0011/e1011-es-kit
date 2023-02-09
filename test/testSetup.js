@@ -1,4 +1,4 @@
-import 'reflect-metadata'
+// import 'reflect-metadata'
 // import React from 'react'
 // import { JSDOM } from 'jsdom'
 
@@ -13,6 +13,9 @@ import 'reflect-metadata'
 // global.window = jsdomWin
 // global.React = React
 // window.location.hash = '#/'
+// global.HTMLElement = jsdomWin.HTMLElement
+
+
 
 // // Jest, Enzyme, Snapshots
 

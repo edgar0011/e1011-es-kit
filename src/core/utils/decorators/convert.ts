@@ -2,6 +2,17 @@ type Target = string | number | unknown
 type Decorator = (
   target: Target, name: string, descriptor: TypedPropertyDescriptor<any>) => TypedPropertyDescriptor<any>
 
+
+
+export const logger = <TClass>(
+  clazz: TClass,
+): TClass => {
+  console.log('logger, target', clazz)
+  return clazz
+}
+
+
+
 export const convertor = (
   target: Target, name: string, descriptor: TypedPropertyDescriptor<any>,
 ): TypedPropertyDescriptor<any> => {
@@ -36,6 +47,7 @@ export const converting
   }
   return descriptor
 }
+@logger<typeof Model>
 export class Model {
   name = 'Model'
 

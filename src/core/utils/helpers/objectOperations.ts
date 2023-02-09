@@ -25,7 +25,10 @@ type Options = {
 }
 
 export const formatJsonString = (
-  value: any, replacer?: Replacer, space?: string | number | undefined, { graphQL, ...options }: Options = {},
+  value: any,
+  replacer?: Replacer | undefined,
+  space?: string | number | undefined,
+  { graphQL, ...options }: Options = {},
 ): string => {
   if (!graphQL) {
     return JSON.stringify(value, replacer, space)
@@ -69,7 +72,7 @@ export const chunkArray = (dataArray: any[], chunkSize = 100): (any[])[] => {
   return result
 }
 
-type TreeNodeStr = (string | TreeNodeStr)[]
+export type TreeNodeStr = (string | TreeNodeStr)[]
 
 type TreeNode = {
   name: string

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { memo, FC } from 'react'
+import { memo, FC } from 'react'
 import styled from 'styled-components'
 
 const lineGrayColor = '#999999'

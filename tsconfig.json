@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2020",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext",
+      "es2020",
       "es6"
     ],
     "allowJs": true,
@@ -13,16 +14,17 @@
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
-    "module": "commonjs",
+    "module": "es2020",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": false,
-    "noEmit": false,
+    "noEmit": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "baseUrl": "./src",
-    "rootDir": ".",
+    "rootDir": "./",
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
@@ -32,6 +34,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
+    "incremental": true,
   },
   "exclude": [
     "node_modules",

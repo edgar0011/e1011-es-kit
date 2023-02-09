@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState, memo, ReactNode, useEffect } from 'react'
+import { FC, useRef, useState, memo, ReactNode, useEffect } from 'react'
 import styled from 'styled-components'
 
 type StyledContainerProps = { propName: string; className: string; [key: string]: any }
