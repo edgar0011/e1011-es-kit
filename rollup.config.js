@@ -1,7 +1,9 @@
-import babelPlugin from 'rollup-plugin-babel'
-import resolvePlugin from 'rollup-plugin-node-resolve'
-import commonjsPlugin from 'rollup-plugin-commonjs'
-import jsonPlugin from 'rollup-plugin-json'
+import babelPlugin from '@rollup/plugin-babel'
+import resolvePlugin from '@rollup/plugin-node-resolve'
+import commonjsPlugin from '@rollup/plugin-commonjs'
+import jsonPlugin from '@rollup/plugin-json'
+import postcss from 'rollup-plugin-postcss'
+import terserPlugin from '@rollup/plugin-terser'
 
 // import pkg from './package.json'
 
@@ -12,6 +14,11 @@ const commonConfig = {
     resolvePlugin({
       extensions,
     }),
+    postcss({
+      extract: true,
+      modules: true,
+      use: ['sass'],
+    }),
     babelPlugin({
       extensions,
       exclude: [
@@ -20,6 +27,7 @@ const commonConfig = {
     }),
     jsonPlugin(),
     commonjsPlugin(),
+    terserPlugin(),
   ],
   external: [
     'react',

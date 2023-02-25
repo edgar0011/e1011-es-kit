@@ -1,0 +1,24 @@
+.flexible-box {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  flex: 0 1 auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  flex-wrap: nowrap;
+  gap: 0;
+  text-align: left;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-self: auto;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  min-width: 0;
+  min-height: 0;
+  border-radius: initial;
+}

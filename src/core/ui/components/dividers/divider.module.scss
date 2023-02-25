@@ -1,0 +1,19 @@
+.divider-line {
+  position:relative;
+  display:block;
+  &.vertical {
+    height: var(--length);
+    left: var(--left);
+    width: var(--width);
+    margin: var(--margin);
+  }
+  &.horizontal {
+    width: var(--length);
+    left: var(--left);
+    height: var(--height);
+    margin: var(--margin);
+  }
+  transition: opacity, width, height 250ms ease-in-out;
+  background-color: var(--color);
+  opacity: var(--opacity);
+}
