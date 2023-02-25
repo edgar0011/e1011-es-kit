@@ -9,10 +9,11 @@ type IconBaseType = PropsWithChildren<any> & {
   width?: string
   height?: string
   color?: string
+  className?: string
 }
 
 export const IconBase = memo<IconBaseType>(({
-  iconUrl, minWidth = '1rem', minHeight = '1rem', width, height, color = 'currentColor',
+  iconUrl, minWidth = '1rem', minHeight = '1rem', width, height, color = 'currentColor', className,
 }: IconBaseType) => {
   const styles = useMemo(() => (
     {
@@ -26,7 +27,10 @@ export const IconBase = memo<IconBaseType>(({
   ), [minWidth, minHeight, width, height, iconUrl, color])
 
   return (
-    <span className={`${classes['icon-base']} icon-base`} style={styles as CSSProperties} />
+    <span
+      className={`${(classes as any)['icon-base']} icon-base ${className}`}
+      style={styles as CSSProperties}
+    />
   )
 })
 

@@ -13,6 +13,7 @@ type DividerProps = {
   left?: string
   width?: string
   height?: string
+  className?: string
 }
 
 export const DividerLine: FC<DividerProps> = memo<DividerProps>(({
@@ -22,6 +23,7 @@ export const DividerLine: FC<DividerProps> = memo<DividerProps>(({
   length = '80%', left = '0',
   width = '1px', height = '1px',
   margin,
+  className,
 }: DividerProps) => {
   const isVertical = useMemo(() => orientation === 'vertical' || vertical === true, [orientation, vertical])
 
@@ -40,7 +42,10 @@ export const DividerLine: FC<DividerProps> = memo<DividerProps>(({
   const verHorClass = isVertical ? classes.vertical : classes.horizontal
 
   return (
-    <div className={`${classes['divider-line']} ${verHorClass}`} style={styles as CSSProperties} />
+    <div
+      className={`${(classes as any)['divider-line']} ${verHorClass} ${className}`}
+      style={styles as CSSProperties}
+    />
   )
 })
 

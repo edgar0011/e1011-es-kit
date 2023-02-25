@@ -27,6 +27,7 @@ export type FBoxProps = PropsWithChildren<any> &{
   css?: string
   borderRadius?: string
   style?: CSSProperties
+  className?: string
 }
 
 const flexValueMap: Record<string, string> = {
@@ -40,7 +41,7 @@ const resolveFlexProps = (value?: string): string | undefined => (value ? (flexV
 
 
 const FBoxRefForwarded = forwardRef(({
-  style, children, ...props
+  style, children, className, ...props
 }: FBoxProps, ref: LegacyRef<HTMLDivElement> | undefined) => {
   const styles = useMemo(() => (
     {
@@ -53,7 +54,13 @@ const FBoxRefForwarded = forwardRef(({
   ), [props, style])
 
   return (
-    <div ref={ref} className={(classes as any)['flexible-box']} style={styles as CSSProperties}>{children}</div>
+    <div
+      ref={ref}
+      className={`${(classes as any)['flexible-box']} ${className}`}
+      style={styles as CSSProperties}
+    >
+      {children}
+    </div>
   )
 })
 
