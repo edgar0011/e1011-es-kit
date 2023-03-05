@@ -47,7 +47,7 @@
     "lint": "eslint src --ext js,jsx,ts,tsx",
     "lint:quiet": "eslint src --ext js,jsx,ts,tsx --quiet",
     "lint:quiet:watch": "nodemon --watch './src/**/*' --exec yarn lint:ts:quiet",
-    "lint:fix": "yarn lint --fix",
+    "lint:fix": "yarn lint -- --fix",
     "test": "jest ./src --verbose",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
