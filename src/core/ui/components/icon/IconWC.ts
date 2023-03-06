@@ -1,12 +1,24 @@
-import { ced } from '../../../utils/web-components/coreElements/coreElements'
+import { ced, resolveAttributes } from '../../../utils/webComponents/webComponent.utils'
 
 import classes from './icon.module.scss'
+
 
 
 const template = document.createElement('template')
 
 template.innerHTML = '<span class="icon-base"></span>'
 
+export type IconBaseWCType = {
+  iconUrl?: string
+  minWidth?: string
+  minHeight?: string
+  width?: string
+  height?: string
+  size?: string
+  fontSize?: string
+  color?: string
+  className?: string
+}
 
 @ced('icon-base')
 export default class IconBase extends HTMLElement {
@@ -26,10 +38,12 @@ export default class IconBase extends HTMLElement {
 
   size?: string | null
 
+  fontSize?: string | null
+
   color?: string | null
 
   static get observedAttributes() {
-    return ['iconUrl', 'minWidth', 'minHeight', 'width', 'height', 'size', 'color', 'className']
+    return ['iconUrl', 'minWidth', 'minHeight', 'width', 'height', 'size', 'fontSize', 'color', 'className']
   }
 
   connectedCallback() {
@@ -39,14 +53,7 @@ export default class IconBase extends HTMLElement {
 
     this.innerHTML = template.innerHTML
 
-    this.iconUrl = this.iconUrl || this.getAttribute('iconUrl')
-    this.minWidth = this.minWidth || this.getAttribute('minWidth')
-    this.minHeight = this.minHeight || this.getAttribute('minHeight')
-    this.width = this.width || this.getAttribute('width')
-    this.height = this.height || this.getAttribute('height')
-    this.size = this.size || this.getAttribute('size')
-    this.color = this.color || this.getAttribute('color')
-    this.className = (this.className || this.getAttribute('className')) as string
+    resolveAttributes(this, IconBase.observedAttributes)
 
     this.render()
   }
@@ -71,15 +78,15 @@ export default class IconBase extends HTMLElement {
     if (!this.mainElement) {
       return
     }
-
+    this.classList.add(classes['icon-base-parent'])
     this.mainElement.classList.add(classes['icon-base'])
 
     const styles = {
-      '--min-width': this.minWidth || 'unset',
-      '--min-height': this.minHeight || 'unset',
+      '--min-width': Math.min(Number(this.minWidth), Number(this.size || this.width)) || 'unset',
+      '--min-height': Math.min(Number(this.minHeight), Number(this.size || this.height)) || 'unset',
       '--width': this.size || this.width || 'unset',
       '--height': this.size || this.height || 'unset',
-      ...(this.size ? { 'font-size': this.size || 'unset' } : {}),
+      ...(this.fontSize ? { 'font-size': this.fontSize || 'unset' } : {}),
       ...(this.iconUrl ? { '--icon-url': `url(${this.iconUrl})` } : {}),
       ...(this.iconUrl ? { '--icon-color': this.color } : { '--icon-content-color': this.color }),
     }

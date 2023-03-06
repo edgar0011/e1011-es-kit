@@ -2,31 +2,33 @@ import { CSSProperties, memo, useMemo, PropsWithChildren } from 'react'
 
 import classes from './icon.module.scss'
 
-type IconBaseType = PropsWithChildren<any> & {
+export type IconBaseType = PropsWithChildren<any> & {
   iconUrl?: string
   minWidth?: string
   minHeight?: string
   width?: string
   height?: string
   size?: string
+  fontSize?: string
   color?: string
   className?: string
 }
 
 export const IconBase = memo<IconBaseType>(({
-  iconUrl, minWidth = '1rem', minHeight = '1rem', size, width, height, color = 'currentColor', className = '', children,
+  iconUrl, minWidth = '1rem', minHeight = '1rem',
+  size, fontSize, width, height, color = 'currentColor', className = '', children,
 }: IconBaseType) => {
   const styles = useMemo(() => (
     {
-      '--min-width': minWidth,
-      '--min-height': minHeight,
+      '--min-width': Math.min(minWidth, size || width),
+      '--min-height': Math.min(minHeight, size || height),
       '--width': size || width,
       '--height': size || height,
-      ...(size ? { fontSize: size } : {}),
+      ...(fontSize ? { fontSize } : {}),
       ...(iconUrl ? { '--icon-url': `url(${iconUrl})` } : {}),
       ...(iconUrl ? { '--icon-color': color } : { '--icon-content-color': color }),
     }
-  ), [minWidth, minHeight, size, width, height, iconUrl, color])
+  ), [minWidth, minHeight, size, width, height, fontSize, iconUrl, color])
 
   return (
     <span

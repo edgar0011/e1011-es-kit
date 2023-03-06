@@ -1,4 +1,4 @@
-import { ced } from './coreElements'
+import { ced } from './webComponent.utils'
 
 @ced('custom-title')
 export class CustomTitle extends HTMLElement {

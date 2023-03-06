@@ -1,8 +1,12 @@
+.icon-base-parent {
+  line-height: 1px !important;
+}
 .icon-base {
   min-width: var(--min-width);
-  min-height: var(--min-width);
-  width: var(--height);
-  height: var(--width);
+  min-height: var(--min-height);
+  width: var(--width);
+  height: var(--height);
+  line-height: var(--height);
   background-color: var(--icon-color);
   color: var(--icon-content-color);
 
