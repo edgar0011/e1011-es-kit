@@ -41,7 +41,7 @@ const resolveFlexProps = (value?: string): string | undefined => (value ? (flexV
 
 
 const FBoxRefForwarded = forwardRef(({
-  style, children, className, ...props
+  style, children, className = '', ...props
 }: FBoxProps, ref: LegacyRef<HTMLDivElement> | undefined) => {
   const styles = useMemo(() => (
     {
