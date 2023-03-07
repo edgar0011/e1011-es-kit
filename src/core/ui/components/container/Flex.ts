@@ -71,13 +71,11 @@ export const FlexWrapper = memo(styled(Flex).attrs((props: Partial<FlexProps>) =
 ))``)
 
 export const FlexTight = memo(styled(Flex).attrs((props: Partial<FlexProps>) => ({
-  size: 'unset',
   width: 'initial',
   ...props,
 }))``)
 
 export const FlexTightStyled = memo(styled(Flex).attrs((props: Partial<FlexProps>) => ({
-  size: 'unset',
   width: 'initial',
   style: {
     text: 'blue',

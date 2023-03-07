@@ -2,9 +2,9 @@
   display: flex;
   position: relative;
   flex-direction: row;
-  flex: 0 1 auto;
-  flex-grow: 1;
-  flex-shrink: 1;
+  flex: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
   flex-basis: auto;
   flex-wrap: nowrap;
   gap: 0;
