@@ -1,16 +1,16 @@
 import { MutableRefObject, useLayoutEffect, useMemo, useState, useRef } from 'react'
 import debounce from 'lodash-es/debounce'
 
-type WrapperSize = {width: undefined | number; height: undefined | number}
+export type WrapperSize = {width: undefined | number; height: undefined | number}
 
 // const DefaultUnobserver = () => null
 
 type Unobserver = () => (null | void)
 
-type CallBack = () => void
+export type UseResizeCallBack = (wrapperSize: WrapperSize) => void
 
 // eslint-disable-next-line default-param-last
-export const useResize = (debounceDelay = 250, callBack?: CallBack): [
+export const useResize = (debounceDelay = 250, callBack?: UseResizeCallBack): [
   MutableRefObject<HTMLElement | null | undefined>, WrapperSize, Unobserver | undefined] => {
   const [containerSize, setContainerSize]
     = useState<WrapperSize>({ width: undefined, height: undefined })
