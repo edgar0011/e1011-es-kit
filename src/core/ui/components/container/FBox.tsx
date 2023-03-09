@@ -45,11 +45,11 @@ const FBoxRefForwarded = forwardRef(({
 }: FBoxProps, ref: LegacyRef<HTMLDivElement> | undefined) => {
   const styles = useMemo(() => (
     {
-      ...style,
       ...props,
       ...(props.align ? { alignItems: resolveFlexProps(props.align) } : {}),
       ...(props.justify ? { justifyContent: resolveFlexProps(props.justify) } : {}),
       ...(props.direction ? { flexDirection: props.direction } : {}),
+      ...style,
     }
   ), [props, style])
 
