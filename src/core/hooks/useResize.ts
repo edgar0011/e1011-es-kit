@@ -7,15 +7,16 @@ type WrapperSize = {width: undefined | number; height: undefined | number}
 
 type Unobserver = () => (null | void)
 
-export const useResize = (debounceDelay = 250): [
+type CallBack = () => void
+
+// eslint-disable-next-line default-param-last
+export const useResize = (debounceDelay = 250, callBack?: CallBack): [
   MutableRefObject<HTMLElement | null | undefined>, WrapperSize, Unobserver | undefined] => {
   const [containerSize, setContainerSize]
-  = useState<WrapperSize>({ width: undefined, height: undefined })
+    = useState<WrapperSize>({ width: undefined, height: undefined })
 
   const lastResizeWidthRef = useRef<WrapperSize>({ width: 0, height: 0 })
   const containerRef: MutableRefObject<HTMLElement | undefined | null> = useRef<HTMLElement | undefined | null>()
-
-  // const [unobserver, setUnobserver] = useState<Unobserver>(DefaultUnobserver)
   const unobserverRef = useRef<Unobserver>()
 
   const debouncedResizeWrapper = useMemo(() => debounce((entries) => {
@@ -28,11 +29,12 @@ export const useResize = (debounceDelay = 250): [
     }
     lastResizeWidthRef.current = { width: newResizeWidth, height: newResizeHeight }
 
-    setContainerSize({
+    // eslint-disable-next-line semi-style
+    ;(callBack || setContainerSize)({
       width: containerRef?.current?.clientWidth,
       height: containerRef?.current?.clientHeight,
     })
-  }, debounceDelay), [containerRef, debounceDelay])
+  }, debounceDelay), [callBack, debounceDelay])
 
   useLayoutEffect(() => {
     let resizeObserver: ResizeObserver
@@ -43,7 +45,8 @@ export const useResize = (debounceDelay = 250): [
       resizeObserver = new ResizeObserver(debouncedResizeWrapper)
       resizeObserver.observe(containerElement as Element)
 
-      setContainerSize({
+      // eslint-disable-next-line semi-style
+      ;(callBack || setContainerSize)({
         width: containerRef?.current?.clientWidth,
         height: containerRef?.current?.clientHeight,
       })
@@ -56,7 +59,7 @@ export const useResize = (debounceDelay = 250): [
     unobserverRef.current = unobserver
 
     return unobserver
-  }, [debouncedResizeWrapper, containerRef])
+  }, [debouncedResizeWrapper, containerRef, callBack])
 
   return [containerRef, containerSize, unobserverRef.current]
 }

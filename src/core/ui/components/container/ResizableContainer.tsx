@@ -1,12 +1,12 @@
-import { memo, useState, useRef, useMemo, useEffect, RefObject, PropsWithChildren } from 'react'
+import { memo, useState, useRef, useMemo, useLayoutEffect, RefObject, PropsWithChildren } from 'react'
 import debounce from 'lodash-es/debounce'
 
 import { FBox, FBoxProps } from './FBox'
 
 
-
-
-export type ResizableContainerProps = FBoxProps & PropsWithChildren<any>
+export type ResizableContainerProps = FBoxProps & PropsWithChildren<any> & {
+  debounceDelay?: number
+}
 
 export type ResizableContainerRenderProps = {
   width: number | string
@@ -32,7 +32,7 @@ const styles = {
 }
 
 export const ResizableContainer = memo<ResizableContainerProps>(
-  ({ children, ...props }: ResizableContainerProps) => {
+  ({ children, debounceDelay = 250, ...props }: ResizableContainerProps) => {
     const containerRef = useRef<HTMLDivElement>()
 
     const lastResizeWidthRef = useRef<{ width: number; height: number }>({ width: 0, height: 0 })
@@ -54,9 +54,9 @@ export const ResizableContainer = memo<ResizableContainerProps>(
         width: containerRef?.current?.clientWidth,
         height: containerRef?.current?.clientHeight,
       })
-    }, 250), [])
+    }, debounceDelay), [debounceDelay])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       let resizeObserver: ResizeObserver
       let containerElement: HTMLElement
 
@@ -64,6 +64,11 @@ export const ResizableContainer = memo<ResizableContainerProps>(
         containerElement = containerRef?.current
         resizeObserver = new ResizeObserver(debouncedResizeWrapper)
         resizeObserver.observe(containerElement as Element)
+
+        setContainerSize({
+          width: containerRef?.current?.clientWidth,
+          height: containerRef?.current?.clientHeight,
+        })
       }
       return () => {
         resizeObserver?.unobserve?.(containerElement as Element)
@@ -71,8 +76,6 @@ export const ResizableContainer = memo<ResizableContainerProps>(
     }, [debouncedResizeWrapper, containerRef])
 
     // END RESIZING
-
-    console.log('containerSize', containerSize)
 
     return (
       <FBox
