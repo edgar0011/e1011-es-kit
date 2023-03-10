@@ -38,7 +38,8 @@
   },
   "exclude": [
     "node_modules",
-    "**/*.spec.*"
+    "**/*.spec.*",
+    "**/*.test.*",
   ],
   "typeRoots": ["./node_modules/@types", "./types"],
   "include": [

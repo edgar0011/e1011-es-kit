@@ -1,4 +1,4 @@
-import { memo, PropsWithChildren, useMemo, CSSProperties, forwardRef, LegacyRef } from 'react'
+import { memo, FC, PropsWithChildren, useMemo, CSSProperties, forwardRef, LegacyRef } from 'react'
 
 
 import classes from './fbox.module.scss'
@@ -43,15 +43,30 @@ const resolveFlexProps = (value?: string): string | undefined => (value ? (flexV
 const FBoxRefForwarded = forwardRef(({
   style, children, tabIndex, className = '', ...props
 }: FBoxProps, ref: LegacyRef<HTMLDivElement> | undefined) => {
+  const [restProps, cssProps] = useMemo(() => {
+    const restProps: Record<string, unknown> = {}
+    const cssProps: Record<string, unknown> = {}
+
+    Object.entries(props).forEach(([key, value]) => {
+      console.log('key', key, 'value', value)
+      if (key.substr(0, 4) === 'data') {
+        restProps[key] = value
+      } else {
+        cssProps[key] = value
+      }
+    })
+    return [restProps, cssProps]
+  }, [props])
+
   const styles = useMemo(() => (
     {
-      ...props,
-      ...(props.align ? { alignItems: resolveFlexProps(props.align) } : {}),
-      ...(props.justify ? { justifyContent: resolveFlexProps(props.justify) } : {}),
-      ...(props.direction ? { flexDirection: props.direction } : {}),
+      ...cssProps,
+      ...(cssProps.align ? { alignItems: resolveFlexProps(cssProps.align as string) } : {}),
+      ...(cssProps.justify ? { justifyContent: resolveFlexProps(cssProps.justify as string) } : {}),
+      ...(cssProps.direction ? { flexDirection: cssProps.direction } : {}),
       ...style,
     }
-  ), [props, style])
+  ), [cssProps, style])
 
   return (
     <div
@@ -59,6 +74,7 @@ const FBoxRefForwarded = forwardRef(({
       tabIndex={tabIndex}
       className={`${(classes as any)['flexible-box']} ${className}`}
       style={styles as CSSProperties}
+      {...restProps}
     >
       {children}
     </div>
@@ -67,7 +83,7 @@ const FBoxRefForwarded = forwardRef(({
 
 FBoxRefForwarded.displayName = 'FBoxRefForwarded'
 
-export const FBox = memo<FBoxProps>(FBoxRefForwarded)
+export const FBox: FC<FBoxProps> = memo<FBoxProps>(FBoxRefForwarded)
 
 
 FBox.displayName = 'FBox'

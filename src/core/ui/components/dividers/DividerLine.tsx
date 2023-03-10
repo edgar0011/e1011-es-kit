@@ -23,7 +23,7 @@ export const DividerLine: FC<DividerProps> = memo<DividerProps>(({
   length = '80%', left = '0',
   width = '1px', height = '1px',
   margin,
-  className,
+  className = '',
 }: DividerProps) => {
   const isVertical = useMemo(() => orientation === 'vertical' || vertical === true, [orientation, vertical])
 
