@@ -28,7 +28,7 @@ export type FBoxProps = PropsWithChildren<any> &{
   borderRadius?: string
   style?: CSSProperties
   className?: string
-}
+} & CSSProperties
 
 const flexValueMap: Record<string, string> = {
   start: 'flex-start',
@@ -48,7 +48,6 @@ const FBoxRefForwarded = forwardRef(({
     const cssProps: Record<string, unknown> = {}
 
     Object.entries(props).forEach(([key, value]) => {
-      console.log('key', key, 'value', value)
       if (key.substr(0, 4) === 'data') {
         restProps[key] = value
       } else {

@@ -65,7 +65,6 @@ export default class IconBase extends HTMLElement {
         this.classList.remove(this.className)
         this.classList.add(this.className)
       }
-      return
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -82,10 +81,10 @@ export default class IconBase extends HTMLElement {
     this.mainElement.classList.add(classes['icon-base'])
 
     const styles = {
-      '--min-width': Math.min(Number(this.minWidth), Number(this.size || this.width)) || 'unset',
-      '--min-height': Math.min(Number(this.minHeight), Number(this.size || this.height)) || 'unset',
-      '--width': this.size || this.width || 'unset',
-      '--height': this.size || this.height || 'unset',
+      '--min-width': this.minWidth || 'auto',
+      '--min-height': this.minHeight || 'auto',
+      '--width': this.size || this.width,
+      '--height': this.size || this.height,
       ...(this.fontSize ? { 'font-size': this.fontSize || 'unset' } : {}),
       ...(this.iconUrl ? { '--icon-url': `url(${this.iconUrl})` } : {}),
       ...(this.iconUrl ? { '--icon-color': this.color } : { '--icon-content-color': this.color }),

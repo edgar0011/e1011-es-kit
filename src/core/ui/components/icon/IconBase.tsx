@@ -15,13 +15,13 @@ export type IconBaseType = PropsWithChildren<any> & {
 }
 
 export const IconBase = memo<IconBaseType>(({
-  iconUrl, minWidth = '1rem', minHeight = '1rem',
-  size, fontSize, width, height, color = 'currentColor', className = '', children,
+  iconUrl, minWidth = '1rem', minHeight = '1rem', size,
+  fontSize, width, height, color = 'currentColor', className = '', children,
 }: IconBaseType) => {
   const styles = useMemo(() => (
     {
-      '--min-width': Math.min(minWidth, size || width),
-      '--min-height': Math.min(minHeight, size || height),
+      '--min-width': minWidth || 'auto',
+      '--min-height': minHeight || 'auto',
       '--width': size || width,
       '--height': size || height,
       ...(fontSize ? { fontSize } : {}),

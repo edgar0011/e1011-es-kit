@@ -59,6 +59,36 @@ export const formatObj = (
   ? Object.entries(obj).map(([key, value]) => `${mapKey(key)}: ${mapValue(value)}`).join(delimiter)
   : '')
 
+
+export const formatObj2 = (
+  obj: Record<string, string | number>,
+  delimiter = ', ',
+  mapValue: ((value: string | number) => string) = simpleIdentiy,
+  mapKey: ((value: string | number) => string) = simpleIdentiy,
+): string => {
+  if (typeof obj === 'object' && Array.isArray(obj)) {
+    return obj
+      .map((objValue) => formatObj2(objValue, delimiter, mapValue, mapKey))
+      .join(delimiter)
+  }
+
+  if (typeof obj === 'object') {
+    return Object.entries(obj)
+      .map(([key, value]) => {
+        const mappedKey = mapKey(key)
+        const mappedValue = mapValue(typeof value === 'object' ? formatObj2(value) : value)
+
+        return `${mappedKey ? `${mappedKey}: ` : ''}${mappedValue}`
+      })
+      .join(delimiter)
+  }
+  return ''
+}
+
+
+
+
+
 export const chunkArray = (dataArray: any[], chunkSize = 100): (any[])[] => {
   const result = []
 
