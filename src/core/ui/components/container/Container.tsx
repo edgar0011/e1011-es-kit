@@ -39,7 +39,7 @@ export type ContainerProps = {
   css?: string
 }
 export const Container: FC<ContainerProps> = memo(({
-  collapsed = false, collapseHandler, children, propName = 'height', className, css,
+  collapsed = false, collapseHandler, children, propName = 'height', className, css, ...props
 }: ContainerProps) => {
   const containerRef = useRef<HTMLDivElement>()
   const [contentProp, setContentProp] = useState(0)
@@ -70,6 +70,7 @@ export const Container: FC<ContainerProps> = memo(({
       contentProp={contentProp}
       propName={propName}
       css={css}
+      {...props}
     >
       {children}
     </StyledContainer>
