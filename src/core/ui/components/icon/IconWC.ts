@@ -3,7 +3,6 @@ import { ced, resolveAttributes } from '../../../utils/webComponents/webComponen
 import classes from './icon.module.scss'
 
 
-
 const template = document.createElement('template')
 
 template.innerHTML = '<span class="icon-base"></span>'
@@ -81,8 +80,8 @@ export default class IconBase extends HTMLElement {
     this.mainElement.classList.add(classes['icon-base'])
 
     const styles = {
-      '--min-width': this.minWidth || 'auto',
-      '--min-height': this.minHeight || 'auto',
+      '--min-width': this.minWidth || this.size || this.width || 'auto',
+      '--min-height': this.minHeight || this.size || this.height || 'auto',
       '--width': this.size || this.width,
       '--height': this.size || this.height,
       ...(this.fontSize ? { 'font-size': this.fontSize || 'unset' } : {}),
