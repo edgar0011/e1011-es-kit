@@ -1,6 +1,6 @@
-import classes from './icon.module.scss'
+import { ced, resolveAttributes } from '../../../utils/webComponents/webComponent.utils'
 
-import { ced, resolveAttributes } from 'core/utils'
+import classes from './icon.module.scss'
 
 const template = document.createElement('template')
 
