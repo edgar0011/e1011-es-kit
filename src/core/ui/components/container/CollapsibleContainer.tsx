@@ -13,7 +13,8 @@ export type CollapsibleContainerProps = {
   children?: ReactNode
   className?: string
   horizontal?: boolean
-}
+} & CSSProperties
+
 export const CollapsibleContainer: FC<CollapsibleContainerProps> = memo(({
   collapsed = false, collapseHandler, children, horizontal = false, className = '', ...style
 }: CollapsibleContainerProps) => {
