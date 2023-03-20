@@ -1,5 +1,6 @@
 export * from './FBox'
 export * from './Flex'
 export * from './Placeholder'
-export * from './Container'
+export * from './CollapsibleContainerS'
+export * from './CollapsibleContainer'
 export * from './ResizableContainer'

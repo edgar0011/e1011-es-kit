@@ -38,7 +38,7 @@ export type ContainerProps = {
   className?: string
   css?: string
 }
-export const Container: FC<ContainerProps> = memo(({
+export const ContainerS: FC<ContainerProps> = memo(({
   collapsed = false, collapseHandler, children, propName = 'height', className, css, ...props
 }: ContainerProps) => {
   const containerRef = useRef<HTMLDivElement>()
@@ -77,4 +77,4 @@ export const Container: FC<ContainerProps> = memo(({
   )
 })
 
-Container.displayName = 'Container'
+ContainerS.displayName = 'ContainerS'
