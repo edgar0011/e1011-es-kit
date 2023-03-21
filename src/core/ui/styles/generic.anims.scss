@@ -1,0 +1,119 @@
+
+.animBgr {
+  width: 100%;
+  opacity: 0;
+  animation: grow-animation 450ms ease-in-out forwards;
+  @keyframes grow-animation {
+    0% { width: 0%; opacity: 1;}
+    100% { width: 100%; opacity: 1; }
+  }
+  animation-delay: calc(var(--animation-delay) * 1ms);
+}
+
+.animFadeIn {
+  opacity: 0;
+  animation: fade-in-animation 350ms ease-in-out forwards;
+  @keyframes fade-in-animation {
+    0% { opacity: 0;}
+    100% { opacity: 1;}
+  }
+  will-change: opacity;
+}
+
+.animSlideDown {
+  opacity: 0;
+  animation: slide-down-animation 350ms ease-in-out forwards;
+  @keyframes slide-down-animation {
+    0% { transform: translateY(-4rem); opacity: 0;}
+    30% { opacity: 0;}
+    100% { transform: translateY(0rem); opacity: 1;}
+  }
+  will-change: opacity, transform;
+}
+
+.animSlideUp {
+  opacity: 0;
+  animation: slide-up-animation 350ms ease-in-out forwards;
+  @keyframes slide-up-animation {
+    0% { transform: translateY(4rem); opacity: 0;}
+    30% { opacity: 0;}
+    100% { transform: translateY(0rem); opacity: 1;}
+  }
+  will-change: opacity, transform;
+}
+
+.animSlideRight {
+  opacity: 0;
+  animation: slide-right-animation 350ms ease-in-out forwards;
+  @keyframes slide-right-animation {
+    0% { transform: translateX(-4rem); opacity: 0;}
+    30% { opacity: 0;}
+    100% { transform: translateX(0rem); opacity: 1;}
+  }
+  will-change: opacity, transform;
+}
+
+.animSlideLeft {
+  opacity: 0;
+  animation: slide-left-animation 350ms ease-in-out forwards;
+  @keyframes slide-left-animation {
+    0% { transform: translateX(4rem); opacity: 0;}
+    30% { opacity: 0;}
+    100% { transform: translateX(0rem); opacity: 1;}
+  }
+  will-change: opacity, transform;
+}
+
+
+.animSpin {
+  animation: spin-animation 1200ms ease-in-out forwards;
+  animation-delay: 400ms;
+
+  will-change: transform, opacity;
+  transition: opacity 250ms ease-out;
+  &:hover {
+    animation: spin-animation-reset 0ms ease forwards;
+    animation-delay: 0ms;
+    opacity: 0.5;
+  }
+
+  @keyframes spin-animation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(1440deg); }
+  }
+  @-webkit-keyframes spin-animation-reset {
+    to { transform: rotate(0deg); }
+  }
+}
+
+.animSpinInfinite {
+  animation: spin-animation 1200ms ease-in-out infinite;
+  animation-delay: 400ms;
+
+  will-change: transform, opacity;
+  transition: opacity 250ms ease-out;
+  &:hover {
+    animation: spin-animation-reset 0ms ease forwards;
+    animation-delay: 0ms;
+    opacity: 0.5;
+  }
+
+  @keyframes spin-animation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(1440deg); }
+  }
+  @-webkit-keyframes spin-animation-reset {
+    to { transform: rotate(0deg); }
+  }
+}
+
+.breathOnHover {
+  transform: scale(1);
+  box-shadow: 0px 0px 0px 0px rgba(10,12,10,0.27);
+  transition: transform 250ms ease-in-out, box-shadow 300ms ease;
+  will-change: transform;
+  &:hover{
+    transform: scale(1.1);
+    box-shadow: 0px 0px 20px 0px rgba(10,12,10,0.27);
+  }
+}

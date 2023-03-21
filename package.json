@@ -35,6 +35,7 @@
       "types": "./dist/types/src/core/ui/index.d.ts"
     },
     "./dist/*": "./dist/*",
+    "./css/*": "./dist/ui/styles/*",
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -42,7 +43,8 @@
     "prepublish": "yarn clean && yarn build:lib",
     "clean": "rimraf ./dist ./es ./coverage",
     "build:lib": "yarn tsc && BABEL_ENV=production NODE_ENV=production rollup --config --environment INCLUDE_DEPS,BUILD:production",
-    "build": "yarn prepush && yarn build:lib",
+    "build:css": "sass src/core/ui/styles:dist/ui/styles",
+    "build": "yarn prepush && yarn build:lib && yarn build:css",
     "watch": "rollup --config --watch",
     "lint": "eslint src --ext js,jsx,ts,tsx",
     "lint:quiet": "eslint src --ext js,jsx,ts,tsx --quiet",
@@ -101,7 +103,7 @@
     "reflect-metadata": "^0.1.13",
     "rollup": "^2.60.1",
     "rollup-plugin-postcss": "^4.0.2",
-    "sass": "^1.58.3",
+    "sass": "^1.59.3",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "typescript": "^4.5.2"
