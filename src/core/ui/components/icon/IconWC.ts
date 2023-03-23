@@ -2,6 +2,8 @@ import { ced, resolveAttributes } from '../../../utils/webComponents/webComponen
 
 import classes from './icon.module.scss'
 
+
+
 const template = document.createElement('template')
 
 template.innerHTML = '<span class="icon-base"></span>'

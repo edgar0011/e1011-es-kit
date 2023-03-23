@@ -1,4 +1,4 @@
-import { CSSProperties, memo, useMemo, PropsWithChildren } from 'react'
+import { CSSProperties, memo, useMemo, FC, PropsWithChildren } from 'react'
 
 import classes from './icon.module.scss'
 
@@ -14,7 +14,7 @@ export type IconBaseType = PropsWithChildren<any> & {
   className?: string
 }
 
-export const IconBase = memo<IconBaseType>(({
+export const IconBase: FC<IconBaseType> = memo<IconBaseType>(({
   iconUrl, minWidth, minHeight, size,
   fontSize, width, height, color = 'currentColor', className = '', children, style,
 }: IconBaseType) => {
