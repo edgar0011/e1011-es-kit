@@ -1,6 +1,6 @@
 {
   "name": "@e1011/es-kit",
-  "version": "1.0.74",
+  "version": "1.0.75",
   "main": "dist/lib/cjs/src/index.js",
   "module": "dist/lib/esm/src/index.js",
   "sideEffects": false,
