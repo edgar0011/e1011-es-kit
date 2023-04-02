@@ -2,7 +2,8 @@ import { CSSProperties, memo, useMemo, FC, PropsWithChildren } from 'react'
 
 import classes from './icon.module.scss'
 
-export type IconBaseType = PropsWithChildren<any> & {
+export type IconBaseType = PropsWithChildren<unknown> & {
+  id?: string
   iconUrl?: string
   minWidth?: string
   minHeight?: string
@@ -12,11 +13,12 @@ export type IconBaseType = PropsWithChildren<any> & {
   fontSize?: string
   color?: string
   className?: string
+  style?: CSSProperties
 }
 
 export const IconBase: FC<IconBaseType> = memo<IconBaseType>(({
   iconUrl, minWidth, minHeight, size,
-  fontSize, width, height, color = 'currentColor', className = '', children, style,
+  fontSize, width, height, color = 'currentColor', className = '', children, style, ...props
 }: IconBaseType) => {
   const styles = useMemo(() => (
     {
@@ -33,6 +35,7 @@ export const IconBase: FC<IconBaseType> = memo<IconBaseType>(({
 
   return (
     <span
+      {...props}
       className={`${(classes as any)['icon-base']} icon-base ${className}`}
       style={styles as CSSProperties}
     >
