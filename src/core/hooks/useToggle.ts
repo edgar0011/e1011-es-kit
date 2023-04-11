@@ -1,6 +1,14 @@
 import { useState, useCallback } from 'react'
 
-export const useToggle = (defaultValue: boolean, async = true): [boolean, (value?: any | boolean) => void] => {
+
+export type useTogggleReturnType = [
+  boolean,
+  (value?: any | boolean) => void,
+  (value?: any | boolean) => void,
+  (value?: any | boolean) => void
+]
+
+export const useToggle = (defaultValue: boolean, async = true): useTogggleReturnType => {
   const [toggled, setToggled] = useState(defaultValue)
 
   const handleToggle: (value?: any | boolean) => void = useCallback((value?: any | boolean) => {
@@ -11,5 +19,13 @@ export const useToggle = (defaultValue: boolean, async = true): [boolean, (value
     }
   }, [async, toggled, setToggled])
 
-  return [toggled, handleToggle]
+  const handleToggleTrue = useCallback(
+    (forceValue?: boolean) => handleToggle(forceValue === undefined ? true : forceValue), [handleToggle],
+  )
+
+  const handleToggleFalse = useCallback(
+    (forceValue?: boolean) => handleToggle(forceValue === undefined ? false : forceValue), [handleToggle],
+  )
+
+  return [toggled, handleToggle, handleToggleTrue, handleToggleFalse]
 }
