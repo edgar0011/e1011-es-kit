@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { FC, ReactNode, memo, useMemo, useCallback } from 'react'
+import { FC, ReactNode, memo, useMemo, useCallback, PropsWithChildren } from 'react'
 import styled from 'styled-components'
 
 import type { FieldError, IconComponentType } from './types'
@@ -18,7 +18,7 @@ export const setIconComponent = (component: IconComponentType): void => {
   IconComponent = component
 }
 
-export type FileWrapperProps = {
+export type FileWrapperProps = PropsWithChildren & {
   className?: string
   error?: boolean
   disabled?: boolean
@@ -101,7 +101,7 @@ export const FieldWrapper: FC<FileWrapperProps> = styled.div<FileWrapperProps>`
   }
 `
 
-type EventType = { target: any; type?: any }
+type EventType = { target: any; type?: any } & Partial<Event>
 export interface FieldProps {
   label?: string
   name?: string
@@ -128,7 +128,7 @@ export interface FieldProps {
   // TODO, rename... something like changeHandler or valueDecorator
   onChangeInner?: (value: string | number) => string | number
   onBlur?: (event?: EventType) => void
-  onFocus?: (event?: EventType) => void
+  onFocus?: (event?: EventType | undefined) => void
   rightIconClick?: (event?: EventType) => void
   leftIconClick?: (event?: EventType) => void
   options?: any[] | null
@@ -205,9 +205,9 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
   if (!children && type === 'textarea') {
     Component = TextAreaComponent
   }
-  const handleFocus = useCallback((event) => {
+  const handleFocus = useCallback((event: Event | EventType | undefined) => {
     if (userDisabled) {
-      event.preventDefault()
+      event?.preventDefault?.()
     } else {
       onFocus && onFocus(event)
     }
@@ -220,9 +220,9 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
     if (onChangeInner && event?.target) {
       // eslint-disable-next-line no-param-reassign
       event.target.value = onChangeInner((event.target.value as string)) as string
-      onChange && onChange(event)
+      onChange && onChange(event as EventType)
     } else {
-      onChange && onChange(event)
+      onChange && onChange(event as EventType)
     }
   }, [onChangeInner, onChange, userDisabled])
 

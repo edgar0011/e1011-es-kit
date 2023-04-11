@@ -1,12 +1,4 @@
 export default {
-  // moduleDirectories: [
-  //   'node_modules',
-  // ],
-  transformIgnorePatterns: [
-    'node_modules/(?!(lodash-es|lit|@lit|lit-html|lit-element)/*)',
-  ],
-  testEnvironment: 'node',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     // eslint-disable-next-line max-len
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|css|pdf)$': '<rootDir>/test/file-mock.js',
@@ -18,8 +10,18 @@ export default {
     '^screens/(.*)$': '<rootDir>/src/screens/$1',
     '^utils/(.*)$': '<rootDir>/src/utils/$1',
   },
+  moduleDirectories: [
+    'node_modules',
+  ],
+  transformIgnorePatterns: [
+    'node_modules/(?!(lodash-es|lit|@lit|lit-html|lit-element)/*)',
+  ],
+  testEnvironment: 'node',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   verbose: true,
-  // preset: 'ts-jest',
+  clearMocks: true,
+  collectCoverage: false,
+  coverageDirectory: 'coverage',
   preset: 'ts-jest/presets/js-with-ts',
   transform: {
     '^.+\\.jsx?$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.json' }],
@@ -31,7 +33,6 @@ export default {
     'ts',
     'tsx',
   ],
-  coverageDirectory: 'report',
   collectCoverageFrom: [
     'src/**/*.js',
     'src/**/*.jsx',
