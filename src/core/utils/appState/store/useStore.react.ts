@@ -10,13 +10,19 @@ export const useStore = <T>(
   //  args[0].selector?? store.subscribe(...args) }, () => selector(store.getState()));
 ) => [useSyncExternalStore(store.subscribe, () => selector(store.getState())), store.setState, store.actions]
 
-export type useStateType<T> = [ReturnType<typeof useStore>, Store<T>['setState'], Store<T>['actions'] ]
+export type useStateType<T> = [
+  ReturnType<typeof useStore>,
+  Store<T>['getState'],
+  Store<T>['setState'],
+  Store<T>['actions'],
+]
 
-export const useState = <T>(
+export const useStoreApi = <T>(
   store: Store<T>,
   selector: Selector<T> = (state) => state,
 ): useStateType<T> => ([
     useStore(store, selector),
+    store.getState,
     store.setState,
     store?.actions,
   ])
