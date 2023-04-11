@@ -18,7 +18,7 @@ export const setIconComponent = (component: IconComponentType): void => {
   IconComponent = component
 }
 
-export type FileWrapperProps = PropsWithChildren & {
+export type FileWrapperProps = PropsWithChildren<unknown> & {
   className?: string
   error?: boolean
   disabled?: boolean

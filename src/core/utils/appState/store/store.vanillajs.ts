@@ -2,9 +2,7 @@
 // TinyStore, inspired by https://github.com/jherr/syncexternalstore/blob/main/csr/src/store.js
 export type ListenerCallBack<T> = (state: Partial<T>) => void
 
-
 export type Selector<T> = (state: Partial<T>) => Partial<T>;
-
 
 export type Listener<T> = {
   selector?: Selector<T>
@@ -16,9 +14,7 @@ export type Store<T> = {
   subscribe: (listener: Listener<T>) => () => void
 } & { actions?: { [actionName: string]: ActionHandlerCaller } }
 
-
 export type ActionHandler<T> = (state: Partial<T>) => Partial<T>
-
 
 export type ActionHandlerCaller = () => void
 
