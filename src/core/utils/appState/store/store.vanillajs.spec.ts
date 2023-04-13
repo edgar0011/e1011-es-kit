@@ -7,6 +7,7 @@ type CommentsState = {
   data: number[]
   date: Date
   messages: string[]
+  priority?: number
 }
 
 describe('Simple Tiny Store', () => {
@@ -60,7 +61,7 @@ describe('Simple Tiny Store', () => {
     expect(subscriber).toHaveBeenCalledTimes(1)
   })
 
-  it('should call and awit async subscribers', async () => {
+  it('should call and await async subscribers', async () => {
     expect.assertions(3)
     const store = createStore<CommentsState>(initialState)
 
@@ -129,12 +130,15 @@ describe('Simple Tiny Store', () => {
     expect(subscriber).toHaveBeenCalledTimes(1)
   })
 
-  it('actions wor fast state handling, and should call subscribers', () => {
+  it('actions for fast state handling, and should call subscribers', async () => {
     const store = createStore<CommentsState>(initialState, {
-      addPriority: (state) => ({
-        ...state,
-        priority: 3,
-      }),
+      addPriority: async (getState, setState) => {
+        await delay(1000)
+        setState({
+          ...getState(),
+          priority: 3,
+        })
+      },
     })
 
     console.log('store', store)
@@ -148,18 +152,23 @@ describe('Simple Tiny Store', () => {
       messages: ['Only one message'],
     })
 
-    store?.actions?.addPriority?.()
+    // async function needs to be awaited or expect in queued micro task
+    await store?.actions?.addPriority?.()
+    // store?.actions?.addPriority?.()
 
-    expect(subscriber).toHaveBeenCalled()
-    expect(subscriber).toHaveBeenCalledTimes(2)
-    unsubscribe()
+    queueMicrotask(() => {
+      expect(subscriber).toHaveBeenCalled()
+      expect(subscriber).toHaveBeenCalledTimes(2)
 
-    store.setState({
-      ...initialState,
-      messages: ['Only one message after unsibscribed'],
+      unsubscribe()
+
+      store.setState({
+        ...initialState,
+        messages: ['Only one message after unsibscribed'],
+      })
+
+      expect(subscriber).toHaveBeenCalledTimes(2)
     })
-
-    expect(subscriber).toHaveBeenCalledTimes(2)
   })
 })
 

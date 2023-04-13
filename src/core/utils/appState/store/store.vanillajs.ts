@@ -14,7 +14,12 @@ export type Store<T> = {
   subscribe: (listener: Listener<T>) => () => void
 } & { actions?: { [actionName: string]: ActionHandlerCaller } }
 
-export type ActionHandler<T> = (state: Partial<T>) => Partial<T>
+
+export type ActionHandler<T> = (
+  getState: Store<T>['getState'],
+  setState: Store<T>['setState']
+) => void | Partial<T> | Promise<void | Partial<T>>
+
 
 export type ActionHandlerCaller = () => void
 
@@ -22,6 +27,9 @@ export type ActionHandlerCaller = () => void
 export const createStore = <T>(initialState: Partial<T>, actions?: Record<string, ActionHandler<T>>): Store<T> => {
   let currentState: Partial<T> = initialState
   const listeners = new Set<Listener<T>>()
+
+
+  const getState = () => currentState
 
   const setState = async (newState: Partial<T>) => {
     currentState = newState
@@ -43,7 +51,7 @@ export const createStore = <T>(initialState: Partial<T>, actions?: Record<string
   }
 
   const storeBaseicApi: Store<T> = {
-    getState: () => currentState,
+    getState,
     setState,
     subscribe: (listener: Listener<T>) => {
       listeners.add(listener)
@@ -59,7 +67,7 @@ export const createStore = <T>(initialState: Partial<T>, actions?: Record<string
         [actionName, actionHandler]: [string, ActionHandler<T>],
       ) => ({
         ...aggregator,
-        [actionName]: () => setState(actionHandler(currentState)),
+        [actionName]: async() => actionHandler(getState, setState),
       }),
       {},
     ) : null
