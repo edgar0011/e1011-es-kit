@@ -4,7 +4,7 @@ import type { Store, Selector } from './store.vanillajs'
 
 
 export type useStoreType<T> = [
-  ReturnType< typeof useSyncExternalStore>,
+  Partial<T>,
   Store<T>['setState'],
   Store<T>['actions'],
 ]
@@ -12,7 +12,7 @@ export type useStoreType<T> = [
 
 export const useStore = <T>(
   store: Store<T>,
-  selector: Selector<T> = (state) => state,
+  selector: Selector<T> = (state: Partial<T>) => state,
   // TODO pass selector
   // useSyncExternalStore((...args) => {
   //  args[0].selector?? store.subscribe(...args) }, () => selector(store.getState()));
@@ -33,7 +33,7 @@ export type useStoreApiType<T> = [
 
 export const useStoreApi = <T>(
   store: Store<T>,
-  selector: Selector<T> = (state) => state,
+  selector: Selector<T> = (state: Partial<T>) => state,
 ): useStoreApiType<T> => ([
     useStore(store, selector),
     store.getState,
