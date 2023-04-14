@@ -133,7 +133,7 @@ describe('Simple Tiny Store', () => {
   it('actions for fast state handling, and should call subscribers', async () => {
     const store = createStore<CommentsState>(initialState, {
       addPriority: async (getState, setState) => {
-        await delay(1000)
+        await delay(300)
         setState({
           ...getState(),
           priority: 3,
@@ -168,6 +168,44 @@ describe('Simple Tiny Store', () => {
       })
 
       expect(subscriber).toHaveBeenCalledTimes(2)
+    })
+  })
+
+
+  it('subscriber called only for value different then previous call of setState:listener', async () => {
+    expect.assertions(2)
+
+    const store = createStore<CommentsState>(initialState, {
+      addPriority: async (getState, setState, ...args: unknown[]) => {
+        await delay(250)
+        setState({
+          ...getState(),
+          priority: args[0] as unknown as number,
+        })
+      },
+    })
+
+    console.log('store', store)
+
+    const subscriber = jest.fn((state: Partial<CommentsState>) => console.log('state subscriber, state:', state))
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    subscriber.selector = (state: CommentsState) => state?.priority
+    store.subscribe(subscriber)
+
+    // async function needs to be awaited or expect in queued micro task
+    await store?.actions?.addPriority?.(3)
+    await store?.actions?.addPriority?.(3)
+    await store?.actions?.addPriority?.(4)
+    await store?.actions?.addPriority?.(4)
+    await store?.actions?.addPriority?.(5)
+    await store?.actions?.addPriority?.(5)
+    await store?.actions?.addPriority?.(4)
+
+    queueMicrotask(() => {
+      expect(subscriber).toHaveBeenCalled()
+      expect(subscriber).toHaveBeenCalledTimes(4)
     })
   })
 })

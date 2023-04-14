@@ -6,6 +6,7 @@ export type Selector<T> = (state: Partial<T>) => Partial<T>;
 
 export type Listener<T> = {
   selector?: Selector<T>
+  previousValue?: Partial<T>
 } & ListenerCallBack<T>
 
 export type Store<T> = {
@@ -17,17 +18,17 @@ export type Store<T> = {
 
 export type ActionHandler<T> = (
   getState: Store<T>['getState'],
-  setState: Store<T>['setState']
+  setState: Store<T>['setState'],
+  ...rest: unknown[]
 ) => void | Partial<T> | Promise<void | Partial<T>>
 
 
-export type ActionHandlerCaller = () => void
+export type ActionHandlerCaller = (...args: unknown[]) => void
 
 
 export const createStore = <T>(initialState: Partial<T>, actions?: Record<string, ActionHandler<T>>): Store<T> => {
   let currentState: Partial<T> = initialState
   const listeners = new Set<Listener<T>>()
-
 
   const getState = () => currentState
 
@@ -43,10 +44,14 @@ export const createStore = <T>(initialState: Partial<T>, actions?: Record<string
       // if listener.previousValue === selector(currentState) no call
       // else listener.previousValue = selector(currentState) and call
       // l1 cache, weak references?
+      const newValue: Partial<T> = selector ? selector(currentState) : currentState
 
-      // TODO parallelize await
-      // eslint-disable-next-line no-await-in-loop
-      await listener(selector ? selector(currentState) : currentState)
+      // TODO plugin equality
+      if (listener.previousValue === undefined || listener.previousValue !== newValue) {
+        listener.previousValue = newValue
+        // eslint-disable-next-line no-await-in-loop
+        await listener(newValue)
+      }
     }
   }
 
@@ -67,7 +72,7 @@ export const createStore = <T>(initialState: Partial<T>, actions?: Record<string
         [actionName, actionHandler]: [string, ActionHandler<T>],
       ) => ({
         ...aggregator,
-        [actionName]: async() => actionHandler(getState, setState),
+        [actionName]: async(...rest: unknown[]) => actionHandler(getState, setState, ...rest),
       }),
       {},
     ) : null
