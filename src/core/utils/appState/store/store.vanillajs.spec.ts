@@ -1,6 +1,6 @@
 import { delay } from '../../helpers/other'
 
-import { Listener, createStore } from './store.vanillajs'
+import { Listener, Store, createStore } from './store.vanillajs'
 
 
 type CommentsState = {
@@ -26,7 +26,7 @@ describe('Simple Tiny Store', () => {
   })
 
   it('should have state', () => {
-    const store = createStore<CommentsState>(initialState)
+    const store: Store<CommentsState> = createStore<CommentsState>(initialState)
 
     console.log('store', store)
     console.log('store.getState()', store.getState())
@@ -153,8 +153,8 @@ describe('Simple Tiny Store', () => {
     })
 
     // async function needs to be awaited or expect in queued micro task
-    await store?.actions?.addPriority?.()
-    // store?.actions?.addPriority?.()
+    await store.actions?.addPriority?.()
+    // store.actions?.addPriority?.()
 
     queueMicrotask(() => {
       expect(subscriber).toHaveBeenCalled()
@@ -195,13 +195,13 @@ describe('Simple Tiny Store', () => {
     store.subscribe(subscriber)
 
     // async function needs to be awaited or expect in queued micro task
-    await store?.actions?.addPriority?.(3)
-    await store?.actions?.addPriority?.(3)
-    await store?.actions?.addPriority?.(4)
-    await store?.actions?.addPriority?.(4)
-    await store?.actions?.addPriority?.(5)
-    await store?.actions?.addPriority?.(5)
-    await store?.actions?.addPriority?.(4)
+    await store.actions?.addPriority?.(3)
+    await store.actions?.addPriority?.(3)
+    await store.actions?.addPriority?.(4)
+    await store.actions?.addPriority?.(4)
+    await store.actions?.addPriority?.(5)
+    await store.actions?.addPriority?.(5)
+    await store.actions?.addPriority?.(4)
 
     queueMicrotask(() => {
       expect(subscriber).toHaveBeenCalled()

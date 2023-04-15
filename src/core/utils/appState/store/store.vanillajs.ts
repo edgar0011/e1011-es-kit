@@ -15,6 +15,8 @@ export type Store<T> = {
   subscribe: (listener: Listener<T>) => () => void
 } & { actions?: { [actionName: string]: ActionHandlerCaller } }
 
+export type StoreWithActions<T> = Store<T> & { actions: { [actionName: string]: ActionHandlerCaller } }
+
 
 export type ActionHandler<T> = (
   getState: Store<T>['getState'],
@@ -26,7 +28,10 @@ export type ActionHandler<T> = (
 export type ActionHandlerCaller = (...args: unknown[]) => void
 
 
-export const createStore = <T>(initialState: Partial<T>, actions?: Record<string, ActionHandler<T>>): Store<T> => {
+export const createStore = <T>(
+  initialState: Partial<T>,
+  actions?: Record<string, ActionHandler<T>>,
+): Store<T> | StoreWithActions<T> => {
   let currentState: Partial<T> = initialState
   const listeners = new Set<Listener<T>>()
 
@@ -82,5 +87,7 @@ export const createStore = <T>(initialState: Partial<T>, actions?: Record<string
     ...(resolvedActions ? { actions: { ...resolvedActions } } : {}),
   }
 
-  return storeCombinedWithActions
+  return resolvedActions
+    ? storeCombinedWithActions as StoreWithActions<T> & { actions: keyof typeof resolvedActions }
+    : storeCombinedWithActions as Store<T>
 }

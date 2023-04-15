@@ -38,5 +38,5 @@ export const useStoreApi = <T>(
     useStore(store, selector),
     store.getState,
     store.setState,
-    store?.actions,
+    store.actions,
   ])
