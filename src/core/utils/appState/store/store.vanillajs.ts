@@ -11,9 +11,10 @@ export type Listener<T> = {
 
 export type Store<T> = {
   getState: () => Partial<T>
-  setState: (state: Partial<T>) => void
+  setState: (state: Partial<T>) => Promise<Partial<T>>
   subscribe: (listener: Listener<T>) => () => void
-} & { actions?: { [actionName: string]: ActionHandlerCaller } }
+}
+// & { actions?: { [actionName: string]: ActionHandlerCaller } }
 
 export type StoreWithActions<T> = Store<T> & { actions: { [actionName: string]: ActionHandlerCaller } }
 
@@ -37,6 +38,7 @@ export const createStore = <T>(
 
   const getState = () => currentState
 
+  // TODO debounce, batch? what is the meaningful time between setState ofr UI to be rendered and registerd by User?
   const setState = async (newState: Partial<T>) => {
     currentState = newState
 
@@ -58,6 +60,7 @@ export const createStore = <T>(
         await listener(newValue)
       }
     }
+    return currentState
   }
 
   const storeBaseicApi: Store<T> = {
@@ -88,6 +91,6 @@ export const createStore = <T>(
   }
 
   return resolvedActions
-    ? storeCombinedWithActions as StoreWithActions<T> & { actions: keyof typeof resolvedActions }
+    ? storeCombinedWithActions as StoreWithActions<T>
     : storeCombinedWithActions as Store<T>
 }

@@ -1,6 +1,6 @@
 import { delay } from '../../helpers/other'
 
-import { Listener, Store, createStore } from './store.vanillajs'
+import { Listener, Store, StoreWithActions, createStore } from './store.vanillajs'
 
 
 type CommentsState = {
@@ -131,7 +131,7 @@ describe('Simple Tiny Store', () => {
   })
 
   it('actions for fast state handling, and should call subscribers', async () => {
-    const store = createStore<CommentsState>(initialState, {
+    const store: StoreWithActions<CommentsState> = createStore<CommentsState>(initialState, {
       addPriority: async (getState, setState) => {
         await delay(300)
         setState({
@@ -139,7 +139,7 @@ describe('Simple Tiny Store', () => {
           priority: 3,
         })
       },
-    })
+    }) as StoreWithActions<CommentsState>
 
     console.log('store', store)
     // const subscriber = (state: Partial<CommentsState>) => console.log('state subscriber, state:', state);
@@ -175,7 +175,7 @@ describe('Simple Tiny Store', () => {
   it('subscriber called only for value different then previous call of setState:listener', async () => {
     expect.assertions(2)
 
-    const store = createStore<CommentsState>(initialState, {
+    const store: StoreWithActions<CommentsState> = createStore<CommentsState>(initialState, {
       addPriority: async (getState, setState, ...args: unknown[]) => {
         await delay(250)
         setState({
@@ -183,7 +183,7 @@ describe('Simple Tiny Store', () => {
           priority: args[0] as unknown as number,
         })
       },
-    })
+    }) as StoreWithActions<CommentsState>
 
     console.log('store', store)
 

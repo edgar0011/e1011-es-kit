@@ -2,7 +2,7 @@
 
 import { delay } from '../../helpers/other'
 
-import { Listener, StoreWithActions } from './store.vanillajs'
+import { Listener } from './store.vanillajs'
 import { DataState, createDataStore } from './store.vanillajs.templates'
 
 
@@ -14,18 +14,17 @@ type Post = {
 }
 
 type PostsData = Post[]
+type PostsDataState = DataState<PostsData>
 
 describe('Simple Tiny Store', () => {
   it('should have state', () => {
-    type PostsDataStore = DataState<PostsData>
-
-    const store: StoreWithActions<PostsDataStore> = createDataStore('postsData1')
+    const store = createDataStore<PostsData>('postsData1')
 
     console.log('store', store)
     console.log('store.getState()', store.getState())
 
-    const Listener: Listener<PostsDataStore>
-      = (state: Partial<PostsDataStore>) => console.log('PostData1 store listener', state)
+    const Listener: Listener<PostsDataState>
+      = (state: Partial<PostsDataState>) => console.log('PostData1 store listener', state)
 
     store.subscribe(Listener)
 
@@ -35,15 +34,13 @@ describe('Simple Tiny Store', () => {
   })
 
   it('should load data into state', async () => {
-    type PostsDataStore = DataState<PostsData>
-
-    const store: StoreWithActions<PostsDataStore> = createDataStore('postsData1')
+    const store = createDataStore<PostsData>('postsData1')
 
     console.log('store', store)
     console.log('store.getState()', store.getState())
 
-    const Listener: Listener<PostsDataStore>
-      = (state: Partial<PostsDataStore>) => console.log('PostData1 store listener', state)
+    const Listener: Listener<PostsDataState>
+      = (state: Partial<PostsDataState>) => console.log('PostData1 store listener', state)
 
     store.subscribe(Listener)
 
@@ -51,10 +48,17 @@ describe('Simple Tiny Store', () => {
     expect(store.getState().dataId).toEqual('postsData1')
     expect(store.getState().isLoading).toEqual(false)
 
-    await store.actions.load((async() => {
-      await delay(2000)
+    const loadPromise = store.actions.load((async() => {
+      await delay(1000)
       return fetch('https://jsonplaceholder.typicode.com/posts').then((res) => res.json())
     })())
+
+
+    expect(store.getState().isLoading).toEqual(true)
+
+    const what = await loadPromise
+
+    console.log('what ', what)
 
 
     const data = store.getState().data as Post[]
