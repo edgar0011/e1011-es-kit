@@ -154,6 +154,7 @@ describe('Simple Tiny Store', () => {
 
     // async function needs to be awaited or expect in queued micro task
     await store.actions?.addPriority?.()
+
     // store.actions?.addPriority?.()
 
     queueMicrotask(() => {
@@ -209,7 +210,3 @@ describe('Simple Tiny Store', () => {
     })
   })
 })
-
-
-
-
