@@ -100,6 +100,7 @@
     "prettier-eslint-cli": "^7.1.0",
     "pretty-format": "^29.5.0",
     "reflect-metadata": "^0.1.13",
+    "reselect": "^4.1.8",
     "rollup": "^2.60.1",
     "rollup-plugin-postcss": "^4.0.2",
     "sass": "^1.59.3",
