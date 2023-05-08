@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 
 import { useStore, useStoreType } from '../useStore.react'
 import { StoreWithActions, createStore } from '../store.vanillajs'
-import { FBox } from '../../../../ui/components/container/FBox'
+import { LayoutBox } from '../../../../ui/components/container/LayoutBox'
 import { delay } from '../../../helpers/other'
 
 
@@ -77,16 +77,16 @@ export const SimpleComponent: FC<SimpleComponentType>
   }, [])
 
   return (
-    <FBox direction='column'>
+    <LayoutBox direction='column'>
       <h3>{title}</h3>
       <p>{count}</p>
       <p>{JSON.stringify(data)}</p>
       <button type='button' id='simpleComponentButton' onClick={simpleComponentButtonCkickHandler}>Add Count</button>
       {children && (
-      <FBox>
+      <LayoutBox>
         {children }
-      </FBox>)}
-    </FBox>
+      </LayoutBox>)}
+    </LayoutBox>
   )
 })
 

@@ -1,6 +1,9 @@
 import { FC, useRef, useState, memo, ReactNode, useEffect, useLayoutEffect, useMemo, CSSProperties } from 'react'
 
+import { useParseProps } from '../../../hooks/useParseProps'
+
 import classes from './CollapsibleContainer.module.scss'
+
 
 const elementPropNameMap: Record<string, string> = {
   width: 'scrollWidth',
@@ -16,10 +19,12 @@ export type CollapsibleContainerProps = {
 } & CSSProperties
 
 export const CollapsibleContainer: FC<CollapsibleContainerProps> = memo(({
-  collapsed = false, collapseHandler, children, horizontal = false, className = '', ...style
+  collapsed = false, collapseHandler, children, horizontal = false, className = '', ...props
 }: CollapsibleContainerProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [contentProp, setContentProp] = useState(0)
+
+  const { dataProps, restProps: style } = useParseProps(props)
 
   const vertical = !horizontal
 
@@ -59,6 +64,7 @@ export const CollapsibleContainer: FC<CollapsibleContainerProps> = memo(({
       className={`${classes['collapsible-container']} ${classNames} ${className} `}
       ref={containerRef}
       style={styleProps}
+      {...dataProps}
     >
       {children}
     </div>

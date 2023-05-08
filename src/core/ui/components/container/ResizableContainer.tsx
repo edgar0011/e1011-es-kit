@@ -1,10 +1,10 @@
 import { memo, useState, useRef, useMemo, useLayoutEffect, RefObject, PropsWithChildren } from 'react'
 import debounce from 'lodash-es/debounce'
 
-import { FBox, FBoxProps } from './FBox'
+import { LayoutBox } from './LayoutBox'
+import { LayoutBoxProps } from './layoutBox.types'
 
-
-export type ResizableContainerProps = FBoxProps & PropsWithChildren<any> & {
+export type ResizableContainerProps = LayoutBoxProps & PropsWithChildren<any> & {
   debounceDelay?: number
 }
 
@@ -78,7 +78,7 @@ export const ResizableContainer = memo<ResizableContainerProps>(
     // END RESIZING
 
     return (
-      <FBox
+      <LayoutBox
         width='100%'
         height='100%'
         justify='center'
@@ -86,13 +86,13 @@ export const ResizableContainer = memo<ResizableContainerProps>(
         direction='column'
         {...props}
       >
-        <FBox
+        <LayoutBox
           style={styles.main}
           width='100%'
           height='100%'
           ref={containerRef as RefObject<HTMLDivElement>}
         />
-        {!children && (<FBox
+        {!children && (<LayoutBox
           width={`${Math.max(containerSize?.width || 200, 200) || 200}px`}
           height={`${Math.max(containerSize?.height || 200, 200) || 200}px`}
           style={styles.empty}
@@ -102,7 +102,7 @@ export const ResizableContainer = memo<ResizableContainerProps>(
           width: `${containerSize?.width || 200}px`,
           measured: !!containerSize?.height,
         } as ResizableContainerRenderProps)}
-      </FBox>
+      </LayoutBox>
     )
   },
 )

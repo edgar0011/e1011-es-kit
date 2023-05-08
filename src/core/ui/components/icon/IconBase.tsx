@@ -24,8 +24,8 @@ export const IconBase: FC<IconBaseType> = memo<IconBaseType>(({
     {
       '--min-width': minWidth || size || width || 'auto',
       '--min-height': minHeight || size || height || 'auto',
-      '--width': size || width,
-      '--height': size || height,
+      '--width': size || width || '1rem',
+      '--height': size || height || '1rem',
       ...(fontSize ? { fontSize } : {}),
       ...(iconUrl ? { '--icon-url': `url(${iconUrl})` } : {}),
       ...(iconUrl ? { '--icon-color': color } : { '--icon-content-color': color }),
@@ -36,7 +36,7 @@ export const IconBase: FC<IconBaseType> = memo<IconBaseType>(({
   return (
     <span
       {...props}
-      className={`${(classes as any)['icon-base']} icon-base ${className}`}
+      className={`${classes['icon-base']} icon-base ${className}`}
       style={styles as CSSProperties}
     >
       {(!iconUrl && children) && children}

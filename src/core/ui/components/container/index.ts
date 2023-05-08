@@ -1,4 +1,4 @@
-export * from './FBox'
+export * from './LayoutBox'
 export * from './Flex'
 export * from './Placeholder'
 export * from './CollapsibleContainerS'
