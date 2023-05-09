@@ -1,4 +1,4 @@
-import { Store, StoreWithActions, createStore } from './store.vanillajs'
+import { ActionHandler, Store, StoreWithActions, createStore } from './store.vanillajs'
 
 
 export type DataState<T> = {
@@ -22,9 +22,11 @@ type LoadHandler<T> = (
   dataPromise: unknown | Promise<unknown>,
 ) => Promise<Partial<DataState<T>>>
 
-export const createDataStore = <T>(dataId: string): Store<DataState<T>>
+export const createDataStore
+= <T>(dataId: string, actions?: Record<string, ActionHandler<T>>): StoreWithActions<DataState<T>>
 & { actions: { load: LoadHandler<T> } } => {
-  const actions: { load: Load<T> } = {
+  const loadActions: { load: Load<T> } = {
+    ...actions,
     load: async (
       getState: Store<DataState<T>>['getState'],
       setState: Store<DataState<T>>['setState'],
@@ -50,7 +52,7 @@ export const createDataStore = <T>(dataId: string): Store<DataState<T>>
   return (createStore<DataState<T>>({
     dataId,
     isLoading: false,
-  }, actions)) as StoreWithActions<DataState<T>>
+  }, loadActions)) as StoreWithActions<DataState<T>>
   & { actions: { load: LoadHandler<T> } }
 }
 
