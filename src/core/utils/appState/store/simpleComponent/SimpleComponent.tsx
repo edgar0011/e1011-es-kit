@@ -85,7 +85,8 @@ export const SimpleComponent: FC<SimpleComponentType>
       {children && (
       <LayoutBox>
         {children }
-      </LayoutBox>)}
+      </LayoutBox>
+      )}
     </LayoutBox>
   )
 })

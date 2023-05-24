@@ -269,7 +269,8 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
               />
             )
             : (
-              !children && <Component
+              !children && (
+              <Component
                 name={name}
                 id={name}
                 ref={inputRef}
@@ -284,7 +285,8 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
                 autoComplete='off'
                 disabled={disabled}
                 {...props}
-              />))}
+              />
+              )))}
 
           {iconLeft && !withoutComponent && (
             <span

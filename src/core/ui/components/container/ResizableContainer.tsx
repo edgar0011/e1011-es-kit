@@ -92,11 +92,13 @@ export const ResizableContainer = memo<ResizableContainerProps>(
           height='100%'
           ref={containerRef as RefObject<HTMLDivElement>}
         />
-        {!children && (<LayoutBox
+        {!children && (
+        <LayoutBox
           width={`${Math.max(containerSize?.width || 200, 200) || 200}px`}
           height={`${Math.max(containerSize?.height || 200, 200) || 200}px`}
           style={styles.empty}
-        />)}
+        />
+        )}
         {children && children?.({
           height: `${containerSize?.height || 200}px`,
           width: `${containerSize?.width || 200}px`,
