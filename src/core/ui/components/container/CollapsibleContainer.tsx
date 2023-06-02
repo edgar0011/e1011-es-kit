@@ -1,8 +1,10 @@
-import { FC, useRef, useState, memo, ReactNode, useEffect, useLayoutEffect, useMemo, CSSProperties } from 'react'
+import { FC, useRef, useState, memo, ReactNode,
+  useEffect, useLayoutEffect, useMemo, CSSProperties, PropsWithChildren } from 'react'
 
 import { useParseProps } from '../../../hooks/useParseProps'
 
 import classes from './CollapsibleContainer.module.scss'
+import { LayoutBoxProps } from './layoutBox.types'
 
 
 const elementPropNameMap: Record<string, string> = {
@@ -10,7 +12,7 @@ const elementPropNameMap: Record<string, string> = {
   height: 'scrollHeight',
 }
 
-export type CollapsibleContainerProps = {
+export type CollapsibleContainerProps = PropsWithChildren & LayoutBoxProps & {
   collapsed?: boolean
   collapseHandler?: (collapsed: boolean) => void
   children?: ReactNode
@@ -36,7 +38,10 @@ export const CollapsibleContainer: FC<CollapsibleContainerProps> = memo(({
     if (containerRef?.current) {
       const propName = vertical ? 'height' : 'width'
 
-      setContentProp((containerRef.current as any)[elementPropNameMap[propName]])
+      // TODO test with requestAnimationFrame
+      setTimeout(() => {
+        setContentProp((containerRef.current as any)[elementPropNameMap[propName]])
+      }, 100)
     }
   }, [containerRef, vertical])
 

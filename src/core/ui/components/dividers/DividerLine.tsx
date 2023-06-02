@@ -3,6 +3,7 @@ import { memo, FC, CSSProperties, useMemo } from 'react'
 
 import classes from './divider.module.scss'
 
+
 type DividerProps = {
   orientation?: string
   margin?: string

@@ -4,6 +4,7 @@ import debounce from 'lodash-es/debounce'
 import { LayoutBox } from './LayoutBox'
 import { LayoutBoxProps } from './layoutBox.types'
 
+
 export type ResizableContainerProps = LayoutBoxProps & PropsWithChildren<any> & {
   debounceDelay?: number
 }
@@ -22,12 +23,9 @@ const styles = {
     zIndex: 111,
     left: 0,
     pointerEvents: 'none',
-    // backgroundColor: '#FF000040',
   },
   empty: {
     pointerEvents: 'none',
-    // background: '#FF000040',
-    // border: '1px solid #0000FF40',
   },
 }
 

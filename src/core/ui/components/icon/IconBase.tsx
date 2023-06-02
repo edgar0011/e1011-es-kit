@@ -1,4 +1,4 @@
-import { CSSProperties, memo, useMemo, FC, PropsWithChildren } from 'react'
+import { CSSProperties, memo, useMemo, FC, PropsWithChildren, MouseEvent } from 'react'
 
 import classes from './icon.module.scss'
 
@@ -14,11 +14,12 @@ export type IconBaseType = PropsWithChildren<unknown> & {
   color?: string
   className?: string
   style?: CSSProperties
+  onClick?: (event?: MouseEvent<HTMLSpanElement> | undefined) => void
 }
 
 export const IconBase: FC<IconBaseType> = memo<IconBaseType>(({
   iconUrl, minWidth, minHeight, size,
-  fontSize, width, height, color = 'currentColor', className = '', children, style, ...props
+  fontSize, width, height, color = 'currentColor', className = '', children, style, onClick, ...props
 }: IconBaseType) => {
   const styles = useMemo(() => (
     {
@@ -29,13 +30,22 @@ export const IconBase: FC<IconBaseType> = memo<IconBaseType>(({
       ...(fontSize ? { fontSize } : {}),
       ...(iconUrl ? { '--icon-url': `url(${iconUrl})` } : {}),
       ...(iconUrl ? { '--icon-color': color } : { '--icon-content-color': color }),
+      ...(onClick ? { cursor: 'pointer' } : {}),
       ...style,
     }
-  ), [minWidth, size, width, minHeight, height, fontSize, iconUrl, color, style])
+  ), [minWidth, size, width, minHeight, height, fontSize, iconUrl, color, onClick, style])
+
+  const onClickProps = useMemo(() => (onClick ? ({
+    onClick,
+    onkeyDown: onClick,
+    role: 'button',
+    tabIndex: -1,
+  }) : {}), [onClick])
 
   return (
     <span
       {...props}
+      {...onClickProps}
       className={`${classes['icon-base']} icon-base ${className}`}
       style={styles as CSSProperties}
     >
