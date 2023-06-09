@@ -2,6 +2,7 @@ import { CSSProperties, memo, useMemo, FC, PropsWithChildren, MouseEvent } from 
 
 import classes from './icon.module.scss'
 
+
 export type IconBaseType = PropsWithChildren<unknown> & {
   id?: string
   iconUrl?: string

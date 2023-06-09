@@ -35,4 +35,3 @@ export const parseProps = (props: Record<string, unknown>):PropsCategoriesType =
   })
   return { dataProps, restProps }
 }
-

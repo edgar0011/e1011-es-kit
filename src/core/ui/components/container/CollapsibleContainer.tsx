@@ -40,7 +40,9 @@ export const CollapsibleContainer: FC<CollapsibleContainerProps> = memo(({
 
       // TODO test with requestAnimationFrame
       setTimeout(() => {
-        setContentProp((containerRef.current as any)[elementPropNameMap[propName]])
+        if (containerRef?.current) {
+          setContentProp((containerRef.current as any)[elementPropNameMap[propName]])
+        }
       }, 100)
     }
   }, [containerRef, vertical])
