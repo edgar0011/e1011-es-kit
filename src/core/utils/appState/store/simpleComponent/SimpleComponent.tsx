@@ -29,6 +29,14 @@ export const simpleStore: StoreWithActions<SimpleState> = createStore<SimpleStat
       title: 'Added Data Title',
     })
   },
+  addCount: (getState, setState) => {
+    const prevState = getState()
+
+    setState({
+      ...prevState,
+      count: (prevState.count || 0) + 1,
+    })
+  },
 }) as StoreWithActions<SimpleState>
 
 let renderCount = 0
@@ -56,24 +64,14 @@ const simpleSelector = createSelector(
   },
 )
 
-// const simpleSelector = (state: Partial<SimpleState>) => ({
-//   title: state.title,
-//   count: state.count,
-// })
-
 export const SimpleComponent: FC<SimpleComponentType>
 = memo<SimpleComponentType>(({ children }: SimpleComponentType) => {
   renderCount += 1
 
   const { title, count, data }: useStoreType<SimpleState> = useStore(simpleStore, simpleSelector)
 
-  const simpleComponentButtonCkickHandler = useCallback(() => {
-    const prevState = simpleStore.getState()
-
-    simpleStore.setState({
-      ...prevState,
-      count: (prevState.count || 0) + 1,
-    })
+  const simpleComponentButtonClickHandler = useCallback(() => {
+    simpleStore.actions.addCount()
   }, [])
 
   return (
@@ -81,7 +79,7 @@ export const SimpleComponent: FC<SimpleComponentType>
       <h3>{title}</h3>
       <p>{count}</p>
       <p>{JSON.stringify(data)}</p>
-      <button type='button' id='simpleComponentButton' onClick={simpleComponentButtonCkickHandler}>Add Count</button>
+      <button type='button' id='simpleComponentButton' onClick={simpleComponentButtonClickHandler}>Add Count</button>
       {children && (
       <LayoutBox>
         {children }

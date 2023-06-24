@@ -131,7 +131,7 @@ export const simpleStore: StoreWithActions<SimpleState> = createStore<SimpleStat
 ) as StoreWithActions<SimpleState>;
 ```
 
-#### Impleent selectors, in this exampel base on reselect (createSelector) library
+#### Implement selectors, in this example based on reselect (createSelector) library
 
 ```typescript
 const titleSelector = (state: Partial<SimpleState>) => state.title;
