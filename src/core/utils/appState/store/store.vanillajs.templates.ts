@@ -22,11 +22,24 @@ type LoadHandler<T> = (
   dataPromise: unknown | Promise<unknown>,
 ) => Promise<Partial<DataState<T>>>
 
+/**
+ * Creates a data store with actions.
+ * @param dataId - The ID of the data.
+ * @param actions - Optional actions for the data store.
+ * @returns The created data store with actions.
+ */
 export const createDataStore
 = <T>(dataId: string, actions?: Record<string, ActionHandler<T>>): StoreWithActions<DataState<T>>
 & { actions: { load: LoadHandler<T> } } => {
   const loadActions: { load: Load<T> } = {
     ...actions,
+    /**
+     * Loads data into the data store.
+     * @param getState - Function to get the current state of the data store.
+     * @param setState - Function to set the state of the data store.
+     * @param dataPromise - The data promise to be loaded.
+     * @returns A promise that resolves to the updated state of the data store.
+     */
     load: async (
       getState: Store<DataState<T>>['getState'],
       setState: Store<DataState<T>>['setState'],

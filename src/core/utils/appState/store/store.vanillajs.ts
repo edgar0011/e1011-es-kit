@@ -1,34 +1,75 @@
 
 // TinyStore, inspired by https://github.com/jherr/syncexternalstore/blob/main/csr/src/store.js
+
+/**
+ * Represents the callback function for a store listener.
+ */
 export type ListenerCallBack<T> = (state: Partial<T>) => void
 
+/**
+ * Represents a selector function that transforms the store state.
+ */
 export type Selector<T> = (state: Partial<T>) => Partial<T>;
 
+/**
+ * Represents a listener for the store.
+ */
 export type Listener<T> = {
   selector?: Selector<T>
   previousValue?: Partial<T>
 } & ListenerCallBack<T>
 
+/**
+ * Represents a store.
+ */
 export type Store<T> = {
+  /**
+   * Get the current state of the store.
+   * @returns The current state of the store.
+   */
   getState: () => Partial<T>
+  /**
+   * Set the state of the store.
+   * @param state - The new state to set.
+   * @returns A promise that resolves to the new state.
+   */
   setState: (state: Partial<T>) => Promise<Partial<T>>
+  /**
+   * Subscribe a listener to the store.
+   * @param listener - The listener function to be subscribed.
+   * @returns A function to unsubscribe the listener.
+   */
   subscribe: (listener: Listener<T>) => () => void
 }
 // & { actions?: { [actionName: string]: ActionHandlerCaller } }
 
+/**
+ * Represents a store with additional actions.
+ */
 export type StoreWithActions<T> = Store<T> & { actions: { [actionName: string]: ActionHandlerCaller } }
 
-
+/**
+ * Represents an action handler function.
+ */
 export type ActionHandler<T> = (
-  getState: Store<T>['getState'],
-  setState: Store<T>['setState'],
+  getState: Store<T>['getState'], // Function to get the current state of the store
+  setState: Store<T>['setState'], // Function to set the state of the store
   ...rest: unknown[]
 ) => void | Partial<T> | Promise<void | Partial<T>>
 
 
+/**
+ * Represents a function that calls an action handler.
+ */
 export type ActionHandlerCaller = (...args: unknown[]) => void
 
 
+/**
+ * Creates a new store.
+ * @param initialState - The initial state of the store.
+ * @param actions - Optional actions for the store.
+ * @returns The created store.
+ */
 export const createStore = <T>(
   initialState: Partial<T>,
   actions?: Record<string, ActionHandler<T>>,
@@ -36,9 +77,18 @@ export const createStore = <T>(
   let currentState: Partial<T> = initialState
   const listeners = new Set<Listener<T>>()
 
+  /**
+   * Gets the current state of the store.
+   * @returns The current state of the store.
+   */
   const getState = () => currentState
 
   // TODO debounce, batch? what is the meaningful time between setState ofr UI to be rendered and registerd by User?
+  /**
+   * Sets the state of the store.
+   * @param newState - The new state to set.
+   * @returns A promise that resolves to the new state.
+   */
   const setState = async (newState: Partial<T>) => {
     currentState = newState
 
@@ -63,16 +113,35 @@ export const createStore = <T>(
     return currentState
   }
 
+  /**
+   * Represents the basic API of the store.
+   */
   const storeBaseicApi: Store<T> = {
+    /**
+     * Get the current state of the store.
+     * @returns The current state of the store.
+     */
     getState,
+    /**
+     * Set the state of the store.
+     * @param state - The new state to set.
+     * @returns A promise that resolves to the new state.
+     */
     setState,
+    /**
+     * Subscribe a listener to the store.
+     * @param listener - The listener function to be subscribed.
+     * @returns A function to unsubscribe the listener.
+     */
     subscribe: (listener: Listener<T>) => {
       listeners.add(listener)
       return () => listeners.delete(listener)
     },
   }
 
-
+  /**
+   * Resolves the actions and creates action handlers.
+   */
   const resolvedActions: Record<string, ActionHandlerCaller> | null | undefined
     = actions ? Object.entries(actions)?.reduce(
       (
@@ -85,6 +154,9 @@ export const createStore = <T>(
       {},
     ) : null
 
+  /**
+   * Represents the store combined with actions.
+   */
   const storeCombinedWithActions = {
     ...storeBaseicApi,
     ...(resolvedActions ? { actions: { ...resolvedActions } } : {}),
