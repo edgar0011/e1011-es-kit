@@ -1,26 +1,25 @@
 import { ActionHandler, Store, StoreWithActions, createStore } from './store.vanillajs'
 
 
-export type DataState<T> = {
+export type DataState<T, ES = any> = {
   dataId: string
   isLoading: boolean
   error?: unknown
   data?: T
+  other?: ES
 }
 
-// type CreateDataStoreType = <T>(dataId: string) => StoreWithActions<DataState<T>>
 
-
-type Load<T> = (
-  getState: Store<DataState<T>>['getState'],
-  setState: Store<DataState<T>>['setState'],
+type Load<T, ES> = (
+  getState: Store<DataState<T, ES>>['getState'],
+  setState: Store<DataState<T, ES>>['setState'],
   dataPromise: unknown | Promise<unknown>,
-) => Promise<Partial<DataState<T>>>
+) => Promise<Partial<DataState<T, ES>>>
 
 
-type LoadHandler<T> = (
+type LoadHandler<T, ES> = (
   dataPromise: unknown | Promise<unknown>,
-) => Promise<Partial<DataState<T>>>
+) => Promise<Partial<DataState<T, ES>>>
 
 /**
  * Creates a data store with actions.
@@ -29,9 +28,11 @@ type LoadHandler<T> = (
  * @returns The created data store with actions.
  */
 export const createDataStore
-= <T>(dataId: string, actions?: Record<string, ActionHandler<DataState<T>>>): StoreWithActions<DataState<T>>
-& { actions: { load: LoadHandler<T> } } => {
-  const loadActions: { load: Load<T> } = {
+= <T, ES = any>(
+  dataId: string,
+  actions?: Record<string, ActionHandler<DataState<T, ES>>>): StoreWithActions<DataState<T, ES>>
+& { actions: { load: LoadHandler<T, ES> } } => {
+  const loadActions: { load: Load<T, ES> } = {
     ...actions,
     /**
      * Loads data into the data store.
@@ -41,11 +42,11 @@ export const createDataStore
      * @returns A promise that resolves to the updated state of the data store.
      */
     load: async (
-      getState: Store<DataState<T>>['getState'],
-      setState: Store<DataState<T>>['setState'],
+      getState: Store<DataState<T, ES>>['getState'],
+      setState: Store<DataState<T, ES>>['setState'],
       dataPromise: unknown | Promise<unknown>,
     ) => {
-      const dataState: Partial<DataState<T>> = {}
+      const dataState: Partial<DataState<T, ES>> = {}
 
       setState({ isLoading: true })
 
@@ -62,10 +63,10 @@ export const createDataStore
     },
   }
 
-  return (createStore<DataState<T>>({
+  return (createStore<DataState<T, ES>>({
     dataId,
     isLoading: false,
-  }, loadActions)) as StoreWithActions<DataState<T>>
-  & { actions: { load: LoadHandler<T> } }
+  }, loadActions)) as StoreWithActions<DataState<T, ES>>
+  & { actions: { load: LoadHandler<T, ES> } }
 }
 
