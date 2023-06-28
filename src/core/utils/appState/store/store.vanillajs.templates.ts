@@ -29,7 +29,7 @@ type LoadHandler<T> = (
  * @returns The created data store with actions.
  */
 export const createDataStore
-= <T>(dataId: string, actions?: Record<string, ActionHandler<T>>): StoreWithActions<DataState<T>>
+= <T>(dataId: string, actions?: Record<string, ActionHandler<DataState<T>>>): StoreWithActions<DataState<T>>
 & { actions: { load: LoadHandler<T> } } => {
   const loadActions: { load: Load<T> } = {
     ...actions,
@@ -45,7 +45,7 @@ export const createDataStore
       setState: Store<DataState<T>>['setState'],
       dataPromise: unknown | Promise<unknown>,
     ) => {
-      const re: Partial<DataState<T>> = {}
+      const dataState: Partial<DataState<T>> = {}
 
       setState({ isLoading: true })
 
@@ -54,11 +54,11 @@ export const createDataStore
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        re.data = response?.data || response
+        dataState.data = response?.data || response
       } catch (error) {
-        re.error = error
+        dataState.error = error
       }
-      return setState({ ...re, isLoading: false })
+      return setState({ ...dataState, isLoading: false })
     },
   }
 
