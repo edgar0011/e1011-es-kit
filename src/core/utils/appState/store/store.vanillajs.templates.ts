@@ -1,13 +1,12 @@
 import { ActionHandler, Store, StoreWithActions, createStore } from './store.vanillajs'
 
 
-export type DataState<T, ES = any> = {
+export type DataState<T, ES = Record<string, any>> = {
   dataId: string
   isLoading: boolean
   error?: unknown
   data?: T
-  other?: ES
-}
+} & Partial<ES>
 
 
 type Load<T, ES> = (
