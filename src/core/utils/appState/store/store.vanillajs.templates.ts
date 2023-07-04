@@ -1,22 +1,25 @@
 import { ActionHandler, Store, StoreWithActions, createStore } from './store.vanillajs'
 
 
-export type DataState<T, ES = Record<string, any>> = {
+type DefaultES = { [key: string]: any }
+
+
+export type DataState<T, ES = DefaultES> = {
   dataId: string
   isLoading: boolean
   error?: unknown
   data?: T
-} & Partial<ES>
+} & ES
 
 
-type Load<T, ES> = (
+type Load<T, ES = DefaultES> = (
   getState: Store<DataState<T, ES>>['getState'],
   setState: Store<DataState<T, ES>>['setState'],
   dataPromise: unknown | Promise<unknown>,
 ) => Promise<Partial<DataState<T, ES>>>
 
 
-type LoadHandler<T, ES> = (
+type LoadHandler<T, ES = DefaultES> = (
   dataPromise: unknown | Promise<unknown>,
 ) => Promise<Partial<DataState<T, ES>>>
 
@@ -27,7 +30,7 @@ type LoadHandler<T, ES> = (
  * @returns The created data store with actions.
  */
 export const createDataStore
-= <T, ES = any>(
+= <T, ES = DefaultES>(
   dataId: string,
   actions?: Record<string, ActionHandler<DataState<T, ES>>>): StoreWithActions<DataState<T, ES>>
 & { actions: { load: LoadHandler<T, ES> } } => {
@@ -45,9 +48,9 @@ export const createDataStore
       setState: Store<DataState<T, ES>>['setState'],
       dataPromise: unknown | Promise<unknown>,
     ) => {
-      const dataState: Partial<DataState<T, ES>> = {}
+      const dataState: Partial<DataState<T, ES>> = getState()
 
-      setState({ isLoading: true })
+      setState({ ...dataState, isLoading: true })
 
       try {
         const response: unknown = await dataPromise
@@ -55,7 +58,9 @@ export const createDataStore
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         dataState.data = response?.data || response
-      } catch (error) {
+      } catch (error: unknown) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         dataState.error = error
       }
       return setState({ ...dataState, isLoading: false })
@@ -65,7 +70,6 @@ export const createDataStore
   return (createStore<DataState<T, ES>>({
     dataId,
     isLoading: false,
-  }, loadActions)) as StoreWithActions<DataState<T, ES>>
+  } as Partial<DataState<T, ES>>, loadActions)) as StoreWithActions<DataState<T, ES>>
   & { actions: { load: LoadHandler<T, ES> } }
 }
-
