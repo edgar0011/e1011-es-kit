@@ -57,6 +57,15 @@ export type ActionHandler<T> = (
   ...rest: unknown[]
 ) => void | Partial<T> | Promise<void | Partial<T>>
 
+/**
+ * Represents an reducer function.
+ */
+export type Reducer<T> = (
+  state: Partial<T>,
+  action: string,
+  ...rest: unknown[]
+) => Partial<T>
+
 
 /**
  * Represents a function that calls an action handler.
@@ -73,6 +82,7 @@ export type ActionHandlerCaller = (...args: unknown[]) => void
 export const createStore = <T>(
   initialState: Partial<T>,
   actions?: Record<string, ActionHandler<T>>,
+  reducer?: Reducer<T>,
 ): Store<T> | StoreWithActions<T> => {
   let currentState: Partial<T> = initialState
   const listeners = new Set<Listener<T>>()
@@ -149,7 +159,14 @@ export const createStore = <T>(
         [actionName, actionHandler]: [string, ActionHandler<T>],
       ) => ({
         ...aggregator,
-        [actionName]: async(...rest: unknown[]) => actionHandler(getState, setState, ...rest),
+        [actionName]: async(...rest: unknown[]) => {
+          const resultOfAction = await actionHandler(getState, setState, ...rest)
+
+          if (reducer) {
+            setState(reducer(getState(), actionName, ...rest))
+          }
+          return resultOfAction
+        },
       }),
       {},
     ) : null

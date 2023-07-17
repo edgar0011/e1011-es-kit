@@ -8,6 +8,7 @@ type CommentsState = {
   date: Date
   messages: string[]
   priority?: number
+  validatedMessage?: string
 }
 
 describe('Simple Tiny Store', () => {
@@ -132,11 +133,11 @@ describe('Simple Tiny Store', () => {
 
   it('actions for fast state handling, and should call subscribers', async () => {
     const store: StoreWithActions<CommentsState> = createStore<CommentsState>(initialState, {
-      addPriority: async (getState, setState) => {
+      addPriority: async (getState, setState, priority) => {
         await delay(300)
         setState({
           ...getState(),
-          priority: 3,
+          priority: (priority as number) || 3,
         })
       },
     }) as StoreWithActions<CommentsState>
@@ -153,7 +154,7 @@ describe('Simple Tiny Store', () => {
     })
 
     // async function needs to be awaited or expect in queued micro task
-    await store.actions?.addPriority?.()
+    await store.actions?.addPriority?.(11)
 
     // store.actions?.addPriority?.()
 
@@ -207,6 +208,80 @@ describe('Simple Tiny Store', () => {
     queueMicrotask(() => {
       expect(subscriber).toHaveBeenCalled()
       expect(subscriber).toHaveBeenCalledTimes(4)
+    })
+  })
+
+  it('reducer called for specific action', async () => {
+    expect.assertions(4)
+
+    const reducer = jest.fn((state, actionName, args) => {
+      console.log('reducer')
+      console.log('actionName', actionName)
+      console.log('state', state)
+      console.log('args', args)
+      switch (actionName) {
+        case 'addPriority': {
+          return {
+            ...state,
+            validatedMessage: `Priority added ${args}`,
+          }
+          break
+        }
+
+        case 'removePriority': {
+          return {
+            ...state,
+            validatedMessage: 'Priority removed!',
+          }
+          break
+        }
+
+        default: {
+          return state
+        }
+      }
+      return state
+    })
+
+    const store: StoreWithActions<CommentsState> = createStore<CommentsState>(initialState, {
+      addPriority: async (getState, setState, ...args: unknown[]) => {
+        await delay(250)
+        setState({
+          ...getState(),
+          priority: args[0] as unknown as number,
+        })
+      },
+      removePriority: (getState, setState) => {
+        setState({
+          ...getState(),
+          priority: 0,
+        })
+      },
+    }, reducer) as StoreWithActions<CommentsState>
+
+    console.log('store', store)
+
+    const subscriber = jest.fn((state: Partial<CommentsState>) => console.log('state subscriber, state:', state))
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    subscriber.selector = (state: CommentsState) => state?.priority
+    store.subscribe(subscriber)
+
+    // async function needs to be awaited or expect in queued micro task
+    await store.actions?.addPriority?.(3)
+
+    expect(store.getState().validatedMessage).toEqual('Priority added 3')
+
+    await store.actions?.removePriority?.()
+
+    console.log(store.getState())
+
+    expect(store.getState().validatedMessage).toEqual('Priority removed!')
+
+    queueMicrotask(() => {
+      expect(subscriber).toHaveBeenCalled()
+      expect(reducer).toHaveBeenCalledTimes(2)
     })
   })
 })
