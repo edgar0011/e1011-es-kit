@@ -18,7 +18,7 @@ export type SimpleComponentType = PropsWithChildren
 export const simpleStore: StoreWithActions<SimpleState> = createStore<SimpleState>({
   title: 'Inittial Title',
   count: 0,
-  data: [],
+  data: [1, 2, 3],
 }, {
   addData: async (getState, setState) => {
     console.log('addData start')
@@ -49,17 +49,20 @@ export const setRenderCount = (count: number) => {
 
 const titleSelector = (state: Partial<SimpleState>) => state.title
 const countSelector = (state: Partial<SimpleState>) => state.count
+// const dataSelector = (state: Partial<SimpleState>) => state.data
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const simpleSelector = createSelector(
   titleSelector,
   countSelector,
-  (title: SimpleState['title'], count: SimpleState['count']) => {
+  // dataSelector,
+  (title: SimpleState['title'], count: SimpleState['count'], data: SimpleState['data']) => {
     console.log('simpleSelector called')
     return {
       title,
       count,
+      data,
     }
   },
 )

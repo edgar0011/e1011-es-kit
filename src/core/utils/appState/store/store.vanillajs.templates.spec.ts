@@ -79,7 +79,3 @@ describe('Simple Tiny Store', () => {
     expect(data?.[0]?.body).toBeDefined()
   })
 })
-
-
-
-

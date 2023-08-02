@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-// import { delay } from '../../../helpers/other'
 import { act, fireEvent, render } from '../../../test/testRenderer'
 
 import { SimpleComponent, SimpleState, simpleStore, getRenderCount, setRenderCount } from './SimpleComponent'

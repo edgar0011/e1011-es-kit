@@ -40,6 +40,11 @@ export type Store<T> = {
    * @returns A function to unsubscribe the listener.
    */
   subscribe: (listener: Listener<T>) => () => void
+  /**
+   * Unubscribe a listener from the store.
+   * @param listener - The listener function to be unsubscribed.
+   */
+  unsubscribe: (listener: Listener<T>) => void
 }
 // & { actions?: { [actionName: string]: ActionHandlerCaller } }
 
@@ -146,6 +151,13 @@ export const createStore = <T>(
     subscribe: (listener: Listener<T>) => {
       listeners.add(listener)
       return () => listeners.delete(listener)
+    },
+    /**
+     * Unsubscribe a listener from the store.
+     * @param listener - The listener function to be unsubscribed.
+     */
+    unsubscribe: (listener: Listener<T>) => {
+      listeners.delete(listener)
     },
   }
 
