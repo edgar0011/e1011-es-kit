@@ -38,6 +38,19 @@
     "./css/*": "./dist/ui/styles/*",
     "./package.json": "./package.json"
   },
+  "typesVersions": {
+    "*": {
+      "hooks": [
+        "./dist/types/src/core/hooks/index.d.ts"
+      ],
+      "utils": [
+        "./dist/types/src/core/utils/index.d.ts"
+      ],
+      "ui": [
+        "./dist/types/src/core/ui/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "prepare": "husky install",
     "prepublish": "yarn clean && yarn build:lib",
