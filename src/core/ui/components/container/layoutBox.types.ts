@@ -26,4 +26,5 @@ export type LayoutBoxProps = PropsWithChildren & {
   className?: string
   tabIndex?: number
   ref?: Ref<HTMLDivElement> | undefined
+  onClick?: () => void
 } & Omit<CSSProperties, 'direction'>

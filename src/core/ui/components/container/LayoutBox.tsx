@@ -17,9 +17,16 @@ const resolveFlexProps = (value?: string): string | undefined => (value ? (flexV
 
 
 const LayoutBoxRefForwarded = forwardRef(({
-  style, children, tabIndex, className = '', ...props
+  style, children, tabIndex, className = '', onClick, ...props
 }: LayoutBoxProps, ref: LegacyRef<HTMLDivElement> | undefined) => {
   const { dataProps, restProps } = useParseProps(props)
+
+  const onClickProps = useMemo(() => (onClick ? ({
+    onClick,
+    onKeyDown: onClick,
+    role: 'button',
+    tabIndex: -1,
+  }) : {}), [onClick])
 
   const styles = useMemo(() => (
     {
@@ -38,6 +45,7 @@ const LayoutBoxRefForwarded = forwardRef(({
       className={`${(classes as any)['flexible-box']} ${className}`}
       style={styles as CSSProperties}
       {...dataProps}
+      {...onClickProps}
     >
       {children}
     </div>
