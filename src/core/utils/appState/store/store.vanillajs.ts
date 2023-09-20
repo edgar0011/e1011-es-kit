@@ -9,14 +9,17 @@ export type ListenerCallBack<T> = (state: Partial<T>) => void
 /**
  * Represents a selector function that transforms the store state.
  */
-export type Selector<T> = (state: Partial<T>) => Partial<T>;
+// export type Selector<T> = (state: Partial<T>) => Partial<T>;
+export type SelectedValueType<T> = Partial<T> | Partial<keyof T> | string | number | boolean | undefined;
+export type Selector<T> = (state: Partial<T>) => SelectedValueType<T>;
+
 
 /**
  * Represents a listener for the store.
  */
 export type Listener<T> = {
   selector?: Selector<T>
-  previousValue?: Partial<T>
+  previousValue?: SelectedValueType<T>
 } & ListenerCallBack<T>
 
 /**
@@ -116,13 +119,13 @@ export const createStore = <T>(
       // if listener.previousValue === selector(currentState) no call
       // else listener.previousValue = selector(currentState) and call
       // l1 cache, weak references?
-      const newValue: Partial<T> = selector ? selector(currentState) : currentState
+      const newValue: SelectedValueType<T> = selector ? selector(currentState) : currentState
 
       // TODO plugin equality
       if (listener.previousValue === undefined || listener.previousValue !== newValue) {
         listener.previousValue = newValue
         // eslint-disable-next-line no-await-in-loop
-        await listener(newValue)
+        await listener(newValue as Partial<T>)
       }
     }
     return currentState

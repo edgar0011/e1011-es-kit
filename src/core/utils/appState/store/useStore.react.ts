@@ -21,7 +21,7 @@ export function useStore<T>(
   // useSyncExternalStore((...args) => {
   //  args[0].selector?? store.subscribe(...args) }, () => selector(store.getState()));
 ): useStoreType<T> {
-  return useSyncExternalStore(store.subscribe, () => selector(store.getState()))
+  return useSyncExternalStore(store.subscribe, () => (selector(store.getState()) as Partial<T>))
 }
 
 /**

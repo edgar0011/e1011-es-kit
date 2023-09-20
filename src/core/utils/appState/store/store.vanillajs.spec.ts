@@ -189,11 +189,12 @@ describe('Simple Tiny Store', () => {
 
     console.log('store', store)
 
-    const subscriber = jest.fn((state: Partial<CommentsState>) => console.log('state subscriber, state:', state))
+    const subscriber: Listener<CommentsState>
+      = jest.fn(
+        (state: Partial<CommentsState>) => console.log('state subscriber, state:', state),
+      ) as Listener<CommentsState>
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    subscriber.selector = (state: CommentsState) => state?.priority
+    subscriber.selector = (state: Partial<CommentsState>) => state?.priority
     store.subscribe(subscriber)
 
     // async function needs to be awaited or expect in queued micro task
