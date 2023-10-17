@@ -20,6 +20,7 @@ const commonConfig = {
       use: ['sass'],
     }),
     babelPlugin({
+      babelHelpers: 'bundled',
       extensions,
       exclude: [
         'node_modules/**',
