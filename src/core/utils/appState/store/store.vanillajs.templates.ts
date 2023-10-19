@@ -1,4 +1,4 @@
-import { ActionHandler, Store, StoreWithActions, createStore } from './store.vanillajs'
+import { ActionHandler, Reducer, Store, StoreWithActions, createStore } from './store.vanillajs'
 
 
 type DefaultES = { [key: string]: any }
@@ -32,7 +32,10 @@ type LoadHandler<T, ES = DefaultES> = (
 export const createDataStore
 = <T, ES = DefaultES>(
   dataId: string,
-  actions?: Record<string, ActionHandler<DataState<T, ES>>>): StoreWithActions<DataState<T, ES>>
+  initialState?: Partial<ES>,
+  actions?: Record<string, ActionHandler<DataState<T, ES>>>,
+  reducer?: Reducer<DataState<T, ES>>,
+): StoreWithActions<DataState<T, ES>>
 & { actions: { load: LoadHandler<T, ES> } } => {
   const loadActions: { load: Load<T, ES> } = {
     ...actions,
@@ -68,8 +71,9 @@ export const createDataStore
   }
 
   return (createStore<DataState<T, ES>>({
+    ...initialState,
     dataId,
     isLoading: false,
-  } as Partial<DataState<T, ES>>, loadActions)) as StoreWithActions<DataState<T, ES>>
+  } as Partial<DataState<T, ES>>, loadActions, reducer)) as StoreWithActions<DataState<T, ES>>
   & { actions: { load: LoadHandler<T, ES> } }
 }

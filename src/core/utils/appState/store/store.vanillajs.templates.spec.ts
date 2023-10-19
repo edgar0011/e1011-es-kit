@@ -20,7 +20,7 @@ type PostsDataState = DataState<PostsData>
 
 describe('Simple Tiny Store', () => {
   it('should have state', () => {
-    const store = createDataStore<PostsData>('postsData1')
+    const store = createDataStore<PostsData>('postsData1', { someData: '13145354' })
 
     console.log('store', store)
     console.log('store.getState()', store.getState())
@@ -33,10 +33,11 @@ describe('Simple Tiny Store', () => {
     expect(store).toBeDefined()
     expect(store.getState().dataId).toEqual('postsData1')
     expect(store.getState().isLoading).toEqual(false)
+    expect(store.getState().someData).toEqual('13145354')
   })
 
   it('should load data into state', async () => {
-    const store = createDataStore<PostsData>('postsData2', {
+    const store = createDataStore<PostsData>('postsData2', {}, {
       init: async() => store.actions.load((async() => {
         await delay(1000)
         const data = await fetch('https://jsonplaceholder.typicode.com/posts').then((res) => res.json())
