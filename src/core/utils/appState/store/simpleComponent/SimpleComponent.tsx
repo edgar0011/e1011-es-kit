@@ -16,7 +16,7 @@ export type SimpleState = {
 export type SimpleComponentType = PropsWithChildren
 
 export const simpleStore: StoreWithActions<SimpleState> = createStore<SimpleState>({
-  title: 'Inittial Title',
+  title: 'Initial Title',
   count: 0,
   data: [1, 2, 3],
 }, {

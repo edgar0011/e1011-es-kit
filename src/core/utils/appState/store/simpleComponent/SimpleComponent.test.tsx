@@ -38,6 +38,7 @@ describe('SimpleComponent, bound to useStore', () => {
 
     expect(getRenderCount()).toEqual(3)
     setRenderCount(0)
+    rendered.unmount()
   })
 
   it('renders SimpleComponent with store, selectors', async () => {

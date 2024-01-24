@@ -54,7 +54,7 @@ export type Store<T> = {
 /**
  * Represents a store with additional actions.
  */
-export type StoreWithActions<T> = Store<T> & { actions: { [actionName: string]: ActionHandlerCaller } }
+export type StoreWithActions<T> = Store<T> & { actions: { [actionName: string]: ActionHandlerCaller<T> } }
 
 /**
  * Represents an action handler function.
@@ -78,7 +78,7 @@ export type Reducer<T> = (
 /**
  * Represents a function that calls an action handler.
  */
-export type ActionHandlerCaller = (...args: unknown[]) => void
+export type ActionHandlerCaller<T> = (...args: unknown[]) => void | Partial<T> | Promise<void | Partial<T>>
 
 
 /**
@@ -167,10 +167,10 @@ export const createStore = <T>(
   /**
    * Resolves the actions and creates action handlers.
    */
-  const resolvedActions: Record<string, ActionHandlerCaller> | null | undefined
+  const resolvedActions: Record<string, ActionHandlerCaller<T>> | null | undefined
     = actions ? Object.entries(actions)?.reduce(
       (
-        aggregator: Record<string, ActionHandlerCaller>,
+        aggregator: Record<string, ActionHandlerCaller<T>>,
         [actionName, actionHandler]: [string, ActionHandler<T>],
       ) => ({
         ...aggregator,
