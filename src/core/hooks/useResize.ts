@@ -3,7 +3,6 @@ import debounce from 'lodash-es/debounce'
 
 export type WrapperSize = {width: undefined | number; height: undefined | number}
 
-// const DefaultUnobserver = () => null
 
 type Unobserver = () => (null | void)
 
@@ -51,6 +50,7 @@ export const useResize = (debounceDelay = 250, callBack?: UseResizeCallBack): [
         height: containerRef?.current?.clientHeight,
       })
     }
+
     const unobserver = () => {
       resizeObserver?.unobserve?.(containerElement as Element)
     }
