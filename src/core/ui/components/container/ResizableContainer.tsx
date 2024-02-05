@@ -1,5 +1,6 @@
-import { memo, useState, useRef, useMemo, useLayoutEffect, RefObject, PropsWithChildren } from 'react'
-import debounce from 'lodash-es/debounce'
+import { memo, RefObject, PropsWithChildren } from 'react'
+
+import { useResize } from '../../../hooks/useResize'
 
 import { LayoutBox } from './LayoutBox'
 import { LayoutBoxProps } from './layoutBox.types'
@@ -15,12 +16,10 @@ export type ResizableContainerRenderProps = {
   measured: boolean
 }
 
-type WrapperSize = {width: undefined | number; height: undefined | number}
-
 const styles = {
   main: {
     position: 'absolute',
-    zIndex: 111,
+    zIndex: 1,
     left: 0,
     pointerEvents: 'none',
   },
@@ -31,49 +30,7 @@ const styles = {
 
 export const ResizableContainer = memo<ResizableContainerProps>(
   ({ children, debounceDelay = 250, ...props }: ResizableContainerProps) => {
-    const containerRef = useRef<HTMLDivElement>()
-
-    const lastResizeWidthRef = useRef<{ width: number; height: number }>({ width: 0, height: 0 })
-
-    const [containerSize, setContainerSize]
-    = useState<WrapperSize>({ width: undefined, height: undefined })
-
-    const debouncedResizeWrapper = useMemo(() => debounce((entries) => {
-      const newResizeWidth = entries[0].contentRect.width
-      const newResizeHeight = entries[0].contentRect.height
-
-      if (lastResizeWidthRef.current?.width === newResizeWidth
-      && lastResizeWidthRef.current?.height === newResizeHeight) {
-        return
-      }
-      lastResizeWidthRef.current = { width: newResizeWidth, height: newResizeHeight }
-
-      setContainerSize({
-        width: containerRef?.current?.clientWidth,
-        height: containerRef?.current?.clientHeight,
-      })
-    }, debounceDelay), [debounceDelay])
-
-    useLayoutEffect(() => {
-      let resizeObserver: ResizeObserver
-      let containerElement: HTMLElement
-
-      if (containerRef?.current) {
-        containerElement = containerRef?.current
-        resizeObserver = new ResizeObserver(debouncedResizeWrapper)
-        resizeObserver.observe(containerElement as Element)
-
-        setContainerSize({
-          width: containerRef?.current?.clientWidth,
-          height: containerRef?.current?.clientHeight,
-        })
-      }
-      return () => {
-        resizeObserver?.unobserve?.(containerElement as Element)
-      }
-    }, [debouncedResizeWrapper, containerRef])
-
-    // END RESIZING
+    const [containerRef, containerSize] = useResize(debounceDelay)
 
     return (
       <LayoutBox
@@ -108,4 +65,3 @@ export const ResizableContainer = memo<ResizableContainerProps>(
 )
 
 ResizableContainer.displayName = 'ResizableContainer'
-

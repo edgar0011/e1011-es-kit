@@ -3,7 +3,6 @@ import { memo, FC, CSSProperties, useMemo } from 'react'
 
 import classes from './divider.module.scss'
 
-
 type DividerProps = {
   orientation?: string
   margin?: string
@@ -19,7 +18,7 @@ type DividerProps = {
 
 export const DividerLine: FC<DividerProps> = memo<DividerProps>(({
   orientation, vertical,
-  color = '#999999',
+  color = 'var(--divider-line)',
   opacity,
   length = '80%', left = '0',
   width = '1px', height = '1px',

@@ -7,11 +7,17 @@ import classes from './CollapsibleContainer.module.scss'
 import { LayoutBoxProps } from './layoutBox.types'
 
 
+/**
+ * Mapping of element property names for calculating dimensions.
+ */
 const elementPropNameMap: Record<string, string> = {
   width: 'scrollWidth',
   height: 'scrollHeight',
 }
 
+/**
+ * Props for the CollapsibleContainer component.
+ */
 export type CollapsibleContainerProps = PropsWithChildren & LayoutBoxProps & {
   collapsed?: boolean
   collapseHandler?: (collapsed: boolean) => void
@@ -20,8 +26,14 @@ export type CollapsibleContainerProps = PropsWithChildren & LayoutBoxProps & {
   horizontal?: boolean
 } & CSSProperties
 
+/**
+ * CollapsibleContainer component.
+ *
+ * @type {React.FC<CollapsibleContainerProps>}
+ * @returns {React.ReactElement} The CollapsibleContainer.
+ */
 export const CollapsibleContainer: FC<CollapsibleContainerProps> = memo(({
-  collapsed = false, collapseHandler, children, horizontal = false, className = '', ...props
+  collapsed = false, collapseHandler, children, horizontal = false, className = '', id, ...props
 }: CollapsibleContainerProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [contentProp, setContentProp] = useState(0)
@@ -68,10 +80,12 @@ export const CollapsibleContainer: FC<CollapsibleContainerProps> = memo(({
 
   return (
     <div
+      id={`${(typeof id !== 'undefined' && id) || id}`}
       className={`${classes['collapsible-container']} ${classNames} ${className} `}
       ref={containerRef}
       style={styleProps}
       {...dataProps}
+      data-testid={dataProps.dataTestId || dataProps['data-testid'] || id}
     >
       {children}
     </div>
