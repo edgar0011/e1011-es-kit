@@ -1,4 +1,4 @@
-import { memo, RefObject, PropsWithChildren } from 'react'
+import { memo, RefObject, PropsWithChildren, ReactElement, FC } from 'react'
 
 import { useResize } from '../../../hooks/useResize'
 
@@ -8,6 +8,7 @@ import { LayoutBoxProps } from './layoutBox.types'
 
 export type ResizableContainerProps = LayoutBoxProps & PropsWithChildren<any> & {
   debounceDelay?: number
+  children?: (props: ResizableContainerRenderProps) => ReactElement
 }
 
 export type ResizableContainerRenderProps = {
@@ -28,7 +29,7 @@ const styles = {
   },
 }
 
-export const ResizableContainer = memo<ResizableContainerProps>(
+export const ResizableContainer: FC<ResizableContainerProps> = memo<ResizableContainerProps>(
   ({ children, debounceDelay = 250, ...props }: ResizableContainerProps) => {
     const [containerRef, containerSize] = useResize(debounceDelay)
 

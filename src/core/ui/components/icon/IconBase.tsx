@@ -6,16 +6,16 @@ import { unifyIconUrl } from './unifyIconUrl'
 
 export type IconBaseType = PropsWithChildren<unknown> & {
   id?: string
-  iconUrl?: string
-  minWidth?: string
-  minHeight?: string
-  width?: string
-  height?: string
-  size?: string
-  fontSize?: string
-  color?: string
-  className?: string
-  style?: CSSProperties
+  iconUrl?: string | null
+  minWidth?: string | null
+  minHeight?: string | null
+  width?: string | null
+  height?: string | null
+  size?: string | null
+  fontSize?: string | null
+  color?: string | null
+  className?: string | null
+  style?: CSSProperties | null
   onClick?: (event?: MouseEvent<HTMLSpanElement> | undefined) => void
 }
 
