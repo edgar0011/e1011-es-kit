@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect'
+
 import { delay } from '../../helpers/other'
 
 import { Listener, Store, StoreWithActions, createStore } from './store.vanillajs'
@@ -10,6 +12,17 @@ type CommentsState = {
   priority?: number
   validatedMessage?: string
 }
+
+const baseSelector = (state: Partial<CommentsState>) => state
+
+const messagesSelector = createSelector(
+  baseSelector,
+  (state: Partial<CommentsState>) => state.messages,
+)
+const prioritySelector = createSelector(
+  baseSelector,
+  (state: Partial<CommentsState>) => state.priority,
+)
 
 describe('Simple Tiny Store', () => {
   let initialState: CommentsState
@@ -25,6 +38,8 @@ describe('Simple Tiny Store', () => {
       ],
     }
   })
+
+
 
   it('should have state', () => {
     const store: Store<CommentsState> = createStore<CommentsState>(initialState)
@@ -106,11 +121,10 @@ describe('Simple Tiny Store', () => {
     // normall use outside of test, mocking
     // subscriberCallback.selector = ((state: Partial<CommentsState>) => ({ messages: state.messages }));
 
-    const subscriber = jest.fn(subscriberCallback)
+    const subscriber: Listener<CommentsState> = jest.fn(subscriberCallback)
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    subscriber.selector = ((state: Partial<CommentsState>) => ({ messages: state.messages }))
+    // subscriber.selector = ((state: Partial<CommentsState>) => ({ messages: state.messages }))
+    subscriber.selector = messagesSelector
 
     const unsubscribe = store.subscribe(subscriber)
 
@@ -120,7 +134,7 @@ describe('Simple Tiny Store', () => {
     })
 
     expect(subscriber).toHaveBeenCalled()
-    expect(subscriber).toHaveBeenCalledWith({ messages: ['Only one message'] })
+    expect(subscriber).toHaveBeenCalledWith(['Only one message'])
     unsubscribe()
 
     store.setState({
@@ -194,7 +208,8 @@ describe('Simple Tiny Store', () => {
         (state: Partial<CommentsState>) => console.log('state subscriber, state:', state),
       ) as Listener<CommentsState>
 
-    subscriber.selector = (state: Partial<CommentsState>) => state?.priority
+    // subscriber.selector = (state: Partial<CommentsState>) => state?.priority
+    subscriber.selector = prioritySelector
     store.subscribe(subscriber)
 
     // async function needs to be awaited or expect in queued micro task
@@ -262,11 +277,11 @@ describe('Simple Tiny Store', () => {
 
     console.log('store', store)
 
-    const subscriber = jest.fn((state: Partial<CommentsState>) => console.log('state subscriber, state:', state))
+    const subscriber: Listener<CommentsState>
+      = jest.fn((state: Partial<CommentsState>) => console.log('state subscriber, state:', state))
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    subscriber.selector = (state: CommentsState) => state?.priority
+    // subscriber.selector = (state: Partial<CommentsState>) => state?.priority
+    subscriber.selector = prioritySelector
     store.subscribe(subscriber)
 
     // async function needs to be awaited or expect in queued micro task

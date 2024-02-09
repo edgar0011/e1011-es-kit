@@ -10,7 +10,8 @@ export type ListenerCallBack<T> = (state: Partial<T>) => void
  * Represents a selector function that transforms the store state.
  */
 // export type Selector<T> = (state: Partial<T>) => Partial<T>;
-export type SelectedValueType<T> = Partial<T> | Partial<keyof T> | string | number | boolean | undefined;
+export type SelectedValueType<T> = Partial<T> | Partial<keyof T>
+| string | number | boolean | undefined | string[] | number[] | boolean[] | undefined[];
 export type Selector<T> = (state: Partial<T>) => SelectedValueType<T>;
 
 
