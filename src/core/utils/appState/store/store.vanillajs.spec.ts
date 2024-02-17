@@ -124,9 +124,10 @@ describe('Simple Tiny Store', () => {
     const subscriber: Listener<CommentsState> = jest.fn(subscriberCallback)
 
     // subscriber.selector = ((state: Partial<CommentsState>) => ({ messages: state.messages }))
-    subscriber.selector = messagesSelector
-
-    const unsubscribe = store.subscribe(subscriber)
+    // subscriber.selector = messagesSelector
+    // const unsubscribe = store.subscribe(subscriber)
+    // or Selector provided as 2nd argument to subscribe
+    const unsubscribe = store.subscribe(subscriber, messagesSelector)
 
     store.setState({
       ...initialState,

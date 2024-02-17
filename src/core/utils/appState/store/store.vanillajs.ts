@@ -41,9 +41,10 @@ export type Store<T> = {
   /**
    * Subscribe a listener to the store.
    * @param listener - The listener function to be subscribed.
+   * @param selector - Optional selector function to transform the store state.
    * @returns A function to unsubscribe the listener.
    */
-  subscribe: (listener: Listener<T>) => () => void
+  subscribe: (listener: Listener<T>, selector?: Selector<T>) => () => void
   /**
    * Unubscribe a listener from the store.
    * @param listener - The listener function to be unsubscribed.
@@ -152,7 +153,14 @@ export const createStore = <T>(
      * @param listener - The listener function to be subscribed.
      * @returns A function to unsubscribe the listener.
      */
-    subscribe: (listener: Listener<T>) => {
+    subscribe: (listener: Listener<T>, selector?: Selector<T>) => {
+      if (selector && listener.selector && listener.selector !== selector) {
+        throw new Error('Error, mismatchm selector, listener.selector !== selector.')
+      }
+      if (selector && !listener.selector) {
+        // eslint-disable-next-line no-param-reassign
+        listener.selector = selector
+      }
       listeners.add(listener)
       return () => listeners.delete(listener)
     },
