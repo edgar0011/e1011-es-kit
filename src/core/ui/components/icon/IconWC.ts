@@ -20,7 +20,7 @@ export type IconBaseWCType = {
 }
 
 @ced('icon-base')
-export class VCIcon extends HTMLElement {
+export class ESIcon extends HTMLElement {
   content: string | null
 
   mainElement: HTMLElement
@@ -52,7 +52,7 @@ export class VCIcon extends HTMLElement {
 
     this.innerHTML = template.innerHTML
 
-    resolveAttributes(this, VCIcon.observedAttributes)
+    resolveAttributes(this, ESIcon.observedAttributes)
 
     this.render()
   }
@@ -106,6 +106,6 @@ declare global {
   }
 }
 
-export const VCIconBase = {
-  VCIconBase: VCIcon,
+export const ESIconBase = {
+  ESIconBase: ESIcon,
 }

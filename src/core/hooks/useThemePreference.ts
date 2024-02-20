@@ -91,7 +91,7 @@ export const switchColorTheme = (isDark: boolean, htmlElement?: HTMLElement, fin
         element.shadowRoot?.querySelector(`.${oldClass}`)?.classList.remove(oldClass)
       })
 
-      document.querySelectorAll('vcmf-wrapper').forEach((element) => {
+      document.querySelectorAll('esmf-wrapper').forEach((element) => {
         element.shadowRoot?.querySelector(`.${oldClass}`)?.classList.add(newClass)
         element.shadowRoot?.querySelector(`.${oldClass}`)?.classList.remove(oldClass)
 
