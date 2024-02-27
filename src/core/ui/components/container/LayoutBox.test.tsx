@@ -11,7 +11,7 @@ import classes from './layoutBox.module.scss'
 test('renders LayoutBox with classes', async () => {
   const rendered = render(<LayoutBox direction='column' data-selected tabIndex={0} />)
 
-  const layoutBoxElements = rendered?.container.querySelectorAll(`.${classes['flexible-box']}`)
+  const layoutBoxElements = rendered?.container.querySelectorAll(`.${classes['layout-box']}`)
 
   const layoutBoxElement = layoutBoxElements[0] as HTMLElement
 

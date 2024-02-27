@@ -74,7 +74,7 @@ const LayoutBoxRefForwarded = forwardRef(({
       {...(id ? { id: `${id}` } : {})}
       ref={ref}
       tabIndex={tabIndex}
-      className={`${(classes as any)['flexible-box']} ${className}`}
+      className={`${(classes as any)['layout-box']} ${className}`}
       style={styles as CSSProperties}
       {...dataProps}
       data-testid={dataProps.dataTestId || dataProps['data-testid'] || id}
