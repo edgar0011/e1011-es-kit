@@ -1,0 +1,35 @@
+@import 'src/styles/common.scss';
+
+.flowLayout {
+  overflow: auto;
+
+  .beforeContent {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .afterContent {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+:global {
+  // Apply dark theme
+  .cui-theme-dark {
+    :local {
+      .flowLayout {
+      }
+    }
+  }
+
+  // Apply light theme
+  .cui-theme-light {
+    :local {
+      .flowLayout {
+      }
+    }
+  }
+}

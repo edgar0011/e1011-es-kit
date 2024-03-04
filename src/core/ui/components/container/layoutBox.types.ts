@@ -1,4 +1,4 @@
-import { CSSProperties, PropsWithChildren, Ref } from 'react'
+import { CSSProperties, LegacyRef, PropsWithChildren } from 'react'
 
 /**
  * Enum representing the possible layout directions.
@@ -61,7 +61,7 @@ export type LayoutBoxProps = PropsWithChildren & {
   /** Tab index for keyboard navigation. */
   tabIndex?: number
   /** Ref for accessing the underlying DOM element. */
-  ref?: Ref<HTMLDivElement> | undefined
+  ref?: LegacyRef<HTMLDivElement> | undefined | null
   /** Callback function for click event. */
   onClick?: () => void
   /** If true, sets the layout direction to column. */

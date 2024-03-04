@@ -32,7 +32,7 @@ const resolveFlexProps = (value?: string): string | undefined => (value ? (flexV
  */
 const LayoutBoxRefForwarded = forwardRef(({
   id, style, children, tabIndex, className = '', onClick, column, ...props
-}: LayoutBoxProps, ref: LegacyRef<HTMLDivElement> | undefined) => {
+}: LayoutBoxProps, ref: LegacyRef<HTMLDivElement> | undefined | null) => {
   const { dataProps, restProps } = useParseProps(props)
 
   /**

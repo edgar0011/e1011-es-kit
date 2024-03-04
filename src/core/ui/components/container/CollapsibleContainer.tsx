@@ -18,7 +18,7 @@ const elementPropNameMap: Record<string, string> = {
 /**
  * Props for the CollapsibleContainer component.
  */
-export type CollapsibleContainerProps = PropsWithChildren & LayoutBoxProps & {
+export type CollapsibleContainerProps = PropsWithChildren & Omit<LayoutBoxProps, 'ref'> & {
   collapsed?: boolean
   collapseHandler?: (collapsed: boolean) => void
   children?: ReactNode
