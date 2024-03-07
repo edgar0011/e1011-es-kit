@@ -4,17 +4,21 @@
 import { act, fireEvent, render } from '../../../test/testRenderer'
 
 import {
-  SimpleComponent,
-  SimpleState, simpleStore, getRenderCount, setRenderCount,
-} from './SimpleComponent'
+  SimpleComponent2,
+  SimpleState, simpleStore2, getRenderCount, setRenderCount,
+} from './SimpleComponent2'
 
 
 describe('SimpleComponent, bound to useStore', () => {
-  const initState: Partial<SimpleState> = simpleStore.getState()
+  const initState: Partial<SimpleState> = simpleStore2.getState()
 
-  it('renders SimpleComponent with store', async () => {
-    expect.assertions(8)
-    const rendered = render(<SimpleComponent />)
+  console.log('initState', initState)
+
+  it('renders SimpleComponent2 with store, setState', async () => {
+    expect.assertions(7)
+    setRenderCount(0)
+    simpleStore2.setState(initState)
+    const rendered = render(<SimpleComponent2 />)
 
     const simpleComponentElement = rendered?.container.querySelector('div') as HTMLDivElement
 
@@ -34,21 +38,22 @@ describe('SimpleComponent, bound to useStore', () => {
     expect(dataElement.innerHTML).toEqual('')
 
     fireEvent(buttonElement, new MouseEvent('click', { bubbles: true, cancelable: true }))
-
-    expect(Number(countElement.innerHTML)).toEqual((initState?.count || 0) + 1)
-
     fireEvent(buttonElement, new MouseEvent('click', { bubbles: true, cancelable: true }))
 
-    expect(Number(countElement.innerHTML)).toEqual((initState?.count || 0) + 2)
+    console.log('simpleStore.getState()', simpleStore2.getState())
 
-    expect(getRenderCount()).toEqual(3)
+    expect(Number(countElement.innerHTML)).toEqual(111)
+
+    // only 2 times rendersm button click sets count to 111 always
+    expect(getRenderCount()).toEqual(2)
     setRenderCount(0)
     rendered.unmount()
   })
 
-  it('renders SimpleComponent with store, selectors', async () => {
+
+  it('renders SimpleComponent2 with store, selectors', async () => {
     expect.assertions(4)
-    const rendered = render(<SimpleComponent />)
+    const rendered = render(<SimpleComponent2 />)
 
     const simpleComponentElement = rendered?.container.querySelector('div') as HTMLDivElement
 
@@ -57,8 +62,8 @@ describe('SimpleComponent, bound to useStore', () => {
     console.log('titleElement.innerHTML', titleElement.innerHTML)
 
     act(() => {
-      simpleStore.setState({
-        ...simpleStore.getState(),
+      simpleStore2.setState({
+        ...simpleStore2.getState(),
         data: [1, 2, 3],
       })
     })
@@ -66,15 +71,15 @@ describe('SimpleComponent, bound to useStore', () => {
     expect(getRenderCount()).toEqual(1)
 
     act(() => {
-      simpleStore.setState({
-        ...simpleStore.getState(),
+      simpleStore2.setState({
+        ...simpleStore2.getState(),
         title: 'New Title',
       })
     })
 
     act(() => {
-      simpleStore.setState({
-        ...simpleStore.getState(),
+      simpleStore2.setState({
+        ...simpleStore2.getState(),
         title: 'New Title',
       })
     })
@@ -83,10 +88,10 @@ describe('SimpleComponent, bound to useStore', () => {
 
 
     await act(async () => {
-      await simpleStore.actions.addData()
+      await simpleStore2.actions.addData()
     })
     await act(async () => {
-      await simpleStore.actions.addData()
+      await simpleStore2.actions.addData()
     })
 
     console.log('titleElement.innerHTML', titleElement.innerHTML)
