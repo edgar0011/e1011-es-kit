@@ -11,6 +11,7 @@
     "@babel/preset-typescript"
   ],
   "plugins": [
+    "react-html-attrs",
     "transform-remove-console",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
@@ -19,6 +20,7 @@
   "env": {
     "production": {
       "plugins": [
+        "react-html-attrs",
         "transform-remove-console",
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
         ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
@@ -26,6 +28,7 @@
     },
     "test": {
       "plugins": [
+        "react-html-attrs",
         // "transform-remove-console",
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
         ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
