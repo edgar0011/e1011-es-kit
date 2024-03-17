@@ -10,20 +10,25 @@
     "@babel/preset-react",
     "@babel/preset-typescript"
   ],
+  "plugins": [
+    "transform-remove-console",
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
 
+  ],
   "env": {
     "production": {
       "plugins": [
         "transform-remove-console",
-        "babel-plugin-styled-components",
-        ["@babel/plugin-proposal-decorators", { "legacy": true }]
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
       ]
     },
     "test": {
       "plugins": [
         // "transform-remove-console",
-        "babel-plugin-styled-components",
-        ["@babel/plugin-proposal-decorators", { "legacy": true }]
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
       ]
     },
   }
