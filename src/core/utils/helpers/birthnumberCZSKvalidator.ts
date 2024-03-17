@@ -38,6 +38,8 @@ export const isValidModulo11 = (value: string | number): boolean => {
   return parseInt(controlDigit, 10) === mod
 }
 
+type RangeTupleType = [number, number, string, number]
+
 const monthRange = {
   ranges: [
     // M
@@ -48,7 +50,7 @@ const monthRange = {
     [51, 62, 'F', 50],
     // F
     [71, 82, 'F', 70],
-  ],
+  ] as RangeTupleType[],
   getRange(monthHint: number) {
     return this.ranges.find(([min, max]) => monthHint >= min && monthHint <= max)
   },
