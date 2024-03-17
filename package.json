@@ -58,6 +58,7 @@
     "build:lib": "yarn tsc && BABEL_ENV=production NODE_ENV=production rollup --config --environment INCLUDE_DEPS,BUILD:production",
     "build:css": "sass src/core/ui/styles:dist/ui/styles",
     "build": "rm -rf dist && yarn prepush && yarn build:lib && yarn build:css",
+    "build:test": "rm -rf dist && yarn build:lib && yarn build:css",
     "watch": "rollup --config --watch",
     "lint": "eslint src --ext js,jsx,ts,tsx",
     "lint:quiet": "eslint src --ext js,jsx,ts,tsx --quiet",

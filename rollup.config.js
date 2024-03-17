@@ -5,7 +5,7 @@ import jsonPlugin from '@rollup/plugin-json'
 import postcss from 'rollup-plugin-postcss'
 import terserPlugin from '@rollup/plugin-terser'
 
-// import pkg from './package.json'
+import pkg from './package.json'
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
@@ -59,6 +59,7 @@ export default [
       },
       {
         dir: 'dist/lib/esm',
+        // file: pkg.module,
         format: 'es',
         sourcemap: true,
         preserveModules: true,
