@@ -5,7 +5,7 @@ import jsonPlugin from '@rollup/plugin-json'
 import postcss from 'rollup-plugin-postcss'
 import terserPlugin from '@rollup/plugin-terser'
 
-import pkg from './package.json' assert { type: 'json' }
+// import pkg from './package.json' assert { type: 'json' }
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
