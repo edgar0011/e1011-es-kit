@@ -15,12 +15,14 @@
     "production": {
       "plugins": [
         "transform-remove-console",
+        "babel-plugin-styled-components",
         ["@babel/plugin-proposal-decorators", { "legacy": true }]
       ]
     },
     "test": {
       "plugins": [
         // "transform-remove-console",
+        "babel-plugin-styled-components",
         ["@babel/plugin-proposal-decorators", { "legacy": true }]
       ]
     },
