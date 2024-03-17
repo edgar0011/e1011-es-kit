@@ -13,7 +13,11 @@
   "plugins": [
     "react-html-attrs",
     "transform-remove-console",
+    "babel-plugin-transform-typescript-metadata",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-transform-class-properties", { "loose": true }],
+    ["@babel/plugin-proposal-private-methods", { "loose": true }],
+    ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
     ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
 
   ],
@@ -22,7 +26,11 @@
       "plugins": [
         "react-html-attrs",
         "transform-remove-console",
+        "babel-plugin-transform-typescript-metadata",
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["@babel/plugin-transform-class-properties", { "loose": true }],
+        ["@babel/plugin-proposal-private-methods", { "loose": true }],
+        ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
         ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
       ]
     },
@@ -30,7 +38,11 @@
       "plugins": [
         "react-html-attrs",
         // "transform-remove-console",
+        "babel-plugin-transform-typescript-metadata",
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["@babel/plugin-transform-class-properties", { "loose": true }],
+        ["@babel/plugin-proposal-private-methods", { "loose": true }],
+        ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
         ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
       ]
     },
