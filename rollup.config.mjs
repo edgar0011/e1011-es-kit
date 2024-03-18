@@ -56,6 +56,7 @@ export default [
         sourcemap: true,
         preserveModules: true,
         exports: 'named',
+        interop: 'auto',
       },
       {
         dir: 'dist/lib/esm',
@@ -78,6 +79,7 @@ export default [
         sourcemap: true,
         preserveModules: true,
         exports: 'named',
+        interop: 'auto',
       },
       {
         dir: 'dist/hooks/esm',
@@ -97,6 +99,7 @@ export default [
         format: 'cjs',
         sourcemap: true,
         preserveModules: true,
+        interop: 'auto',
       },
       {
         dir: 'dist/utils/esm',
@@ -118,6 +121,7 @@ export default [
         sourcemap: true,
         preserveModules: true,
         exports: 'named',
+        interop: 'auto',
       },
       {
         dir: 'dist/ui/esm',
