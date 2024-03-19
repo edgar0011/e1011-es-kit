@@ -51,15 +51,15 @@ const monthRange = {
     // F
     [71, 82, 'F', 70],
   ] as RangeTupleType[],
-  getRange(monthHint: number) {
+  getRange(monthHint: number): RangeTupleType | undefined {
     return this.ranges.find(([min, max]) => monthHint >= min && monthHint <= max)
   },
-  getGender(monthHint: number) {
+  getGender(monthHint: number): string | null {
     const range = this.getRange(monthHint)
 
     return range ? range[2] as string : null
   },
-  getMonth(monthHint: number) {
+  getMonth(monthHint: number): string {
     const range = this.getRange(monthHint)
 
     return String(range ? monthHint - (range[3] as number) : null).padStart(2, '0')

@@ -13,7 +13,7 @@ type CommentsState = {
   validatedMessage?: string
 }
 
-const baseSelector = (state: Partial<CommentsState>) => state
+const baseSelector = (state: Partial<CommentsState>): Partial<CommentsState> => state
 
 const messagesSelector = createSelector(
   baseSelector,

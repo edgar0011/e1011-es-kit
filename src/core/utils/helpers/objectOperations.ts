@@ -48,7 +48,7 @@ export const formatJsonString = (
   return `{${strValues.join(', ')}}`
 }
 
-const simpleIdentiy = (value: string | number) => `${value}`
+const simpleIdentiy = (value: string | number): string => `${value}`
 
 export const formatObj = (
   obj: Record<string, string | number>,
@@ -111,7 +111,7 @@ type TreeNode = {
 
 // ['app', ['user', 'dashboard', ['ui', ['header', 'footer', 'menu'], 'realTime']]]
 
-export const arrayToObjectTree = (itemsInTree: TreeNodeStr[]) => {
+export const arrayToObjectTree = (itemsInTree: TreeNodeStr[]): Record<string, TreeNode> => {
   let previousParent: TreeNode
 
   const innerMake = (items: TreeNodeStr[]): Record<string, TreeNode> => {

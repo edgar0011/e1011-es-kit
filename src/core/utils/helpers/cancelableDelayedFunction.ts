@@ -1,11 +1,11 @@
-export const cancelableSetInterval = (func: () => void, delay = 100) => {
+export const cancelableSetInterval = (func: () => void, delay = 100): () => void => {
   const timeoutInterval = setInterval(func, delay)
 
-  return () => clearInterval(timeoutInterval)
+  return (): void => clearInterval(timeoutInterval)
 }
 
-export const cancelableSetTimeout = (func: () => void, delay = 100) => {
+export const cancelableSetTimeout = (func: () => void, delay = 100): () => void => {
   const timeoutInterval = setTimeout(func, delay)
 
-  return () => clearTimeout(timeoutInterval)
+  return (): void => clearTimeout(timeoutInterval)
 }

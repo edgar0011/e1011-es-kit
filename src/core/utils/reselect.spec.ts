@@ -20,8 +20,8 @@ type TState = {
 describe('Select syntax', () => {
   let state: TState
 
-  const userSelector = (state: TState) => state.user
-  const postsSelector = (state: TState) => {
+  const userSelector = (state: TState): TState['user'] => state.user
+  const postsSelector = (state: TState): TState['posts'] => {
     console.log('postsSelector called')
     return state.posts
   }

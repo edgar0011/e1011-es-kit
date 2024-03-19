@@ -6,7 +6,7 @@ const cache: Map<TFunction, tValuFunction> = new Map()
 
 let resolvedUseTranslation = useTranslation
 
-export const setUseTranslation = (useTrans: any) => {
+export const setUseTranslation = (useTrans: any): void => {
   resolvedUseTranslation = useTrans
 }
 

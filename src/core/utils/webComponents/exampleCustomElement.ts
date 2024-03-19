@@ -4,7 +4,7 @@ import { ced } from './webComponent.utils'
 export class CustomTitle extends HTMLElement {
   text: string
 
-  static get observedAttributes() {
+  static get observedAttributes(): string[] {
     return ['text']
   }
 
@@ -14,7 +14,7 @@ export class CustomTitle extends HTMLElement {
     this.shadowRoot!.innerHTML = '<div class=\'title\'><b>Title</b><i><slot id=\'subtitle\'></slot></i></div>'
   }
 
-  attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
+  attributeChangedCallback(attrName: string, oldVal: string, newVal: string): void {
     switch (attrName) {
       case 'text': {
         this.text = newVal

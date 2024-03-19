@@ -38,7 +38,7 @@ describe('Simple Tiny Store', () => {
 
   it('should load data into state', async () => {
     const store = createDataStore<PostsData>('postsData2', {}, {
-      init: async() => store.actions.load((async() => {
+      init: async() => store.actions.load((async(): Promise<unknown> => {
         await delay(1000)
         const data = await fetch('https://jsonplaceholder.typicode.com/posts').then((res) => res.json())
 

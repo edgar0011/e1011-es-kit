@@ -4,21 +4,21 @@ import { useEffect } from 'react'
 const windowMatchMediaChangeEventType = 'change'
 
 export const observeThemePreference = (
-  getHtmlElement: () => HTMLElement = () => document.body,
-  switchCallback: (isDark: boolean) => void = (isDark: boolean) => isDark,
-) => {
-  const switchColorThemeHandler = (isDark: boolean) => {
+  getHtmlElement: () => HTMLElement = (): HTMLElement => document.body,
+  switchCallback: (isDark: boolean) => void = (isDark: boolean): boolean => isDark,
+): () => void => {
+  const switchColorThemeHandler = (isDark: boolean): void => {
     const htmlElement = getHtmlElement()
 
     switchColorTheme?.(isDark, htmlElement)
     switchCallback?.(isDark)
   }
 
-  const changeDarkColorThemeHandler = (event: MediaQueryListEvent) => {
+  const changeDarkColorThemeHandler = (event: MediaQueryListEvent): void => {
     switchColorThemeHandler(event.matches)
   }
 
-  const changeLightColorThemeHandler = (event: MediaQueryListEvent) => {
+  const changeLightColorThemeHandler = (event: MediaQueryListEvent): void => {
     switchColorThemeHandler(!event.matches)
   }
 
@@ -54,9 +54,9 @@ export const observeThemePreference = (
 }
 
 export const useThemePreference = (
-  getHtmlElement: () => HTMLElement = () => document.body,
-  switchCallback: (isDark: boolean) => void = (isDark: boolean) => isDark,
-) => {
+  getHtmlElement: () => HTMLElement = (): HTMLElement => document.body,
+  switchCallback: (isDark: boolean) => void = (isDark: boolean): boolean => isDark,
+): void => {
   useEffect(() => observeThemePreference(getHtmlElement, switchCallback), [getHtmlElement, switchCallback])
 }
 
@@ -69,7 +69,7 @@ export const baseThemes: {
   light: 'theme-light',
 }
 
-export const switchColorTheme = (isDark: boolean, htmlElement?: HTMLElement, findShadows = true) => {
+export const switchColorTheme = (isDark: boolean, htmlElement?: HTMLElement, findShadows = true): void => {
   const oldClass = isDark ? baseThemes.light : baseThemes.dark
   const newClass = isDark ? baseThemes.dark : baseThemes.light
 
@@ -106,7 +106,7 @@ export const switchColorTheme = (isDark: boolean, htmlElement?: HTMLElement, fin
   }
 }
 
-export const updateColorTheme = (isDark?: boolean, htmlElement?: HTMLElement) => {
+export const updateColorTheme = (isDark?: boolean, htmlElement?: HTMLElement): void => {
   let resolvedIsDark: boolean = isDark || false
 
   if (typeof document !== 'undefined' && isDark === undefined) {

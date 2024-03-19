@@ -41,11 +41,11 @@ export class ESIcon extends HTMLElement {
 
   color?: string | null
 
-  static get observedAttributes() {
+  static get observedAttributes(): string[] {
     return ['iconUrl', 'minWidth', 'minHeight', 'width', 'height', 'size', 'fontSize', 'color', 'className']
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     if (this.content || this.innerHTML) {
       this.content = this.content || this.innerHTML || this.getAttribute('content')
     }
@@ -57,7 +57,7 @@ export class ESIcon extends HTMLElement {
     this.render()
   }
 
-  attributeChangedCallback(attrName: string, oldVal: string | number | null, newVal: string | number | null) {
+  attributeChangedCallback(attrName: string, oldVal: string | number | null, newVal: string | number | null): void {
     if (attrName === 'className' || attrName === 'classname' || attrName === 'class') {
       if (typeof newVal === 'string') {
         this.classList.remove(newVal as string)
@@ -73,7 +73,7 @@ export class ESIcon extends HTMLElement {
     this.render()
   }
 
-  render = () => {
+  render = (): void => {
     this.mainElement = this.mainElement || this.querySelector('.icon-base') as HTMLElement
     if (!this.mainElement) {
       return

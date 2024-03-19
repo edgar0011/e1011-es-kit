@@ -11,7 +11,9 @@ export function useOutsideClick(
   callback?: CallbackFunction,
   handleClickOutside = defaultHandleClickOutside(element, callback),
 ): () => void {
-  const unsubscriber = useCallback(() => document.removeEventListener(EventName.Click, handleClickOutside), [])
+  const unsubscriber = useCallback(
+    () => document.removeEventListener(EventName.Click, handleClickOutside), [handleClickOutside],
+  )
 
   useEffect(() => {
     unsubscriber()
@@ -28,7 +30,7 @@ export function outsideClickHandler(
   callback?: CallbackFunction,
   handleClickOutside = defaultHandleClickOutside(element, callback),
 ): () => void {
-  const unsubscriber = () => document.removeEventListener(EventName.Click, handleClickOutside)
+  const unsubscriber = (): void => document.removeEventListener(EventName.Click, handleClickOutside)
 
   document.addEventListener(EventName.Click, handleClickOutside)
 

@@ -41,16 +41,14 @@ export class TinyStateMachineState implements ITinyStateMachineState {
     return this.#name
   }
 
-  subscribe = (listener: ListenerCallBack) => {
+  subscribe = (listener: ListenerCallBack): () => void => {
     this.#listeners.add(listener)
     return () => this.#listeners.delete(listener)
   }
 
-  unsubscribe = (listener: ListenerCallBack) => {
-    this.#listeners.delete(listener)
-  }
+  unsubscribe = (listener: ListenerCallBack): boolean => this.#listeners.delete(listener)
 
-  publish = (event: TinyStateMachineEvent) => {
+  publish = (event: TinyStateMachineEvent): void => {
     if (!this.#listeners?.size) {
       return
     }
@@ -60,9 +58,9 @@ export class TinyStateMachineState implements ITinyStateMachineState {
     }
   }
 
-  toString = () => `TinyStateMachineSate: ${this.#name}`
+  toString = (): string => `TinyStateMachineSate: ${this.#name}`
 
-  get [Symbol.toStringTag]() {
+  get [Symbol.toStringTag](): string {
     return `TinyStateMachineSate: ${this.#name}`
   }
 }
@@ -72,11 +70,11 @@ export interface ITinyStateMachine extends IPubSub {
   addState: (state: TinyStateMachineState) => void
   removeState: (state: TinyStateMachineState) => void
   currentState: undefined | TinyStateMachineState
-  gotoState: (state: TinyStateMachineState) => boolean
+  gotoState: (state: TinyStateMachineState) => void | boolean
 
 }
 
-export const createStates = (stateNames: string[]) => new Set(
+export const createStates = (stateNames: string[]): Set<TinyStateMachineState> => new Set(
   stateNames.map((name: string) => new TinyStateMachineState(name)),
 )
 
@@ -92,32 +90,32 @@ export class TinyStateMachine implements ITinyStateMachine {
     this.#listeners = new Set<ListenerCallBack>()
   }
 
-  addState = (state: TinyStateMachineState) => {
+  addState = (state: TinyStateMachineState): void => {
     this.#states.add(state)
   }
 
-  removeState = (state: TinyStateMachineState) => {
+  removeState = (state: TinyStateMachineState): void => {
     this.#states.delete(state)
   }
 
-  get states () {
+  get states (): Set<TinyStateMachineState> {
     return this.#states
   }
 
-  get currentState () {
+  get currentState (): undefined | TinyStateMachineState {
     return this.#currentState
   }
 
-  subscribe = (listener: ListenerCallBack) => {
+  subscribe = (listener: ListenerCallBack): () => void => {
     this.#listeners.add(listener)
     return () => this.#listeners.delete(listener)
   }
 
-  unsubscribe = (listener: ListenerCallBack) => {
+  unsubscribe = (listener: ListenerCallBack): void => {
     this.#listeners.delete(listener)
   }
 
-  publish = (event: TinyStateMachineEvent, state?: TinyStateMachineState) => {
+  publish = (event: TinyStateMachineEvent, state?: TinyStateMachineState): void => {
     if (!this.#listeners?.size) {
       return
     }
@@ -133,7 +131,7 @@ export class TinyStateMachine implements ITinyStateMachine {
   #getStateByState
     = (state: TinyStateMachineState): undefined | TinyStateMachineState => (this.#states.has(state) ? state : undefined)
 
-  gotoState = (state: TinyStateMachineState | string) => {
+  gotoState = (state: TinyStateMachineState | string): void | boolean => {
     const foundState = typeof state === 'string'
       ? this.#getStateByName(state as string)
       : this.#getStateByState(state as TinyStateMachineState)
@@ -177,6 +175,7 @@ export class TinyStateMachine implements ITinyStateMachine {
 
 
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const stateIterator = function* () {
   let operation: string
   let state: string = stateIterator.IS_RUNNING

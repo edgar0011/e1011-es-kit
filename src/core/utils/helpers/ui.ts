@@ -1,7 +1,8 @@
-export const noop = () => undefined
+export const noop = (): void => undefined
 
 
-export const mapSerReplacer = (key: string, value: unknown) => {
+export const mapSerReplacer
+= (key: string, value: unknown): unknown | { dataType: string; value: Array<unknown>} => {
   if (value instanceof Map) {
     return {
       dataType: 'Map',
@@ -12,7 +13,7 @@ export const mapSerReplacer = (key: string, value: unknown) => {
 }
 
 export type TClassName = string | boolean | null | undefined
-export const classNames = (...classes: TClassName[]) => classes
+export const classNames = (...classes: TClassName[]): string => classes
   .filter((className: TClassName) => (typeof className === 'string' && className !== undefined && className !== null))
   .filter(Boolean).join(' ')
 

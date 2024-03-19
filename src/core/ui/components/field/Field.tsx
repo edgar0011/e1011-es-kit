@@ -27,8 +27,8 @@ export type FileWrapperProps = PropsWithChildren<unknown> & {
 }
 
 export const FieldWrapper: FC<FileWrapperProps> = styled.div<FileWrapperProps>`
-  opacity: ${({ disabled, userDisabled }) => (disabled || userDisabled ? 0.5 : 1)};
-  pointer-events: ${({ disabled, userDisabled }) => (disabled || userDisabled ? 'none' : 'auto')};
+  opacity: ${({ disabled, userDisabled }): number => (disabled || userDisabled ? 0.5 : 1)};
+  pointer-events: ${({ disabled, userDisabled }): string => (disabled || userDisabled ? 'none' : 'auto')};
   flex: 1 1 auto;
   width: 100%;
   @media (min-width: 400px) {

@@ -42,13 +42,13 @@ export const simpleStore2: StoreWithActions<SimpleState> = createStore<SimpleSta
 let renderCount = 0
 
 export const getRenderCount = (): number => renderCount
-export const setRenderCount = (count: number) => {
+export const setRenderCount = (count: number): void => {
   renderCount = count
 }
 
 
-const titleSelector = (state: Partial<SimpleState>) => state.title
-const countSelector = (state: Partial<SimpleState>) => state.count
+const titleSelector = (state: Partial<SimpleState>): SimpleState['title'] | undefined => state.title
+const countSelector = (state: Partial<SimpleState>): SimpleState['count'] | undefined => state.count
 // const dataSelector = (state: Partial<SimpleState>) => state.data
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

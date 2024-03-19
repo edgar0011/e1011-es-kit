@@ -101,7 +101,7 @@ export const createStore = <T>(
    * Gets the current state of the store.
    * @returns The current state of the store.
    */
-  const getState = () => currentState
+  const getState = (): Partial<T> => currentState
 
   // TODO debounce, batch? what is the meaningful time between setState ofr UI to be rendered and registerd by User?
   /**
@@ -109,7 +109,7 @@ export const createStore = <T>(
    * @param newState - The new state to set.
    * @returns A promise that resolves to the new state.
    */
-  const setState = async (newState: Partial<T>) => {
+  const setState = async (newState: Partial<T>): Promise<Partial<T>> => {
     currentState = newState
 
     // eslint-disable-next-line no-restricted-syntax
@@ -183,7 +183,7 @@ export const createStore = <T>(
         [actionName, actionHandler]: [string, ActionHandler<T>],
       ) => ({
         ...aggregator,
-        [actionName]: async(...rest: unknown[]) => {
+        [actionName]: async(...rest: unknown[]): Promise<void | Partial<T>> => {
           const resultOfAction = await actionHandler(getState, setState, ...rest)
 
           if (reducer) {

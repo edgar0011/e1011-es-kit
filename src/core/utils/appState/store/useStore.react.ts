@@ -29,7 +29,7 @@ export function useStore<T>(
  */
 export function useStore<T>(
   store: Store<T> | StoreWithActions<T>,
-  selector: Selector<T> = (state: Partial<T>) => state,
+  selector: Selector<T> = (state: Partial<T>): Partial<T> => state,
   returnSetter = false,
   // TODO pass selector
   // useSyncExternalStore((...args) => {
@@ -62,7 +62,7 @@ export type useStoreApiType<T> = [
  */
 export function useStoreApi<T>(
   store: Store<T>,
-  selector: Selector<T> = (state: Partial<T>) => state,
+  selector: Selector<T> = (state: Partial<T>): Partial<T> => state,
 ): useStoreApiType<T> {
   return [
     useStore(store, selector),

@@ -33,7 +33,7 @@ export const converting
   console.log(descriptor)
   if (flag === 'invert') {
     const original = descriptor.value
-    const newValue = function newValue(...args: unknown[]) {
+    const newValue = function newValue(...args: unknown[]): unknown {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       return !original.apply(this, args)
@@ -52,13 +52,13 @@ export class Model {
   name = 'Model'
 
   @converting('invert')
-  validate(data: Record<string, unknown>) {
+  validate(data: Record<string, unknown>): boolean {
     console.log('validate', this.name, data)
     return true
   }
 
   @convertor
-  message(msg: string) {
+  message(msg: string): string {
     console.log('message', this.name, msg)
     return msg
   }

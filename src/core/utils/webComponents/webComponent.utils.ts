@@ -1,5 +1,5 @@
 /* custom elements define */
-export const ced = (name: string) => (
+export const ced = (name: string): (componentClass: typeof HTMLElement) => void => (
   componentClass: typeof HTMLElement,
 ) => {
   customElements.get(name) || customElements.define(name, componentClass)
@@ -31,7 +31,7 @@ export const createResolveAttribute = (
 export const resolveAttributes = (
   component: Element & Record<string, any>,
   attributes: ({ name: string; override: boolean; valueMap?: (value: unknown) => unknown } | string)[],
-) => {
+): void => {
   const resolver = createResolveAttribute(component)
 
   attributes.forEach((attribute) => {

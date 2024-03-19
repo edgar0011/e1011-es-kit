@@ -25,7 +25,7 @@ const props: { message: Message } = {
   },
 }
 
-const sayHello = (logger: ILogger) => {
+const sayHello = (logger: ILogger): void => {
   if (typeof logger.log === 'function') {
     logger.log(props.message)
   }

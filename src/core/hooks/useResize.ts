@@ -51,7 +51,7 @@ export const useResize = (debounceDelay = 250, callBack?: UseResizeCallBack): [
       })
     }
 
-    const unobserver = () => {
+    const unobserver = (): void => {
       resizeObserver?.unobserve?.(containerElement as Element)
     }
 

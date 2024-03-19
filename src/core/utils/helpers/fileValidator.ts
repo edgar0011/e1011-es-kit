@@ -105,7 +105,7 @@ export const validateCSVFile
   const reader = new FileReader()
 
   reader.readAsText(file)
-  reader.onloadend = () => {
+  reader.onloadend = (): void => {
     const data = reader.result ? reader.result.toString() : ''
 
     const { numColumns, lines } = parseCSVdata(data, columnDelimiter)
@@ -131,7 +131,7 @@ export const validateCSVFile
     callBack && callBack(errorsArray.length ? errorsArray : null)
   }
 
-  reader.onerror = (error) => {
+  reader.onerror = (error): void => {
     console.error(error)
   }
 }
@@ -149,7 +149,7 @@ export const validateSDFFile
   const reader = new FileReader()
 
   reader.readAsText(file)
-  reader.onloadend = () => {
+  reader.onloadend = (): void => {
     const data = reader.result ? reader.result.toString() : ''
 
     const { lines } = parseCSVdata(data, columnDelimiter)
@@ -162,7 +162,7 @@ export const validateSDFFile
     callBack && callBack(null)
   }
 
-  reader.onerror = (error) => {
+  reader.onerror = (error): void => {
     console.error(error)
   }
 }
@@ -180,7 +180,7 @@ export const validateJSONFile
   const reader = new FileReader()
 
   reader.readAsText(file)
-  reader.onloadend = () => {
+  reader.onloadend = (): void => {
     const data = reader.result ? reader.result.toString() : ''
 
     try {
@@ -203,7 +203,7 @@ export const validateJSONFile
     callBack && callBack(null)
   }
 
-  reader.onerror = (error) => {
+  reader.onerror = (error): void => {
     console.error(error)
   }
 }
