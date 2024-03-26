@@ -1,7 +1,9 @@
 export type Styles = {
-  afterContent: string
-  beforeContent: string
-  flowLayout: string
+  collapsed: string
+  'collapsible-container': string
+  expanded: string
+  horizontal: string
+  vertical: string
 };
 
 export type ClassNames = keyof Styles;

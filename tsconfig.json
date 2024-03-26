@@ -42,6 +42,23 @@
     "noUnusedParameters": false,
     "strictBindCallApply": true
    },
+   "paths": {
+      "ui": [
+        "/core/ui/*"
+      ],
+      "utils": [
+        "/core/utils/*"
+      ],
+      "constants": [
+        "/core/constants/*"
+      ],
+      "hooks": [
+        "/core/hooks/*"
+      ],
+      "core": [
+        "/core/*"
+      ],
+    },
    "exclude": [
      "node_modules",
    ],

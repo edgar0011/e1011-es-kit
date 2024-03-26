@@ -1,7 +1,7 @@
 export type Styles = {
-  afterContent: string
-  beforeContent: string
-  flowLayout: string
+  'divider-line': string
+  horizontal: string
+  vertical: string
 };
 
 export type ClassNames = keyof Styles;

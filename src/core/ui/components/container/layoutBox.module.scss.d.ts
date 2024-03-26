@@ -1,7 +1,5 @@
 export type Styles = {
-  afterContent: string
-  beforeContent: string
-  flowLayout: string
+  'layout-box': string
 };
 
 export type ClassNames = keyof Styles;

@@ -1,10 +1,10 @@
 import { memo, FC, useMemo, CSSProperties, forwardRef, LegacyRef } from 'react'
 
 import { useParseProps } from '../../../hooks/useParseProps'
+import { classNames } from '../../../utils'
 
-import { LayoutDirection, LayoutBoxProps } from './layoutBox.types'
 import classes from './layoutBox.module.scss'
-
+import { LayoutDirection, LayoutBoxProps } from './layoutBox.types'
 
 /**
  * Map of flex values for resolving flex alignment and justification.
@@ -74,7 +74,10 @@ const LayoutBoxRefForwarded = forwardRef(({
       {...(id ? { id: `${id}` } : {})}
       ref={ref}
       tabIndex={tabIndex}
-      className={`${(classes as any)['layout-box']} ${className}`}
+      className={classNames(
+        classes['layout-box'],
+        className,
+      )}
       style={styles as CSSProperties}
       {...dataProps}
       data-testid={dataProps.dataTestId || dataProps['data-testid'] || id}

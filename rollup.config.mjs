@@ -4,13 +4,18 @@ import commonjsPlugin from '@rollup/plugin-commonjs'
 import jsonPlugin from '@rollup/plugin-json'
 import postcss from 'rollup-plugin-postcss'
 import terserPlugin from '@rollup/plugin-terser'
+// not good for result bunlde, absolute path not transformed to relative inside bundle
+// import tsConfigPath from 'rollup-plugin-tsconfig-paths'
 
 // import pkg from './package.json' assert { type: 'json' }
+
+// TODO use rollup-plugin-peer-deps-external
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
 const commonConfig = {
   plugins: [
+    // tsConfigPath(),
     resolvePlugin({
       extensions,
     }),
