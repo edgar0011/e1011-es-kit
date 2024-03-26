@@ -1,8 +1,12 @@
-import { PropsWithChildren } from 'react'
+import { ComponentType, PropsWithChildren } from 'react'
 
-import { LayoutBoxProps } from '../container/layoutBox/layoutBox.types'
+export type ErrorBoundaryProps = PropsWithChildren & {
+  title?: string
+  text?: string
+  ErrorComponent?: ComponentType
+}
 
-export type ErrorBoundaryProps = LayoutBoxProps & PropsWithChildren & {
+export type DefaultErrorComponentProps = {
   title?: string
   text?: string
 }

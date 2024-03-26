@@ -16,9 +16,9 @@ const ThisThrowsErrorUI = (): ReactElement => {
   throw new Error('This does nothing, even no UI, what is this, am I inside an ErrorBoundary?')
 }
 
-const ErrorBoundaryTemplate: Story<ErrorBoundaryProps> = () => (
+const ErrorBoundaryTemplate: Story<ErrorBoundaryProps> = (args: ErrorBoundaryProps) => (
   <LayoutBox width='100%' height='100%' justify='center' align='center' direction='column'>
-    <ErrorBoundary>
+    <ErrorBoundary {...args}>
       <ThisThrowsErrorUI />
     </ErrorBoundary>
   </LayoutBox>
@@ -26,3 +26,9 @@ const ErrorBoundaryTemplate: Story<ErrorBoundaryProps> = () => (
 
 export const ErrorBoundaryBase = ErrorBoundaryTemplate.bind({})
 ErrorBoundaryBase.args = {}
+
+export const ErrorBoundaryCustomText = ErrorBoundaryTemplate.bind({})
+ErrorBoundaryCustomText.args = {
+  title: 'Error Custom Title',
+  text: 'Error Custom Text',
+}

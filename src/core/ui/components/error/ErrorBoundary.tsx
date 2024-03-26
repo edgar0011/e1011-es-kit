@@ -1,14 +1,11 @@
-import { FC, memo, PureComponent, ReactNode, PropsWithChildren, ComponentType } from 'react'
+import { FC, memo, PureComponent, ReactNode } from 'react'
 
 import { IconBase } from '../icon'
 import { LayoutBox } from '../container/layoutBox/LayoutBox'
 
 import classes from './errorBoundary.module.scss'
+import { DefaultErrorComponentProps, ErrorBoundaryProps } from './errorBoundary.types'
 
-
-type Props = PropsWithChildren<unknown> & {
-  ErrorComponent?: ComponentType
-}
 
 interface State {
   error?: Error
@@ -16,11 +13,6 @@ interface State {
   hasError: boolean
 }
 
-
-export type DefaultErrorComponentProps = {
-  title?: string
-  text?: string
-}
 
 export const DefaultErrorComponent: FC<DefaultErrorComponentProps>
 = memo(({ title, text }: DefaultErrorComponentProps) => (
@@ -47,8 +39,8 @@ export const DefaultErrorComponent: FC<DefaultErrorComponentProps>
 ))
 DefaultErrorComponent.displayName = 'DefaultErrorComponent'
 
-export class ErrorBoundary extends PureComponent<Props, State> {
-  constructor(props: Props) {
+export class ErrorBoundary extends PureComponent<ErrorBoundaryProps, State> {
+  constructor(props: ErrorBoundaryProps) {
     super(props)
     this.state = { hasError: false }
   }
@@ -66,12 +58,17 @@ export class ErrorBoundary extends PureComponent<Props, State> {
     this.setState({ hasError: true, error, errorInfo })
   }
 
-  render():ReactNode {
-    const { ErrorComponent = DefaultErrorComponent } = this.props
+  render(): ReactNode {
+    const { ErrorComponent = DefaultErrorComponent, title, text } = this.props
     const { hasError, error, errorInfo } = this.state
 
     if (hasError) {
-      return <ErrorComponent title={error?.toString() || 'Error'} text={`${JSON.stringify(errorInfo, null, 2)}`} />
+      return (
+        <ErrorComponent
+          title={title || error?.toString() || 'Error'}
+          text={text || `${JSON.stringify(errorInfo, null, 2)}`}
+        />
+      )
     }
 
     return this.props.children
