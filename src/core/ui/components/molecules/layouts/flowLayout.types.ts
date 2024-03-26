@@ -2,7 +2,7 @@
 import { ComponentType, FC, ReactNode } from 'react'
 
 import { CommonProps } from '../../../types/CommonProps'
-import { LayoutBoxProps } from '../../container/layoutBox.types'
+import { LayoutBoxProps } from '../../container/layoutBox/layoutBox.types'
 
 
 /**

@@ -2,8 +2,8 @@ import { memo, RefObject, PropsWithChildren, ReactElement, FC } from 'react'
 
 import { useResize } from '../../../hooks/useResize'
 
-import { LayoutBox } from './LayoutBox'
-import { LayoutBoxProps } from './layoutBox.types'
+import { LayoutBox } from './layoutBox/LayoutBox'
+import { LayoutBoxProps } from './layoutBox/layoutBox.types'
 
 
 export type ResizableContainerProps = LayoutBoxProps & PropsWithChildren<any> & {

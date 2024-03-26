@@ -5,13 +5,18 @@
     "@earlorg/eslint-config/base-typescript",
     "@earlorg/eslint-config/perf-react-jsx",
     "@earlorg/eslint-config/app-common",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:storybook/recommended"
   ],
   "rules": {
     "@typescript-eslint/no-empty-function": 0
   },
   "globals": {
     "React": "writable",
-    "ReactHookFormRef": "readonly"
+    "ReactHookFormRef": "readonly",
+    "EventListener": "readonly",
+    "JSX": "readonly",
+    "ESModule": "readonly",
+    "ForwardedRef": "readonly"
   }
 }

@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 
 import { useStore, useStoreWithSetterType } from '../useStore.react'
 import { StoreWithActions, createStore } from '../store.vanillajs'
-import { LayoutBox } from '../../../../ui/components/container/LayoutBox'
+import { LayoutBox } from '../../../../ui/components/container/layoutBox/LayoutBox'
 import { delay } from '../../../helpers/other'
 
 

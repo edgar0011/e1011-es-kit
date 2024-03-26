@@ -4,7 +4,7 @@ import { FC, useRef, useState, memo, ReactNode,
 import { useParseProps } from '../../../hooks/useParseProps'
 
 import classes from './CollapsibleContainer.module.scss'
-import { LayoutBoxProps } from './layoutBox.types'
+import { LayoutBoxProps } from './layoutBox/layoutBox.types'
 
 
 /**

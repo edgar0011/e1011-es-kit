@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '../../../utils/test/testRenderer'
+import { render } from '../../../../utils/test/testRenderer'
 
 import { LayoutBox } from './LayoutBox'
 import classes from './layoutBox.module.scss'

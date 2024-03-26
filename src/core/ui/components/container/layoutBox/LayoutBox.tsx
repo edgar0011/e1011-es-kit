@@ -1,7 +1,7 @@
 import { memo, FC, useMemo, CSSProperties, forwardRef, LegacyRef } from 'react'
 
-import { useParseProps } from '../../../hooks/useParseProps'
-import { classNames } from '../../../utils'
+import { useParseProps } from '../../../../hooks/useParseProps'
+import { classNames } from '../../../../utils/helpers/ui'
 
 import classes from './layoutBox.module.scss'
 import { LayoutDirection, LayoutBoxProps } from './layoutBox.types'
