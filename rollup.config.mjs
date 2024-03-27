@@ -6,6 +6,7 @@ import postcss from 'rollup-plugin-postcss'
 import terserPlugin from '@rollup/plugin-terser'
 // not good for result bunlde, absolute path not transformed to relative inside bundle
 // import tsConfigPath from 'rollup-plugin-tsconfig-paths'
+// import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 
 // import pkg from './package.json' assert { type: 'json' }
 
@@ -15,6 +16,7 @@ const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
 const commonConfig = {
   plugins: [
+    // peerDepsExternal(),
     // tsConfigPath(),
     resolvePlugin({
       extensions,
@@ -40,9 +42,7 @@ const commonConfig = {
     'ramda',
     'lodash-es',
     'dayjs',
-    'i18next',
     'core-js',
-    'react-i18next',
     'styled-components',
     'sanitize-html',
   ],
