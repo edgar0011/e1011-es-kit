@@ -60,13 +60,21 @@ export const useThemePreference = (
   useEffect(() => observeThemePreference(getHtmlElement, switchCallback), [getHtmlElement, switchCallback])
 }
 
-
-export const baseThemes: {
+type ThemeMap = {
   dark: string
   light: string
-} = {
+}
+
+let baseThemes: ThemeMap = {
   dark: 'theme-dark',
   light: 'theme-light',
+}
+
+
+export const getBaseThemes = (): ThemeMap => baseThemes
+
+export const setTHemeClassNames = (themes: ThemeMap): void => {
+  baseThemes = themes
 }
 
 export const switchColorTheme = (isDark: boolean, htmlElement?: HTMLElement, findShadows = true): void => {

@@ -6,7 +6,9 @@ import {
 
 // TODO Lukas Z, add spec/test for isBirthNumberValid
 export const isBirthNumberValid = (birthnumber: string, birthdate: string, gender: string): boolean => {
-  if (!isValidFormat(birthnumber) || !isValidModulo11(birthnumber)) return false
+  if (!isValidFormat(birthnumber) || !isValidModulo11(birthnumber)) {
+    return false
+  }
 
   const parsedBirthNumber = parseBirthNumber(birthnumber)
 

@@ -51,24 +51,30 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProps, State> {
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     // eslint-disable-next-line no-console
-    error && console.error(error)
+    !this.props.muted && error && console.error(error)
     // eslint-disable-next-line no-console
-    errorInfo && console.error(errorInfo)
-    // this.lastError = { error, errorInfo }
-    this.setState({ hasError: true, error, errorInfo })
+    !this.props.muted && errorInfo && console.error(errorInfo)
+
+    this.props?.onError?.({ error, errorInfo })
+
+    !this.props.muted && this.setState({ hasError: true, error, errorInfo })
   }
 
   render(): ReactNode {
-    const { ErrorComponent = DefaultErrorComponent, title, text } = this.props
+    const { ErrorComponent = DefaultErrorComponent, title, text, muted } = this.props
     const { hasError, error, errorInfo } = this.state
 
-    if (hasError) {
+    if (hasError && !muted) {
       return (
         <ErrorComponent
           title={title || error?.toString() || 'Error'}
           text={text || `${JSON.stringify(errorInfo, null, 2)}`}
         />
       )
+    }
+
+    if (hasError && muted) {
+      return null
     }
 
     return this.props.children
