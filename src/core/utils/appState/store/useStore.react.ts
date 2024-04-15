@@ -14,12 +14,12 @@ type returnSetterTrueType = true
 
 export function useStore<T>(
   store: Store<T> | StoreWithActions<T>,
-  selector: Selector<T>): useStoreType<T>
+  selector?: Selector<T>): useStoreType<T>
 
 export function useStore<T>(
   store: Store<T> | StoreWithActions<T>,
-  selector: Selector<T>,
-  returnSetter: returnSetterTrueType): useStoreWithSetterType<T>
+  selector?: Selector<T>,
+  returnSetter?: returnSetterTrueType): useStoreWithSetterType<T>
 /**
  * Custom hook to subscribe to a store and retrieve the selected state.
  * @param store - The store to subscribe to.
