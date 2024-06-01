@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { FC, ReactNode, memo, useMemo, useCallback, PropsWithChildren } from 'react'
-import styled from 'styled-components'
+import { FC, ReactNode, memo, useMemo, useCallback, PropsWithChildren, CSSProperties, createElement } from 'react'
 
+import { classNames } from '../../../utils/helpers/ui'
+
+import classes from './field.module.scss'
 import type { FieldError, IconComponentType } from './types'
 
 let iconColor: string | (() => string) = () => '#000000'
@@ -25,81 +27,6 @@ export type FileWrapperProps = PropsWithChildren<unknown> & {
   userDisabled?: boolean
   css?: string
 }
-
-export const FieldWrapper: FC<FileWrapperProps> = styled.div<FileWrapperProps>`
-  opacity: ${({ disabled, userDisabled }): number => (disabled || userDisabled ? 0.5 : 1)};
-  pointer-events: ${({ disabled, userDisabled }): string => (disabled || userDisabled ? 'none' : 'auto')};
-  flex: 1 1 auto;
-  width: 100%;
-  @media (min-width: 400px) {
-    flex: 1;
-  }
-  .label {
-    font-size: 0.8rem !important;
-    font-weight: normal;
-  }
-
-  .help {
-    text-align: left;
-  }
-
-  .mainControl {
-    flex: 1;
-    border-radius: 6px;
-    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.06);
-    will-change: box-shadow;
-    transition: box-shadow 250ms ease-in-out;
-    &:hover {
-      box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
-    }
-  }
-  button {
-    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
-  }
-  .select {
-    width: 100%;
-    flex: 1;
-    &::after {
-      border-color: #000000 !important;
-    }
-  }
-
-  .icon {
-    &.is-action {
-      cursor: pointer;
-      pointer-events: initial !important;
-    }
-  }
-
-  /* Chrome, Safari, Edge, Opera */
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  /* Firefox */
-  input[type=number] {
-    -moz-appearance: textfield;
-  }
-
-  .input[type=date]::-webkit-calendar-picker-indicator {
-    opacity:0;
-    -webkit-appearance: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 40px;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-  }
-
-  textarea {
-    resize: none;
-  }
-`
 
 type EventType = { target: any; type?: any } & Partial<Event>
 export interface FieldProps {
@@ -134,7 +61,7 @@ export interface FieldProps {
   options?: any[] | null
   creatable?: boolean
   async?: boolean
-  css?: string
+  style?: CSSProperties
   [key: string]: any
 }
 
@@ -164,12 +91,13 @@ export const Select: FC<SelectProps>
     )
   },
 )
+const TextAreaComponent = memo((props) => createElement('textarea', props))
 
-const InputComponent = styled.input``
-const TextAreaComponent = styled.textarea``
-const StyledFieldLabel = styled.label`
-  text-align: left;
-`
+TextAreaComponent.displayName = 'TextAreaComponent'
+
+const InputComponent = memo((props) => createElement('input', props))
+
+InputComponent.displayName = 'InputComponent'
 
 export const Field: FC<FieldProps> = memo<FieldProps>(({
   label,
@@ -197,7 +125,7 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
   rightIconClick,
   leftIconClick,
   options,
-  css,
+  style,
   ...props
 }: FieldProps) => {
   let Component: FC<any> = InputComponent
@@ -234,14 +162,17 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
   }, [value, defaultValue])
 
   return (
-    <FieldWrapper
-      className={`field ${className}`}
-      error={error}
-      disabled={disabled}
-      userDisabled={userDisabled}
-      css={css}
+    <div
+      className={classNames(
+        classes.field,
+        (disabled || userDisabled) && classes.disable,
+        className,
+      )}
+      // TODO fix
+      // error={error}
+      style={style}
     >
-      <StyledFieldLabel htmlFor={name} className='label'>{label}</StyledFieldLabel>
+      <label htmlFor={name} className='label'>{label}</label>
       <div className={`field ${addon ? 'has-addons' : ''}`}>
         <div
           className={`control mainControl ${iconLeft && !withoutComponent
@@ -316,7 +247,7 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
       </div>
       {helpTextInfo && <p className='help'>{helpTextInfo}</p>}
       {helpText && <p className={`help ${error ? 'is-danger' : ''}`}>{helpText}</p>}
-    </FieldWrapper>
+    </div>
   )
 })
 

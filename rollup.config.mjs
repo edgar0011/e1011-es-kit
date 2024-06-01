@@ -43,7 +43,6 @@ const commonConfig = {
     'lodash-es',
     'dayjs',
     'core-js',
-    'styled-components',
     'sanitize-html',
   ],
   watch: {

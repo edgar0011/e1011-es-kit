@@ -1,0 +1,82 @@
+.field {
+  opacity: 1;
+  pointer-events: auto;
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  flex: 1 1 auto;
+  width: 100%;
+  @media (min-width: 400px) {
+    flex: 1;
+  }
+  .label {
+    font-size: 0.8rem !important;
+    font-weight: normal;
+  }
+
+  .help {
+    text-align: left;
+  }
+
+  .mainControl {
+    flex: 1;
+    border-radius: 6px;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.06);
+    will-change: box-shadow;
+    transition: box-shadow 250ms ease-in-out;
+    &:hover {
+      box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+    }
+  }
+  button {
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
+  .select {
+    width: 100%;
+    flex: 1;
+    &::after {
+      border-color: #000000 !important;
+    }
+  }
+
+  .icon {
+    &.is-action {
+      cursor: pointer;
+      pointer-events: initial !important;
+    }
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  .input[type=date]::-webkit-calendar-picker-indicator {
+    opacity:0;
+    -webkit-appearance: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  label {
+    text-align: left;
+  }
+}

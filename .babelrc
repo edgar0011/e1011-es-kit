@@ -17,8 +17,7 @@
     ["@babel/plugin-transform-class-properties", { "loose": true }],
     ["@babel/plugin-proposal-private-methods", { "loose": true }],
     ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
-    "@babel/plugin-transform-async-to-generator",
-    ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
+    "@babel/plugin-transform-async-to-generator"
 
   ],
   "env": {
@@ -31,8 +30,7 @@
         ["@babel/plugin-transform-class-properties", { "loose": true }],
         ["@babel/plugin-proposal-private-methods", { "loose": true }],
         ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
-        "@babel/plugin-transform-async-to-generator",
-        ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
+        "@babel/plugin-transform-async-to-generator"
       ]
     },
     "test": {
@@ -44,8 +42,7 @@
         ["@babel/plugin-transform-class-properties", { "loose": true }],
         ["@babel/plugin-proposal-private-methods", { "loose": true }],
         ["@babel/plugin-proposal-private-property-in-object", { "loose": true }],
-        "@babel/plugin-transform-async-to-generator",
-        ["babel-plugin-styled-components", { "displayName": true, "pure": true }]
+        "@babel/plugin-transform-async-to-generator"
       ]
     },
   }

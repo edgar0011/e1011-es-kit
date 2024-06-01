@@ -112,9 +112,7 @@
     "@types/react": "^18.0.34",
     "@types/sanitize-html": "^2.6.1",
     "@types/shelljs": "^0.8.15",
-    "@types/styled-components": "^5.1.19",
     "babel-plugin-react-html-attrs": "^3.0.5",
-    "babel-plugin-styled-components": "^2.1.4",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "chalk-pipe": "^6.0.0",
@@ -147,7 +145,6 @@
     "ramda": "^0.27.1",
     "react": "^17.0.2 || ^18.2.0",
     "sanitize-html": "^2.6.1",
-    "styled-components": "^6.1.8",
     "uuid": "^9.0.1"
   },
   "peerDdependencies": {
@@ -156,7 +153,6 @@
     "lodash-es": "^4.17.21",
     "ramda": "^0.27.1",
     "react": "^17.0.2 || ^18.2.0",
-    "sanitize-html": "^2.6.1",
-    "styled-components": "^6.1.8"
+    "sanitize-html": "^2.6.1"
   }
 }
