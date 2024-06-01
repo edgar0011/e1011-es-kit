@@ -147,7 +147,8 @@
     "ramda": "^0.27.1",
     "react": "^17.0.2 || ^18.2.0",
     "sanitize-html": "^2.6.1",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "uuid": "^9.0.1"
   },
   "peerDdependencies": {
     "core-js": "^3.20.2",
