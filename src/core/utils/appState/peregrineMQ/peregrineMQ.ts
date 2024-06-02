@@ -2,6 +2,14 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { Callback, Config, PeregrineMQApi, SubscribersSet, UnsubscribeOptions } from './peregrineMQ.types'
 
+
+export class PeregrineMQClearError extends Error {
+  constructor() {
+    super('Clearing PeregrineMQ is not allowed. Please read the documentation for more information.')
+    this.name = 'PeregrineMQClearError'
+  }
+}
+
 /**
  * Represents a message queue with publish/subscribe functionality.
  */
@@ -31,19 +39,22 @@ export class PeregrineMQ implements PeregrineMQApi {
    */
   private addListener = (callback: Callback, channel: string): void => {
     const listener = this.listeners.get(callback)
-    // reference to the channel's subscribers set, so each listener know all places where it is subscribed
     const subscribersSet = this.channels.get(channel)
 
     if (subscribersSet) {
-      listener ? listener.push(subscribersSet) : this.listeners.set(callback, [subscribersSet])
+      if (listener) {
+        listener.push(subscribersSet)
+      } else {
+        this.listeners.set(callback, [subscribersSet])
+      }
     }
   }
 
   /**
    * Removes the callback from the listeners collection if it is not subscribed to any channels.
-   * @description Removes the calback only when it's ot presented in any other subscriberSet
+   * @description Removes the callback only when it is not present in any other subscriberSet
    * (Ref to Map<string, SubscribersSet>).
-   * @param callback The callback to remove form listeners.
+   * @param callback The callback to remove from listeners.
    */
   private removeListener = (callback: Callback): void => {
     const channelSubscriberSets = this.listeners.get(callback)
@@ -51,26 +62,29 @@ export class PeregrineMQ implements PeregrineMQApi {
 
     // eslint-disable-next-line no-restricted-syntax
     for (const channelSubscriberSet of channelSubscriberSets || []) {
-      // we have to check that callback is not present in any channel, if not we can remove listener
       isEmpty = !channelSubscriberSet.has(callback)
-      if (!isEmpty) { break }
+      if (!isEmpty) {
+        break
+      }
     }
 
-    isEmpty && this.listeners.delete(callback)
+    if (isEmpty) {
+      this.listeners.delete(callback)
+    }
   }
 
   /**
    * Publishes data to a channel.
    * @param channel The channel to publish the data to.
-   * @param isParrent Indicates if the channel is a parent channel.
+   * @param isParent Indicates if the channel is a parent channel.
    * @param data The data to publish.
    * @returns A boolean indicating if the publication was successful.
    */
-  private publishToChannel = (channel: string, isParrent: boolean, data?: unknown): boolean => {
+  private publishToChannel = (channel: string, isParent: boolean, data?: unknown): boolean => {
     const subscribersSet = this.channels.get(channel)
 
     if (!subscribersSet) {
-      return isParrent
+      return isParent
     }
 
     const iterator = subscribersSet[Symbol.iterator]()
@@ -158,7 +172,7 @@ export class PeregrineMQ implements PeregrineMQApi {
 
     // eslint-disable-next-line no-plusplus
     while (subscribersSet) {
-      if (subscribersSet?.[1]?.size === 0) {
+      if (subscribersSet[1]?.size === 0) {
         prunedChannels.push(subscribersSet[0])
         this.channels.delete(subscribersSet[0])
       }
@@ -179,16 +193,10 @@ export class PeregrineMQ implements PeregrineMQApi {
     if (subscribersSet && subscribersSet.size > 0) {
       const channelListeners = [...subscribersSet || []]
 
-      // remove all listeners from the channel
-      subscribersSet?.clear()
+      subscribersSet.clear()
 
       let index = channelListeners.length
 
-      /**
-       * remove all empty listeners from the listeners collection (all with Set(0))
-       * removeListener checks if the listener is subscribed to any other channel and if not removes
-       * it from the collection
-       */
       // eslint-disable-next-line no-plusplus
       while (index--) {
         this.removeListener(channelListeners[index])
@@ -209,16 +217,19 @@ export class PeregrineMQ implements PeregrineMQApi {
       const nestedChannels = channel.split('.')
 
       let { length } = nestedChannels
-
       let failed = false
 
       // eslint-disable-next-line no-plusplus
       while (length--) {
         const result = this.publishToChannel(
-          nestedChannels.slice(0, length + 1).join('.'), length !== nestedChannels.length - 1, data,
+          nestedChannels.slice(0, length + 1).join('.'),
+          length !== nestedChannels.length - 1,
+          data,
         )
 
-        !result && (failed = true)
+        if (!result) {
+          failed = true
+        }
       }
       return !failed
     }
@@ -260,11 +271,11 @@ export class PeregrineMQ implements PeregrineMQApi {
     if (channel) {
       const subscriberSet = this.channels.get(channel)
 
-      // remove callback from channel
       unsubscribed = subscriberSet ? subscriberSet.delete(callback) : false
-      prune && subscriberSet?.size === 0 && this.channels.delete(channel)
+      if (prune && subscriberSet?.size === 0) {
+        this.channels.delete(channel)
+      }
 
-      // remove callback from listeners, if it is not subscribed to any other channel
       this.removeListener(callback)
 
       return unsubscribed
@@ -273,12 +284,14 @@ export class PeregrineMQ implements PeregrineMQApi {
     const subscriberSetArray = this.listeners.get(callback) || []
 
     // remove callback form listeners and all channels
+    // TODO remove only if has
     // eslint-disable-next-line no-restricted-syntax
     for (const subscriberSet of subscriberSetArray) {
       unsubscribed = subscriberSet.delete(callback) as boolean
 
-      // remove channel if no subscribers when prune is forced
-      prune && subscriberSet.size === 0 && this.prune()
+      if (prune && subscriberSet.size === 0) {
+        this.prune()
+      }
     }
 
     this.listeners.delete(callback)
@@ -288,7 +301,6 @@ export class PeregrineMQ implements PeregrineMQApi {
 
   /**
    * Checks if a callback is subscribed to a specific channel or any channel.
-   *
    * @param callback The callback function to check.
    * @param channel Optional channel name to check subscription for.
    * @returns A boolean indicating if the callback is subscribed.
@@ -305,7 +317,6 @@ export class PeregrineMQ implements PeregrineMQApi {
 
   /**
    * Clears all channels and listeners.
-   *
    * @throws {Error} If clearing PeregrineMQ is not allowed.
    */
   clear = (): void => {
@@ -313,14 +324,13 @@ export class PeregrineMQ implements PeregrineMQApi {
       this.channels.clear()
       this.listeners.clear()
     } else {
-      throw new Error('Clearing PeregrineMQ is not allowed. Please read documentation for more info.')
+      throw new PeregrineMQClearError()
     }
   }
 
   /**
-   * Returns the specific instance of PeregrineMQ
-   *
-   * @returns A string identifier of the specific instance of PeregrineMQ
+   * Returns the specific instance of PeregrineMQ.
+   * @returns A string identifier of the specific instance of PeregrineMQ.
    */
   getId = (): string => this.id
 }

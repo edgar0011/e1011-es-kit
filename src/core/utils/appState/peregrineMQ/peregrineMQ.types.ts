@@ -1,34 +1,33 @@
-export type CallbackPayload = string | number | Record<any, any>
-export type Callback = (message: string, data?: CallbackPayload) => void
+export type CallbackPayload = string | number | Record<any, any>;
+export type Callback = (message: string, data?: CallbackPayload) => void;
 
-export type SubscribersSet = Set<Callback>
+export type SubscribersSet = Set<Callback>;
 
 export interface Config {
   /**
-   *  If true, enables automatic pruning of channels with no subscribers.
+   *  If true, enables automatic removal of channels without subscribers.
    */
   allowAutoPrune?: boolean
 
   /**
-   *  The interval in milliseconds at which to check for channels with no
-   *  subscribers.
+   *  The interval, in milliseconds, for checking channels with no subscribers.
    */
   pruneInterval?: number
 
   /**
-   * If true, will allow the use of clear method to remove all channels and listeners.
+   * If true, allows the use of the clear method to remove all channels and listeners.
    */
   allowClear?: boolean
 }
 
 export interface UnsubscribeOptions {
   /**
-   * Channel to unsubscribe from
+   * The channel to unsubscribe from.
    */
   channel?: string
 
   /**
-   * If true, will remove the channel from the collection when the last subscriber is removed
+   * If true, removes the channel from the collection when the last subscriber is removed.
    */
   prune?: boolean
 }
@@ -37,89 +36,83 @@ export interface PeregrineMQApi {
   /**
    * Sets the configuration options for a PeregrineMQ instance.
    *
-   * @param {Config} config - An object containing configuration options for the function.
+   * @param {Config} config - An object containing configuration options for the instance.
    * @return {void}
    */
   configure: (config: Config) => void
 
   /**
-   * Collection of all channels and their subscribers
-   * @function
+   * Retrieves a list of all channels and their subscribers.
+   *
    * @return { string[] }
    */
   getChannels: () => string[]
 
   /**
-   * Prunes all channels with no subscribers.
+   * Removes all channels that have no subscribers.
    *
-   * @function
-   * @returns {void}
+   * @return {void}
    */
   prune: () => void
 
   /**
-   * Removes a channel from the collection.
+   * Removes a specified channel from the collection.
    *
    * @param {string} channel - The name of the channel to remove.
-   * @returns {boolean} - Returns true if the channel was successfully removed, false otherwise.
+   * @return {boolean} - Returns true if the channel was successfully removed, otherwise false.
    */
   removeChannel: (channel: string) => boolean
 
   /**
-   * Publishes the message, passing the data to it's subscribers
-   * @function
-   * @param { String } channel The channel to publish
-   * @param {} data The data to pass to subscribers
-   * @return { Boolean }
+   * Publishes a message to a specified channel, passing the data to its subscribers.
+   *
+   * @param {string} channel - The channel to publish the message to.
+   * @param {unknown} [data] - The data to pass to subscribers.
+   * @return {boolean} - Returns true if the message was successfully published, otherwise false.
    */
   publish: (channel: string, data?: unknown) => boolean
 
   /**
-   * Subscribes the passed function to the passed message.
-   * Every returned token is unique and should be stored if you need to unsubscribe
-   * @function
-   * @param { String } channel The channel name to subscribe to
-   * @param { Function } callback The function to call when a new message is published
-   * @return { Function } The unsubscribe function
+   * Subscribes a function to a specified channel.
+   * The returned unsubscribe function is unique and should be stored for later use.
+   *
+   * @param {string} channel - The channel name to subscribe to.
+   * @param {Callback} callback - The function to call when a new message is published.
+   * @return {() => boolean} - The unsubscribe function.
    */
   subscribe: (channel: string, callback: Callback) => () => boolean
 
   /**
-   * Unsubscribes a callback from a channel. Returns true if the callback was successfully
-   * unsubscribed, false otherwise.
+   * Unsubscribes a callback from a channel.
+   * Returns true if the callback was successfully unsubscribed, otherwise false.
    *
-   * @param callback The callback to unsubscribe.
-   * @param channel (optional) The channel from which to unsubscribe the callback. If no channel is
-   * specified, the callback will be unsubscribed from all channels.
-   *
-   * @returns True if the callback was successfully unsubscribed, false otherwise.
+   * @param {Callback} callback - The callback to unsubscribe.
+   * @param {UnsubscribeOptions} [options] - Options for unsubscribing, including the channel.
+   * @return {boolean} - Returns true if the callback was successfully unsubscribed, otherwise false.
    */
   unsubscribe: (callback: Callback, options?: UnsubscribeOptions) => boolean
 
   /**
-   * Returns true if the specified callback is subscribed to the specified channel (or to any
-   * channel, if no channel is specified), false otherwise.
+   * Checks if a specified callback is subscribed to a specified channel (or any channel if not specified).
    *
-   * @param callback The callback to check for subscription.
-   * @param channel (optional) The channel to check for subscription. If no channel is specified, all
-   * channels will be checked.
-   *
-   * @returns True if the specified callback is subscribed to the specified channel (or to any
-   * channel, if no channel is specified), false otherwise.
+   * @param {Callback} callback - The callback to check for subscription.
+   * @param {string} [channel] - The channel to check for subscription. If not specified, all channels will be checked.
+   * @return {boolean} - Returns true if the callback is subscribed, otherwise false.
    */
   isSubscribed: (callback: Callback, channel?: string) => boolean
 
   /**
-   * Removes all channels and subsribers from collection
+   * Removes all channels and subscribers from the collection.
+   *
    * @function
    * @alias clear
    */
   clear: () => void
 
-    /**
-   * Returns the specific instance of PeregrineMQ
+  /**
+   * Retrieves the identifier for the specific instance of PeregrineMQ.
    *
-   * @returns A string identifier of the specific instance of PeregrineMQ
+   * @return {string} - A string identifier for the specific instance.
    */
-   getId: () => string
+  getId: () => string
 }

@@ -6,7 +6,7 @@ export enum TinyStateMachineEventType {
   REMOVED_FROM_QUEUE = 'removedFromQueue'
 }
 
-export type ListenerCallBack = (
+export type TinyStateMachineListenerCallBack = (
   stateEvent: TinyStateMachineEvent,
   state?: ITinyStateMachineState
 ) => void;
@@ -18,8 +18,8 @@ export class TinyStateMachineEvent extends Event {
 }
 
 interface IPubSub {
-  subscribe: (listener: ListenerCallBack) => () => void
-  unsubscribe: (listener: ListenerCallBack) => void
+  subscribe: (listener: TinyStateMachineListenerCallBack) => () => void
+  unsubscribe: (listener: TinyStateMachineListenerCallBack) => void
   publish: (...args: any[]) => void
 }
 
@@ -30,23 +30,23 @@ export interface ITinyStateMachineState extends IPubSub {
 export class TinyStateMachineState implements ITinyStateMachineState {
   #name: string
 
-  #listeners: Set<ListenerCallBack>
+  #listeners: Set<TinyStateMachineListenerCallBack>
 
   constructor(name: string) {
     this.#name = name
-    this.#listeners = new Set<ListenerCallBack>()
+    this.#listeners = new Set<TinyStateMachineListenerCallBack>()
   }
 
   get name(): string {
     return this.#name
   }
 
-  subscribe = (listener: ListenerCallBack): () => void => {
+  subscribe = (listener: TinyStateMachineListenerCallBack): () => void => {
     this.#listeners.add(listener)
     return () => this.#listeners.delete(listener)
   }
 
-  unsubscribe = (listener: ListenerCallBack): boolean => this.#listeners.delete(listener)
+  unsubscribe = (listener: TinyStateMachineListenerCallBack): boolean => this.#listeners.delete(listener)
 
   publish = (event: TinyStateMachineEvent): void => {
     if (!this.#listeners?.size) {
@@ -81,13 +81,13 @@ export const createStates = (stateNames: string[]): Set<TinyStateMachineState> =
 export class TinyStateMachine implements ITinyStateMachine {
   #states: Set<TinyStateMachineState>
 
-  #listeners: Set<ListenerCallBack>
+  #listeners: Set<TinyStateMachineListenerCallBack>
 
   #currentState: undefined | TinyStateMachineState
 
   constructor(states: Set<TinyStateMachineState>) {
     this.#states = states
-    this.#listeners = new Set<ListenerCallBack>()
+    this.#listeners = new Set<TinyStateMachineListenerCallBack>()
   }
 
   addState = (state: TinyStateMachineState): void => {
@@ -106,12 +106,12 @@ export class TinyStateMachine implements ITinyStateMachine {
     return this.#currentState
   }
 
-  subscribe = (listener: ListenerCallBack): () => void => {
+  subscribe = (listener: TinyStateMachineListenerCallBack): () => void => {
     this.#listeners.add(listener)
     return () => this.#listeners.delete(listener)
   }
 
-  unsubscribe = (listener: ListenerCallBack): void => {
+  unsubscribe = (listener: TinyStateMachineListenerCallBack): void => {
     this.#listeners.delete(listener)
   }
 

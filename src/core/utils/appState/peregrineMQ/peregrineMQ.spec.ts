@@ -6,6 +6,8 @@
 
 import { delay } from '../../helpers'
 
+import { PeregrineMQClearError } from './peregrineMQ'
+
 import peregrineMQ from './index'
 
 
@@ -80,7 +82,7 @@ describe('PeregrineMQ main spec', () => {
 
     expect(() => {
       peregrineMQ.clear()
-    }).toThrow(new Error('Clearing PeregrineMQ is not allowed. Please read documentation for more info.'))
+    }).toThrow(new PeregrineMQClearError())
   })
 
   it('should prune channels without listeners', () => {
