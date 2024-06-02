@@ -1,4 +1,5 @@
 import { StoryFn as Story, Meta } from '@storybook/react'
+import { useMemo } from 'react'
 
 import { LayoutBox } from '../../../ui/components'
 import { LayoutBoxProps } from '../../../ui'
@@ -38,13 +39,16 @@ const counterState: StoreWithActions<CounterState> = createStore<CounterState>(
 ) as StoreWithActions<CounterState>
 
 const ComponentA: Story<LayoutBoxProps> = ({ children, ...args }: LayoutBoxProps) => {
-  const { counter } = useStore(counterState)
+  const { counter, ...state } = useStore(counterState)
+
+  const isPending = useMemo(() => (state as any)['increase-pending'] || (state as any)['decrease-pending'], [state])
 
   return (
-    <LayoutBox width='100%' height='100%' justify='center' align='center' direction='column' {...args}>
+    <LayoutBox justify='center' align='center' direction='column' {...args}>
       ComponentA
       <div />
       counter: {counter}
+      {isPending && <span>Pending...</span>}
       <button type='button' onClick={counterState.actions.increase}>Increase</button>
       {children && children}
     </LayoutBox>
@@ -52,24 +56,46 @@ const ComponentA: Story<LayoutBoxProps> = ({ children, ...args }: LayoutBoxProps
 }
 
 const ComponentB: Story<LayoutBoxProps> = ({ children, ...args }: LayoutBoxProps) => {
-  const { counter } = useStore(counterState)
+  const { counter, ...state } = useStore(counterState)
+
+  const isPending = useMemo(() => (state as any)['increase-pending'] || (state as any)['decrease-pending'], [state])
 
   return (
-    <LayoutBox width='100%' height='100%' justify='center' align='center' direction='column' {...args}>
+    <LayoutBox justify='center' align='center' direction='column' {...args}>
       ComponentB
       <div />
       counter: {counter}
+      {isPending && <span>Pending...</span>}
       <button type='button' onClick={counterState.actions.decrease}>Decrease</button>
       {children && children}
     </LayoutBox>
   )
 }
 
+const ComponentC: Story<LayoutBoxProps> = ({ children, ...args }: LayoutBoxProps) => {
+  const counter = useStore(counterState, (state) => state.counter)
+
+  return (
+    <LayoutBox justify='center' align='center' direction='column' {...args}>
+      ComponentC
+      <div />
+      counter: {counter?.toString()}
+      {children && children}
+    </LayoutBox>
+  )
+}
+
+
 
 const StoreUseExampleTemplate: Story<any> = () => (
-  <LayoutBox width='800px' gap='10rem'>
-    <ComponentA />
-    <ComponentB />
+  <LayoutBox column width='100%' gap='10rem'>
+    <LayoutBox width='100%' gap='10rem' justify='center'>
+      <ComponentA />
+      <ComponentB />
+    </LayoutBox>
+    <LayoutBox width='100%' gap='10rem' justify='center'>
+      <ComponentC />
+    </LayoutBox>
   </LayoutBox>
 )
 

@@ -6,13 +6,7 @@ import { configure } from '@testing-library/react'
 
 global.React = React
 
-
-
-configure((existingConfig) => {
-  console.log('existingConfig')
-  console.log(existingConfig)
-  return {
-    ...existingConfig,
-    // getElementError: (message) => new Error(message),
-  }
-})
+configure((existingConfig) => ({
+  ...existingConfig,
+  getElementError: (message): Error => new Error(message),
+}))

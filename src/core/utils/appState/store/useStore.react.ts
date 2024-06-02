@@ -35,13 +35,13 @@ export function useStore<T>(
   // useSyncExternalStore((...args) => {
   //  args[0].selector?? store.subscribe(...args) }, () => selector(store.getState()));
 ): useStoreType<T> | useStoreWithSetterType<T> {
-  const getter = useSyncExternalStore(store.subscribe, () => (selector(store.getState()) as Partial<T>))
+  const selectedValues = useSyncExternalStore(store.subscribe, () => (selector(store.getState()) as Partial<T>))
 
   if (returnSetter) {
-    return [getter, store.setState] as useStoreWithSetterType<T>
+    return [selectedValues, store.setState] as useStoreWithSetterType<T>
   }
 
-  return getter as useStoreType<T>
+  return selectedValues as useStoreType<T>
 }
 
 /**

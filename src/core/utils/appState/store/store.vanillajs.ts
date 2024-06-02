@@ -1,6 +1,8 @@
 
 // TinyStore, inspired by https://github.com/jherr/syncexternalstore/blob/main/csr/src/store.js
 
+import { isFunctionAsync } from '../../helpers'
+
 /**
  * Represents the callback function for a store listener.
  */
@@ -161,6 +163,13 @@ export const createStore = <T>(
         // eslint-disable-next-line no-param-reassign
         listener.selector = selector
       }
+
+      if (listener.selector) {
+        // setting the previousValue for the next cache/equality check
+        // eslint-disable-next-line no-param-reassign
+        listener.previousValue = listener.selector(getState())
+      }
+
       listeners.add(listener)
       return () => listeners.delete(listener)
     },
@@ -184,12 +193,41 @@ export const createStore = <T>(
       ) => ({
         ...aggregator,
         [actionName]: async(...rest: unknown[]): Promise<void | Partial<T>> => {
-          const resultOfAction = await actionHandler(getState, setState, ...rest)
+          // TODO try to not call subscriber too many times becuase of -error and -pending values
+          const isAsync = isFunctionAsync(actionHandler as () => unknown)
 
-          if (reducer) {
-            setState(reducer(getState(), actionName, ...rest))
+          if (isAsync) {
+            setState({
+              ...getState(),
+              [`${actionName}-error`]: null,
+              [`${actionName}-pending`]: true,
+            })
           }
-          return resultOfAction
+
+          try {
+            const resultOfAction = await actionHandler(getState, setState, ...rest)
+
+            // TODO try to mutate state only once with the results, that means pass custom setState to action,
+            // so that it would matk pending and error already inside action
+            if (reducer) {
+              setState(reducer(getState(), actionName, ...rest))
+            }
+
+            if (isAsync) {
+              setState({ ...getState(), [`${actionName}-pending`]: false })
+            }
+
+            return resultOfAction
+          } catch (error) {
+            if (isAsync) {
+              setState({
+                ...getState(),
+                [`${actionName}-pending`]: false,
+                [`${actionName}-error`]: error,
+              })
+            }
+            throw error
+          }
         },
       }),
       {},

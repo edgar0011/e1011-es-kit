@@ -36,6 +36,7 @@ describe('Simple Tiny Store', () => {
         'message 2',
         'message 3',
       ],
+      priority: 0,
     }
   })
 
@@ -157,10 +158,11 @@ describe('Simple Tiny Store', () => {
       },
     }) as StoreWithActions<CommentsState>
 
-    console.log('store', store)
     // const subscriber = (state: Partial<CommentsState>) => console.log('state subscriber, state:', state);
 
-    const subscriber = jest.fn((state: Partial<CommentsState>) => console.log('state subscriber, state:', state))
+    const subscriber = jest.fn((state: Partial<CommentsState>) => {
+      console.log('state subscriber, state:', state)
+    })
     const unsubscribe = store.subscribe(subscriber)
 
     store.setState({
@@ -169,13 +171,22 @@ describe('Simple Tiny Store', () => {
     })
 
     // async function needs to be awaited or expect in queued micro task
-    await store.actions?.addPriority?.(11)
+    const promise = store.actions?.addPriority?.(11)
 
-    // store.actions?.addPriority?.()
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    expect(store.getState()['addPriority-pending']).toEqual(true)
+
+    await promise
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    expect(store.getState()['addPriority-pending']).toEqual(false)
 
     queueMicrotask(() => {
       expect(subscriber).toHaveBeenCalled()
-      expect(subscriber).toHaveBeenCalledTimes(2)
+      // async actiomn handler cause +2 additional setState calls (pending: true, pending: false)
+      expect(subscriber).toHaveBeenCalledTimes(2 + 2)
 
       unsubscribe()
 
@@ -184,7 +195,7 @@ describe('Simple Tiny Store', () => {
         messages: ['Only one message after unsibscribed'],
       })
 
-      expect(subscriber).toHaveBeenCalledTimes(2)
+      expect(subscriber).toHaveBeenCalledTimes(2 + 2)
     })
   })
 
@@ -202,11 +213,12 @@ describe('Simple Tiny Store', () => {
       },
     }) as StoreWithActions<CommentsState>
 
-    console.log('store', store)
-
     const subscriber: Listener<CommentsState>
       = jest.fn(
-        (state: Partial<CommentsState>) => console.log('state subscriber, state:', state),
+        (state: Partial<CommentsState>) => {
+          console.log('state subscriber, prioritySelector:', state)
+          console.log('state subscriber, store.getState():', store.getState())
+        },
       ) as Listener<CommentsState>
 
     // subscriber.selector = (state: Partial<CommentsState>) => state?.priority
@@ -222,8 +234,11 @@ describe('Simple Tiny Store', () => {
     await store.actions?.addPriority?.(5)
     await store.actions?.addPriority?.(4)
 
+    console.log('store.getState()', store.getState())
+
     queueMicrotask(() => {
       expect(subscriber).toHaveBeenCalled()
+      // Async action, but having selector to control when is subscriber calls does not change number of calls
       expect(subscriber).toHaveBeenCalledTimes(4)
     })
   })

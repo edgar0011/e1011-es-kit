@@ -45,3 +45,9 @@ export const debounce = (func: () => void, wait = 100, immediate = false): () =>
 export const delay = (delay: number): Promise<string> => new Promise((resolve) => {
   setTimeout(() => resolve(`delayed: ${delay}`), delay)
 })
+
+export const AsyncFunctionTemplate = (async (): Promise<void> => {}).constructor
+
+export const isFunctionAsync = (
+  func: () => unknown,
+): boolean => func.constructor === AsyncFunctionTemplate.prototype.constructor
