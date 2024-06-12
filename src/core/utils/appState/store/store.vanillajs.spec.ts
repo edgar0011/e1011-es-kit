@@ -175,13 +175,13 @@ describe('Simple Tiny Store', () => {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    expect(store.getState()['addPriority-pending']).toEqual(true)
+    expect(store.getState().addPriorityPending).toEqual(true)
 
     await promise
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    expect(store.getState()['addPriority-pending']).toEqual(false)
+    expect(store.getState().addPriorityPending).toEqual(false)
 
     queueMicrotask(() => {
       expect(subscriber).toHaveBeenCalled()

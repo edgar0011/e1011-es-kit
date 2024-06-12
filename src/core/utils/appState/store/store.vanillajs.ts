@@ -55,6 +55,7 @@ export type Store<T> = {
 }
 // & { actions?: { [actionName: string]: ActionHandlerCaller } }
 
+// TODO infer actionNames from createStore arguments
 /**
  * Represents a store with additional actions.
  */
@@ -85,6 +86,7 @@ export type Reducer<T> = (
 export type ActionHandlerCaller<T> = (...args: unknown[]) => void | Partial<T> | Promise<void | Partial<T>>
 
 
+type Actions<T> = { [key: string]: ActionHandler<T>}
 /**
  * Creates a new store.
  * @param initialState - The initial state of the store.
@@ -93,7 +95,7 @@ export type ActionHandlerCaller<T> = (...args: unknown[]) => void | Partial<T> |
  */
 export const createStore = <T>(
   initialState: Partial<T>,
-  actions?: Record<string, ActionHandler<T>>,
+  actions?: Actions<T>,
   reducer?: Reducer<T>,
 ): Store<T> | StoreWithActions<T> => {
   let currentState: Partial<T> = initialState
@@ -157,7 +159,7 @@ export const createStore = <T>(
      */
     subscribe: (listener: Listener<T>, selector?: Selector<T>) => {
       if (selector && listener.selector && listener.selector !== selector) {
-        throw new Error('Error, mismatchm selector, listener.selector !== selector.')
+        throw new Error('Error, mismatch selector, listener.selector !== selector.')
       }
       if (selector && !listener.selector) {
         // eslint-disable-next-line no-param-reassign
@@ -185,7 +187,7 @@ export const createStore = <T>(
   /**
    * Resolves the actions and creates action handlers.
    */
-  const resolvedActions: Record<string, ActionHandlerCaller<T>> | null | undefined
+  const resolvedActions: Actions<T> | null | undefined
     = actions ? Object.entries(actions)?.reduce(
       (
         aggregator: Record<string, ActionHandlerCaller<T>>,
@@ -193,14 +195,14 @@ export const createStore = <T>(
       ) => ({
         ...aggregator,
         [actionName]: async(...rest: unknown[]): Promise<void | Partial<T>> => {
-          // TODO try to not call subscriber too many times becuase of -error and -pending values
+          // TODO try to not call subscriber too many times becuase of Error and Pending values
           const isAsync = isFunctionAsync(actionHandler as () => unknown)
 
           if (isAsync) {
             setState({
               ...getState(),
-              [`${actionName}-error`]: null,
-              [`${actionName}-pending`]: true,
+              [`${actionName}Error`]: null,
+              [`${actionName}Pending`]: true,
             })
           }
 
@@ -214,7 +216,7 @@ export const createStore = <T>(
             }
 
             if (isAsync) {
-              setState({ ...getState(), [`${actionName}-pending`]: false })
+              setState({ ...getState(), [`${actionName}Pending`]: false })
             }
 
             return resultOfAction
@@ -222,8 +224,8 @@ export const createStore = <T>(
             if (isAsync) {
               setState({
                 ...getState(),
-                [`${actionName}-pending`]: false,
-                [`${actionName}-error`]: error,
+                [`${actionName}Pending`]: false,
+                [`${actionName}Error`]: error,
               })
             }
             throw error

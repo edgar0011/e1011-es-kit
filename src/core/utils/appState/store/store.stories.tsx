@@ -41,7 +41,7 @@ const counterState: StoreWithActions<CounterState> = createStore<CounterState>(
 const ComponentA: Story<LayoutBoxProps> = ({ children, ...args }: LayoutBoxProps) => {
   const { counter, ...state } = useStore(counterState)
 
-  const isPending = useMemo(() => (state as any)['increase-pending'] || (state as any)['decrease-pending'], [state])
+  const isPending = useMemo(() => (state as any).increasePending || (state as any).decreasePending, [state])
 
   return (
     <LayoutBox justify='center' align='center' direction='column' {...args}>
@@ -58,7 +58,7 @@ const ComponentA: Story<LayoutBoxProps> = ({ children, ...args }: LayoutBoxProps
 const ComponentB: Story<LayoutBoxProps> = ({ children, ...args }: LayoutBoxProps) => {
   const { counter, ...state } = useStore(counterState)
 
-  const isPending = useMemo(() => (state as any)['increase-pending'] || (state as any)['decrease-pending'], [state])
+  const isPending = useMemo(() => (state as any).increasePending || (state as any).decreasePending, [state])
 
   return (
     <LayoutBox justify='center' align='center' direction='column' {...args}>
