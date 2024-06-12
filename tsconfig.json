@@ -43,6 +43,12 @@
     "strictBindCallApply": true
    },
    "paths": {
+      "components": [
+        "/core/ui/components/*"
+      ],
+      "types": [
+        "/types/*"
+      ],
       "ui": [
         "/core/ui/*"
       ],
