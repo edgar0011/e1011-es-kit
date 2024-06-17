@@ -49,26 +49,23 @@ export const wrapPromise: wrapPromiseType = (promise: (() => Promise<any>) | Pro
   }
 }
 
+const DefaultLoader: React.ReactNode = (
+  <div className={classes.loader}>
+    <svg className='spinner' viewBox='0 0 50 50'>
+      <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='5' />
+    </svg>
+  </div>
+)
 
 export const LazyComponent: FC<LazyComponentProps>
-= memo<LazyComponentProps>(({ children, Component, LoaderJSX, ...props }: LazyComponentProps) => {
-  const Loader: React.ReactNode = useMemo(() => (
-    <div className={classes.loader}>
-      <svg className='spinner' viewBox='0 0 50 50'>
-        <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='5' />
-      </svg>
-    </div>
-  ), [])
-
-  return (
-    <ErrorBoundary>
-      <Suspense fallback={LoaderJSX || Loader}>
-        {Component && <Component {...props} />}
-        {children && children}
-      </Suspense>
-    </ErrorBoundary>
-  )
-})
+= memo<LazyComponentProps>(({ children, Component, LoaderJSX, ...props }: LazyComponentProps) => (
+  <ErrorBoundary>
+    <Suspense fallback={LoaderJSX || DefaultLoader}>
+      {Component && <Component {...props} />}
+      {children && children}
+    </Suspense>
+  </ErrorBoundary>
+))
 
 LazyComponent.displayName = 'LazyComponent'
 
