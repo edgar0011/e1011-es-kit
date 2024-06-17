@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { FC, memo, Suspense, lazy, ComponentType, PropsWithChildren, useRef, useMemo } from 'react'
+import { FC, memo, Suspense, lazy, ComponentType, PropsWithChildren, useRef, useMemo, ReactNode } from 'react'
 
 import { ErrorBoundary } from '../../error/ErrorBoundary'
 
@@ -49,7 +49,7 @@ export const wrapPromise: wrapPromiseType = (promise: (() => Promise<any>) | Pro
   }
 }
 
-const DefaultLoader: React.ReactNode = (
+const getDefaultLoader = (): ReactNode => (
   <div className={classes.loader}>
     <svg className='spinner' viewBox='0 0 50 50'>
       <circle className='path' cx='25' cy='25' r='20' fill='none' strokeWidth='5' />
@@ -60,7 +60,7 @@ const DefaultLoader: React.ReactNode = (
 export const LazyComponent: FC<LazyComponentProps>
 = memo<LazyComponentProps>(({ children, Component, LoaderJSX, ...props }: LazyComponentProps) => (
   <ErrorBoundary>
-    <Suspense fallback={LoaderJSX || DefaultLoader}>
+    <Suspense fallback={LoaderJSX || getDefaultLoader()}>
       {Component && <Component {...props} />}
       {children && children}
     </Suspense>
