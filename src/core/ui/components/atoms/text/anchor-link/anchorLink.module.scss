@@ -1,0 +1,23 @@
+@import 'src/styles/common.scss';
+
+.anchorLink {
+  text-decoration: none;
+  color: $blue;
+  font-size: 0.875rem;
+  &:hover:not(.disabled) {
+    text-decoration: underline;
+    color: $blue;
+  }
+  &.disabled {
+
+    pointer-events: none;
+    opacity: 0.6;
+  }
+  display: inline-flex;
+
+  span {
+    display: inline-flex;
+  }
+
+  gap: $cui-tiny-gap;
+}

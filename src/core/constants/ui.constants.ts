@@ -22,3 +22,10 @@ export enum KeyCode {
   Space = 32,
   Escape = 27,
 }
+
+export enum Alerts {
+  info = 'info',
+  success = 'success',
+  error = 'error',
+  warning = 'warning',
+}

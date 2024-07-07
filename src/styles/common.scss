@@ -1,0 +1,62 @@
+@import './_color-variables';
+
+$white: #F4F4F4;
+$black: #090A0A;
+
+$blue: #65C5F6;
+$blue-dark: #383D75;
+$blue-light: #b5e3fa;
+$gray: #707071;
+$gray-dark: #3D3D3D;
+$gray-light: #d1cfcf;
+
+$alert: #FF4949;
+$error: #FF4949;
+$success: #13CE66;
+$warning: #FFCC3D;
+$info: #2D8EFF;
+
+$yellow: #FDDA0D;
+$yellow-hover: #FFEA00;
+
+
+// reused calues
+$cui-micro-gap: 0.2rem;
+$cui-tiny-gap: 0.4rem;
+$cui-gap: 0.5rem;
+$cui-big-gap: 1rem;
+
+$cui-border-radius: 4px;
+$cui-border-radius-tiny: 2px;
+$cui-border-container-radius: 8px;
+$cui-border-container-radius-big: 16px;
+
+$container-shadow:  0px 4px 4px rgba(0, 0, 0, 0.16);
+$popup-shadow:  0px 10px 20px 4px rgb(0 0 0 / 15%);
+
+$cui-card-shadow: 0 5px 15px 0 rgba(28,37,39,0.1), 0 0 2px 0 rgba(0,0,0,0.1);
+$cui-card-shadow-hover: 0 15px 25px 0 rgba(28,37,39,0.2), 0 0 2px 0 rgba(0,0,0,0.1);
+$cui-hover-transition: 0.25s ease;
+// utility classes
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.text-nowrap {
+  white-space: nowrap !important;
+}
+.text-ellipsis {
+  text-overflow: ellipsis !important;
+}
+
+.text-truncate {
+  @extend .overflow-hidden;
+  @extend .text-nowrap;
+  @extend .text-ellipsis;
+}
+
+@mixin text-truncate() {
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+}

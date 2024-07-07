@@ -1,0 +1,26 @@
+.popup-modal-overlay {
+  z-index: 1;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(40 80 120 / 80%) !important;
+  pointer-events: all;
+  user-select: none;
+
+  will-change: opacity;
+  transition: opacity 450ms ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+
+  &[data-show] {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &[data-show='false'] {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

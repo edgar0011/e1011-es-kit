@@ -1,0 +1,61 @@
+@import 'src/styles/common.scss';
+
+.headline {
+  font-size: 28px;
+  line-height: 32px;
+}
+
+.headlineSecondary {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.headlineTertiary {
+  font-size: 18px;
+  line-height: 24x;
+}
+
+
+.paragraph {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 300;
+}
+
+.paragraphSmall {
+  @extend .paragraph;
+  font-size: 12px;
+}
+
+.paragraphBold {
+  @extend .paragraph;
+  font-weight: 600;
+}
+
+
+.paragraphBoldSmall {
+  @extend .paragraphBold;
+  @extend .paragraphSmall;
+}
+
+.link {
+  @include text-truncate;
+
+  text-decoration: none;
+  color: $blue;
+  display: inline;
+  gap: 4px;
+  flex-grow: 0;
+  max-width: 400px;
+  position: relative;
+  vertical-align: center;
+  &:hover:not(.disabled) {
+    text-decoration: underline;
+    color: $blue;
+  }
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+}

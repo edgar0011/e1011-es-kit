@@ -1,0 +1,89 @@
+// gray color palette
+$gray-100: #515757;
+$gray-200: #434747;
+$gray-300: #393B3B;
+$gray-400: #2D2F2F;
+$gray-500: #282A2A;
+$gray-600: #242626;
+$gray-700: #1B1D1D;
+$gray-800: #141515;
+$gray-900: #090A0A;
+
+// white color palette
+$white-000: #FFFFFF;
+$white-100: #F4F4F4;
+$white-200: #D9D9D9;
+$white-300: #C5C6C6;
+$white-400: #969797;
+$white-500: #676969;
+
+// blue color palette
+$blue-100: #E5F7FC;
+$blue-200: #BFECF9;
+$blue-300: #80D9F3;
+$blue-400: #3FC6EC;
+$blue-500: #02B3E6;
+$blue-600: #0990B6;
+$blue-700: #126C86;
+$blue-800: #1B4956;
+$blue-900: #203439;
+
+// coral color palette
+$coral-100: #F6DBD7;
+$coral-200: #EEB7B0;
+$coral-300: #E7958A;
+$coral-400: #E17364;
+$coral-500: #FD553E;
+$coral-600: #EC515B;
+$coral-700: #A34840;
+$coral-800: #984D44;
+$coral-900: #8B4843;
+$coral-1000: #371A1A;
+$coral-1100: #311616;
+
+// dark teal color palette
+$dark-teal-100: #BFCED2;
+$dark-teal-200: #809CA5;
+$dark-teal-300: #406B79;
+$dark-teal-400: #003A4C;
+
+// green color palette
+$green-100: #CBF3CD;
+$green-200: #97E89A;
+$green-300: #64DD68;
+$green-400: #30D136;
+$green-500: #B1E02C;
+$green-1000: #353505;
+$green-1100: #212A04;
+
+// yellow color palette
+$yellow-100: #F8F8DC;
+$yellow-200: #F0F1BA;
+$yellow-300: #E9EA99;
+$yellow-400: #E2E369;
+
+// orange color palette
+$orange-500: #FD8F3E;
+$orange-1000: #632E03;
+
+// severity color palette
+$severity-info: #2C71CC;
+$severity-very-low: #58ABCE;
+$severity-low: #F6BF42;
+$severity-medium: #F08332;
+$severity-high: #CD483E;
+$severity-critical: #933C3E;
+
+// alert color palette
+$success: #5AC57B;
+$error: #F26B5E;
+$warn: #FFA800;
+$informational: #02B3E6;
+
+
+// consult color palette
+$gray-bg: #252626;
+
+:root {
+  --divider-line: #4a4b4b;
+}

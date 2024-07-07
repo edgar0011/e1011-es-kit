@@ -1,0 +1,135 @@
+@import 'src/styles/common.scss';
+
+.button {
+  border: none;
+  color: $black;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  // display: inline-block;
+  font-size: 1rem;
+
+  > span {
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 'auto';
+  width: 'auto';
+
+  &.info {
+    background-color: $info;
+    &.transparent {
+      border: 1px solid $info !important;
+    }
+  }
+
+  &.success {
+    background-color: $success;
+    &.transparent {
+      border: 1px solid $success !important;
+    }
+  }
+
+  &.error {
+    background-color: $error;
+    &.transparent {
+      border: 1px solid $error !important;
+    }
+  }
+
+  &.warning {
+    background-color: $warning;
+    &.transparent {
+      border: 1px solid $warning !important;
+    }
+  }
+
+  &.transparent {
+    border: none !important;
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+
+  &.tiny {
+    height: 1.4rem;
+    min-width: 1.5rem;
+    width: 1.5rem;
+    padding: 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  &.fluid {
+    width: 100%;
+  }
+
+  &.truncate {
+    > span {
+      @include text-truncate;
+    }
+  }
+
+  &.animated {
+    transition: transform 250ms ease-out;
+  }
+
+  &.hasShadow {
+    box-shadow: $cui-card-shadow;
+  }
+
+  &.hasIcon {
+    padding: $cui-tiny-gap;
+    border: none !important;
+    line-height: 1px;
+
+    &.tiny {
+      padding: 0px;
+    }
+  }
+
+  &:hover {
+    &.animated {
+      transform: scale(1.2);
+    }
+    background-color: #c5c5c5 !important;
+  }
+
+  user-select: all;
+  pointer-events: auto;
+  cursor: pointer;
+
+  &.disabled {
+    user-select: none;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+}
+
+:global {
+  // Apply dark theme
+  .cui-theme-dark {
+    :local {
+      .button {
+        color: $white;
+        // background-color: $gray;
+      }
+    }
+  }
+
+  // Apply light theme
+  .cui-theme-light {
+    :local {
+      .button {
+        color: $black;
+        // background-color: $white;
+      }
+    }
+  }
+}
