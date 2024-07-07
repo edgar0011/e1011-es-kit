@@ -7,8 +7,7 @@ import { HeadlineTertiary as H3, ParagraphSmall } from '../../atoms/text'
 import { DividerHorizontal } from '../../dividers'
 import { LayoutBox } from '../../container'
 import { IconBase } from '../../icon'
-import infoIcon from '../../../../../assets/icons/circle-info.svg'
-import closeIcon from '../../../../../assets/icons/circle-xmark.svg'
+import { infoIconJSX } from '../../atoms/icons'
 
 import { Popover } from './PopoverLite'
 import { PopoverPlacement, PopoverProps } from './popover.types'
@@ -26,7 +25,6 @@ export type TooltipProps = PopoverProps & {
   tooltipProps?: Record<string, unknown>
   infoIconUrl?: string
 }
-
 
 /**
 
@@ -92,7 +90,12 @@ const TooltipContent = ({
               tabIndex={-1}
               className={classes['close-button']}
             >
-              <IconBase iconUrl={closeIconUrl || closeIcon} />
+              {closeIconUrl && <IconBase iconUrl={closeIconUrl} />}
+              {!closeIconUrl && (
+                <IconBase>
+                  {infoIconJSX}
+                </IconBase>
+              )}
             </div>
           )}
         </LayoutBox>
@@ -131,7 +134,13 @@ export const Tooltip: FC<TooltipProps> = memo<TooltipProps>(({
   }
   if (!children && infoTip) {
     TargetNode = (
-      <IconBase iconUrl={infoIconUrl || infoIcon} size='1rem' color='#00336640' style={{ lineHeight: '1px' }} />
+      infoIconUrl
+        ? <IconBase iconUrl={infoIconUrl} size='1rem' color='#00336640' style={{ lineHeight: '1px' }} />
+        : (
+          <IconBase size='1rem' color='#00336640' style={{ lineHeight: '1px' }}>
+            {infoIconJSX}
+          </IconBase>
+        )
     )
   }
 

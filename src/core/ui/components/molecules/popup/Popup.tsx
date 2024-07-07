@@ -2,12 +2,12 @@ import {
   cloneElement, memo, PropsWithChildren, FC, ReactNode, CSSProperties, useMemo, ReactElement,
 } from 'react'
 
-import closeIcon from '../../../../../assets/icons/circle-xmark.svg'
 import { Popover as PopoverLite } from '../popover/PopoverLite'
 import { HeadlineTertiary as H3 } from '../../atoms/text'
 import { IconBase } from '../../icon'
 import { DividerLine } from '../../dividers'
 import { LayoutBox } from '../../container'
+import { closeIconJSX } from '../../atoms/icons'
 
 import classes from './popup.module.scss'
 import classesOverlay from './popup.overlay.module.scss'
@@ -118,6 +118,7 @@ type PopupContentProps = PropsWithChildren<unknown> & {
   popupStyle?: CSSProperties
   hasHeader?: boolean
   hasCloseIcon?: boolean
+  closeIconURL?: string
   hide?: () => void
 }
 
@@ -136,6 +137,7 @@ const PopupContent = memo(({
   popupStyle,
   hasHeader = true,
   hasCloseIcon = true,
+  closeIconURL,
   ...props
 }: PopupContentProps) => {
   /**
@@ -169,7 +171,12 @@ const PopupContent = memo(({
                   tabIndex={-1}
                   className={classes['close-button']}
                 >
-                  <IconBase iconUrl={closeIcon} />
+                  {closeIconURL && <IconBase iconUrl={closeIconURL} />}
+                  {!closeIconURL && (
+                    <IconBase>
+                      {closeIconJSX}
+                    </IconBase>
+                  )}
                 </div>
               )}
             </LayoutBox>
