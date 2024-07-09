@@ -3,6 +3,12 @@ import { useEffect } from 'react'
 
 const windowMatchMediaChangeEventType = 'change'
 
+/**
+ * Observes the user's theme preference and applies the appropriate theme.
+ * @param {() => HTMLElement} [getHtmlElement] - Function to get the HTML element to which the theme will be applied.
+ * @param {(isDark: boolean) => void} [switchCallback] - Callback function to execute when the theme changes.
+ * @returns {() => void} Function to stop observing the theme preference.
+ */
 export const observeThemePreference = (
   getHtmlElement: () => HTMLElement = (): HTMLElement => document.body,
   switchCallback: (isDark: boolean) => void = (isDark: boolean): boolean => isDark,
@@ -53,6 +59,11 @@ export const observeThemePreference = (
   }
 }
 
+/**
+ * Custom hook to use theme preference in a React component.
+ * @param {() => HTMLElement} [getHtmlElement] - Function to get the HTML element to which the theme will be applied.
+ * @param {(isDark: boolean) => void} [switchCallback] - Callback function to execute when the theme changes.
+ */
 export const useThemePreference = (
   getHtmlElement: () => HTMLElement = (): HTMLElement => document.body,
   switchCallback: (isDark: boolean) => void = (isDark: boolean): boolean => isDark,
@@ -60,6 +71,12 @@ export const useThemePreference = (
   useEffect(() => observeThemePreference(getHtmlElement, switchCallback), [getHtmlElement, switchCallback])
 }
 
+/**
+ * Type definition for theme map.
+ * @typedef {Object} ThemeMap
+ * @property {string} dark - CSS class for the dark theme.
+ * @property {string} light - CSS class for the light theme.
+ */
 type ThemeMap = {
   dark: string
   light: string
@@ -70,13 +87,26 @@ let baseThemes: ThemeMap = {
   light: 'theme-light',
 }
 
-
+/**
+ * Gets the base themes.
+ * @returns {ThemeMap} The current base themes.
+ */
 export const getBaseThemes = (): ThemeMap => baseThemes
 
-export const setTHemeClassNames = (themes: ThemeMap): void => {
+/**
+ * Sets the base theme class names.
+ * @param {ThemeMap} themes - Object containing the CSS classes for dark and light themes.
+ */
+export const setThemeClassNames = (themes: ThemeMap): void => {
   baseThemes = themes
 }
 
+/**
+ * Switches the color theme of the document.
+ * @param {boolean} isDark - Flag to determine if the dark theme should be applied.
+ * @param {HTMLElement} [htmlElement] - The HTML element to which the theme will be applied.
+ * @param {boolean} [findShadows=true] - Flag to determine if shadow DOM elements should also be themed.
+ */
 export const switchColorTheme = (isDark: boolean, htmlElement?: HTMLElement, findShadows = true): void => {
   const oldClass = isDark ? baseThemes.light : baseThemes.dark
   const newClass = isDark ? baseThemes.dark : baseThemes.light
@@ -114,6 +144,11 @@ export const switchColorTheme = (isDark: boolean, htmlElement?: HTMLElement, fin
   }
 }
 
+/**
+ * Updates the color theme of the document.
+ * @param {boolean} [isDark] - Optional flag to determine if the dark theme should be applied.
+ * @param {HTMLElement} [htmlElement] - The HTML element to which the theme will be applied.
+ */
 export const updateColorTheme = (isDark?: boolean, htmlElement?: HTMLElement): void => {
   let resolvedIsDark: boolean = isDark || false
 
