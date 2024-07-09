@@ -6,6 +6,16 @@ const defaultOptions = {
   threshold: 0.5,
 }
 
+/**
+ * Type definition for the parameters used in the `useIntersectionObserver` hook.
+ * @typedef {Object} UseIntersectionObserverType
+ * @property {() => void} callback - Function to be called when the element intersects.
+ * @property {() => void} [notIntersectingCallback] - Optional function to be called
+ * when the element is not intersecting.
+ * @property {Partial<{ root: HTMLElement | null; rootMargin: string; threshold: number }>} [options] -
+ * Optional IntersectionObserver options.
+ * @property {boolean} [granular] - Flag to determine if each entry should be checked individually.
+ */
 export type UseIntersectionObserverType = {
   callback: () => void
   notIntersectingCallback?: () => void
@@ -17,6 +27,13 @@ export type UseIntersectionObserverType = {
   granular?: boolean
 }
 
+/**
+ * Default handler for intersection changes.
+ * @param {IntersectionObserverEntry[]} entries - Array of intersection observer entries.
+ * @param {() => void} callback - Function to be called when the element intersects.
+ * @param {() => void} [notIntersectingCallback] - Optional function to be called when the element is not intersecting.
+ * @param {boolean} [granular=false] - Flag to determine if each entry should be checked individually.
+ */
 const defaultIntersectionHandler = (
   entries: IntersectionObserverEntry[],
   callback: UseIntersectionObserverType['callback'],
@@ -41,7 +58,11 @@ const defaultIntersectionHandler = (
   }
 }
 
-
+/**
+ * Custom hook to observe the intersection of an element.
+ * @param {UseIntersectionObserverType} params - The parameters for the intersection observer.
+ * @returns {MutableRefObject<T | null>} Ref object for the observed element.
+ */
 export const useIntersectionObserver = <T extends Element = Element>({
   callback, notIntersectingCallback, options = {}, granular,
 }: UseIntersectionObserverType): MutableRefObject<T | null> => {
@@ -69,7 +90,6 @@ export const useIntersectionObserver = <T extends Element = Element>({
       observerRef.current?.disconnect()
     }
   }, [intersectionHandler, options])
-
 
   return elementRef
 }
