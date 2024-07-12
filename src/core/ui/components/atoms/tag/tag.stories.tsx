@@ -7,7 +7,8 @@ import { LayoutBox } from '../../container'
 import { PopoverPlacement, Tooltip } from '../../molecules'
 import { generateId, noop } from '../../../../utils'
 
-import { Tag, TagProps, TagVariant } from './Tag'
+import { Tag } from './Tag'
+import { TagProps, TagVariant } from './tag.types'
 
 
 export default {

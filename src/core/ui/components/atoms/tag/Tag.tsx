@@ -1,45 +1,15 @@
-import { memo, PropsWithChildren, FC, MouseEvent, useMemo, useRef, CSSProperties, useState, RefObject } from 'react'
+import { memo, FC, useMemo, useRef, CSSProperties, useState, RefObject } from 'react'
 
 import { TextAndIcons } from '../textAndContent/TextAndContent'
-import { TextAndIconsProps } from '../textAndContent/textAndContent.types'
 import { LayoutBox } from '../../container/layoutBox/LayoutBox'
-import { LayoutBoxProps } from '../../container/layoutBox/layoutBox.types'
 import { useClassNames, useParseProps, useResize, WrapperSize } from '../../../../hooks'
 import { composeId } from '../../../../utils'
-import { CommonProps } from '../../../../types/CommonProps'
 import { Tooltip } from '../../molecules'
 import { Text as BodyText } from '../text'
-import { TextProps } from '../text/text.types'
 
 import classes from './tag.module.scss'
+import { TagProps, TagVariant } from './tag.types'
 
-
-export enum TagVariant {
-  info = 'info',
-  veryLow = 'very-low',
-  low = 'low',
-  medium = 'medium',
-  high = 'high',
-  critical = 'critical',
-  information = 'information',
-  success = 'success',
-  alert = 'alert',
-  error = 'error',
-  warning = 'warning',
-  default = 'default'
-}
-
-export type TagProps = PropsWithChildren & CommonProps & TextAndIconsProps & LayoutBoxProps & {
-  variant?: TagVariant
-  text?: string
-  hashtag?: boolean
-  inTable?: boolean
-  components?: {
-    TextComponent?: FC<TextProps>
-  }
-  onClick?: (event?: MouseEvent) => void
-  className?: string
-}
 
 const styles = {
   textWrapper: { position: 'relative' },

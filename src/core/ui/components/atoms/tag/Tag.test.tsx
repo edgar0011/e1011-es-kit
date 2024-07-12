@@ -2,7 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { Tag, TagVariant } from './Tag'
+import { Tag } from './Tag'
+import { TagVariant } from './tag.types'
 import classes from './tag.module.scss'
 
 import { render } from 'core/utils/test/testRenderer'
