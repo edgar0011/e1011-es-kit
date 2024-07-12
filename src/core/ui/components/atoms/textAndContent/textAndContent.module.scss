@@ -1,0 +1,25 @@
+.textAndContent {
+  align-items: baseline;
+  flex-shrink: 1;
+  gap: 8px;
+}
+
+:global {
+  // Apply dark theme
+  .cui-theme-dark {
+    :local {
+      .textAndContent {
+
+      }
+    }
+  }
+
+  // Apply light theme
+  .cui-theme-light {
+    :local {
+      .textAndContent {
+
+      }
+    }
+  }
+}

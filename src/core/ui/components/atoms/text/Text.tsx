@@ -1,21 +1,9 @@
-import React, { memo, PropsWithChildren, CSSProperties, FC, MouseEventHandler, useMemo } from 'react'
+import React, { memo, FC, useMemo } from 'react'
 
-import { CommonProps } from '../../../types/CommonProps'
 import { composeId } from '../../../../utils'
 import { useParseProps } from '../../../../hooks'
 
-
-export interface ITextProps extends PropsWithChildren, CSSProperties, CommonProps {
-  element?: string | FC
-  className?: string
-  text?: string
-  href?: string
-  target?: string
-  onClick?: MouseEventHandler
-  disabled?: boolean
-}
-
-export type TextProps = ITextProps & { style?: CSSProperties; 'data-testid'?: string }
+import { ITextProps, TextProps } from './text.types'
 
 
 export const Text: FC<TextProps> = memo<ITextProps>((

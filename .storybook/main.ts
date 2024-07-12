@@ -1,20 +1,68 @@
-import type { StorybookConfig } from '@storybook/react-vite';
+import { mergeConfig } from 'vite';
 
-const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+import pckg from '../package.json';
+
+export default {
+  stories: ['../src/components/**/*.mdx', '../src/*.mdx', '../src/**/*.@(mdx|stories.@(js|jsx|ts|tsx))'],
+
   addons: [
-    '@storybook/addon-onboarding',
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    '@storybook/preset-scss',
+    '@storybook/addon-themes',
+    'storybook-dark-mode',
+    '@storybook/addon-storysource',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        configureJSX: true,
+        babelOptions: {},
+        sourceLoaderOptions: null,
+        transcludeMarkdown: true,
+      },
+    },
+    '@storybook/addon-viewport',
+    '@storybook/addon-mdx-gfm',
   ],
+
+  refs: {
+    '@chakra-ui/react': {
+      disable: true,
+    },
+  },
+
   framework: {
     name: '@storybook/react-vite',
     options: {},
   },
-  docs: {
-    autodocs: 'tag',
+
+  features: { emotionAlias: false },
+
+  async viteFinal(config, {
+    configType,
+  }) {
+    const resolvedConfig = {
+      ...config,
+    };
+
+    if (configType === 'PRODUCTION') {
+      resolvedConfig.base = './';
+      resolvedConfig.build = {
+        ...resolvedConfig.build,
+        assetsInlineLimit: 0,
+      };
+    }
+    const mergedConfig = mergeConfig(resolvedConfig, {
+      plugins: [],
+    });
+
+    mergedConfig.plugins = mergedConfig.plugins.filter(({ name }) => name !== 'vite-plugin-eslint')
+    return mergedConfig
   },
+
+  docs: {
+    autodocs: true,
+    defaultName: 'Documentation',
+  }
 };
-export default config;

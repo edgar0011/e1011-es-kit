@@ -1,0 +1,200 @@
+@import 'src/styles/common.scss';
+
+.tag {
+  display: inline-flex;
+  flex-direction: row;
+  padding: 4px 8px;
+  gap: 4px;
+  min-height: 18px;
+  border-radius: $cui-border-radius;
+  border-width: 1px;
+  border-style: solid;
+  align-items: center;
+
+  min-width: 'auto';
+  width: 'auto';
+
+  :global {
+    .icon-base {
+      color: $yellow-400 !important;
+    }
+  }
+
+  .text {
+    white-space: nowrap;
+  }
+
+  &.in-table {
+    justify-content: center;
+    align-items: center;
+
+    @include text-truncate;
+  }
+
+  &.default {
+    background-color: $gray-200;
+    border-color: #515757;
+    // TODO: Change to text color
+    color: $white-100;
+  }
+
+  &.clickable {
+    cursor: pointer;
+    transition: background-color $cui-hover-transition;
+    &.default:hover {
+      background-color: $gray-100;
+    }
+  }
+}
+
+:global {
+  // Apply dark theme
+  .cui-theme-dark {
+    :local {
+      .tag {
+        // severity
+        &.info {
+          background-color: $blue-900;
+          border-color: $blue-300;
+          color: $blue-300;
+        }
+
+        &.very-low {
+          background-color: $green-1100;
+          border-color: $green-500;
+          color: $green-500;
+        }
+
+        &.low {
+          background-color: $green-1000;
+          border-color: $yellow-400;
+          color: $yellow-400;
+        }
+
+        &.medium {
+          background-color: $orange-1000;
+          border-color: $orange-500;
+          color: $orange-500;
+        }
+
+        &.high {
+          background-color: $coral-1000;
+          border-color: $coral-500;
+          color: $coral-500;
+        }
+
+        &.critical {
+          background-color: $coral-1100;
+          border-color: $coral-600;
+          color: $coral-600;
+        }
+
+        // alert colors
+        &.information {
+          background-color: $blue-900;
+          border-color: $blue-500;
+          color: $blue-500;
+        }
+
+        &.success {
+          background-color: $green-1100;
+          border-color: $green-400;
+          color: $green-400;
+        }
+
+        &.alert {
+          background-color: $coral-1100;
+          border-color: $coral-500;
+          color: $coral-500;
+        }
+
+        &.error {
+          background-color: $coral-1100;
+          border-color: $coral-500;
+          color: $coral-500;
+        }
+
+        &.warning {
+          background-color: $orange-1000;
+          border-color: $orange-500;
+          color: $orange-500;
+        }
+      }
+    }
+  }
+
+  // Apply light theme
+  .cui-theme-light {
+    :local {
+      .tag {
+        // severity
+        &.info {
+          background-color: $blue-300;
+          border-color: $blue-300;
+          color: $blue-900;
+        }
+
+        &.very-low {
+          background-color: $green-500;
+          border-color: $green-500;
+          color: $green-1100;
+        }
+
+        &.low {
+          background-color: $yellow-400;
+          border-color: $yellow-400;
+          color: $green-1000;
+        }
+
+        &.medium {
+          background-color: $orange-500;
+          border-color: $orange-500;
+          color: $orange-1000;
+        }
+
+        &.high {
+          background-color: $coral-500;
+          border-color: $coral-500;
+          color: $coral-1000;
+        }
+
+        &.critical {
+          background-color: $coral-600;
+          border-color: $coral-600;
+          color: $coral-1100;
+        }
+
+        // alert colors
+        &.information {
+          background-color: $blue-500;
+          border-color: $blue-500;
+          color: $blue-900;
+        }
+
+        &.success {
+          background-color: $green-400;
+          border-color: $green-400;
+          color: $green-1100;
+        }
+
+        &.alert {
+          background-color: $coral-500;
+          border-color: $coral-500;
+          color: $coral-1100;
+        }
+
+        &.error {
+          background-color: $coral-500;
+          border-color: $coral-500;
+          color: $coral-1100;
+        }
+
+        &.warning {
+          background-color: $orange-500;
+          border-color: $orange-500;
+          color: $orange-1000;
+        }
+      }
+    }
+  }
+}

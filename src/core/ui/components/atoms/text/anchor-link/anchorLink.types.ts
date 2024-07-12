@@ -1,7 +1,7 @@
 import { MouseEvent, PropsWithChildren } from 'react'
 
 
-import { ITextProps } from '../Text'
+import { ITextProps } from '../text.types'
 import { CommonProps } from '../../../../types/CommonProps'
 
 

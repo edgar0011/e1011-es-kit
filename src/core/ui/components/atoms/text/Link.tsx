@@ -1,6 +1,7 @@
 import { memo } from 'react'
 
-import { ITextProps, Text } from './Text'
+import { ITextProps } from './text.types'
+import { Text } from './Text'
 import classes from './typography.module.scss'
 
 
