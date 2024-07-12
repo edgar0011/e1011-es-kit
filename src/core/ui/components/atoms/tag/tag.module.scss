@@ -3,16 +3,16 @@
 .tag {
   display: inline-flex;
   flex-direction: row;
+  flex-shrink: 1;
+
   padding: 4px 8px;
+
   gap: 4px;
   min-height: 18px;
   border-radius: $cui-border-radius;
   border-width: 1px;
   border-style: solid;
   align-items: center;
-
-  min-width: 'auto';
-  width: 'auto';
 
   :global {
     .icon-base {

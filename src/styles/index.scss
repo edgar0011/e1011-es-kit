@@ -1,0 +1,32 @@
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, Oswald, sans-serif;
+}
+
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+
+:root {
+  --ff-primary: basic-sans, sans-serif;
+  --clr-primary: #000000;
+  --clr-body: #2c2c2c;
+  --clr-bg: #ffffff;
+  --spacer: 1rem;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  // font-family: var(--ff-primary);
+  min-height: 100vh;
+  font-size: 1em;
+  line-height: 1.4;
+}

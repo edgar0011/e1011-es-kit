@@ -1,6 +1,7 @@
 import React from 'react'
 import { withThemeByClassName } from '@storybook/addon-themes';
 
+import '../src/styles/index.scss'
 import '../src/styles/common.scss'
 import { ErrorBoundary } from '../src/core/ui/components/error/ErrorBoundary'
 

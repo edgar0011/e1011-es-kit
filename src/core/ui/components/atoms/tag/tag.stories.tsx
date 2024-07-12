@@ -67,7 +67,7 @@ const TagTemplate: Story<TagProps> = (args) => (
     <HeadlineTertiary cursor='pointer'>Feature variants </HeadlineTertiary>
     <LayoutBox direction='row' gap='1rem' width='100%' height='100%' justify='center' align='center'>
       <LayoutBox width='60px'>
-        <Tag data-testid={generateId('tag')} variant={TagVariant.info} text='hashtag' hashtag inTable />
+        <Tag data-testid={generateId('tag')} variant={TagVariant.info} text='hashtag' hashtag />
       </LayoutBox>
       <Tag data-testid={generateId('tag')} variant={TagVariant.veryLow} text='hashtag and icon' hashtag iconRight={pencilSVG} />
       <Tag data-testid={generateId('tag')} variant={TagVariant.low} text='hashtag and onclick' hashtag onClick={noop} />
