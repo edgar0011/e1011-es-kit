@@ -10,11 +10,7 @@
   background-color: var(--icon-color);
   color: var(--icon-content-color);
 
-  svg {
-    fill: var(--icon-content-color);
-    width: var(--height);
-    height: var(--width);
-  }
+
   background-repeat: no-repeat;
 
   mask-image: var(--icon-url);
@@ -29,4 +25,10 @@
   display: inline-block;
   will-change: transform;
   transform: translate3d(0, 0, 0);
+
+  svg {
+    fill: var(--icon-content-color);
+    width: var(--height);
+    height: var(--width);
+  }
 }

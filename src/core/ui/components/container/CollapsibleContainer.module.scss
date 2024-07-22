@@ -1,5 +1,9 @@
 .collapsible-container {
   transform-origin: 0% 0%;
+
+  opacity: 0;
+  overflow: clip;
+
   &.vertical {
     transition: opacity 0.2s ease-in-out, height 0.2s ease-in-out, max-height 0.2s ease-in-out;
     will-change: opacity, height, max-height;
@@ -32,6 +36,4 @@
     }
   }
 
-  opacity: 0;
-  overflow: clip;
 }

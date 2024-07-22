@@ -1,6 +1,10 @@
 .divider-line {
   position:relative;
   display:block;
+  transition: opacity, width, height 250ms ease-in-out;
+  background-color: var(--color);
+  opacity: var(--opacity);
+
   &.vertical {
     height: var(--length);
     left: var(--left);
@@ -13,7 +17,5 @@
     height: var(--height);
     margin: var(--margin);
   }
-  transition: opacity, width, height 250ms ease-in-out;
-  background-color: var(--color);
-  opacity: var(--opacity);
+
 }

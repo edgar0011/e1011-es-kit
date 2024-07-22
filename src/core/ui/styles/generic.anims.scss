@@ -3,65 +3,65 @@
   width: 100%;
   opacity: 0;
   animation: grow-animation 450ms ease-in-out forwards;
+  animation-delay: calc(var(--animation-delay) * 1ms);
   @keyframes grow-animation {
     0% { width: 0%; opacity: 1;}
     100% { width: 100%; opacity: 1; }
   }
-  animation-delay: calc(var(--animation-delay) * 1ms);
 }
 
 .animFadeIn {
   opacity: 0;
   animation: fade-in-animation 350ms ease-in-out forwards;
+  will-change: opacity;
   @keyframes fade-in-animation {
     0% { opacity: 0;}
     100% { opacity: 1;}
   }
-  will-change: opacity;
 }
 
 .animSlideDown {
   opacity: 0;
   animation: slide-down-animation 350ms ease-in-out forwards;
+  will-change: opacity, transform;
   @keyframes slide-down-animation {
     0% { transform: translateY(-4rem); opacity: 0;}
     30% { opacity: 0;}
     100% { transform: translateY(0rem); opacity: 1;}
   }
-  will-change: opacity, transform;
 }
 
 .animSlideUp {
   opacity: 0;
   animation: slide-up-animation 350ms ease-in-out forwards;
+  will-change: opacity, transform;
   @keyframes slide-up-animation {
     0% { transform: translateY(4rem); opacity: 0;}
     30% { opacity: 0;}
     100% { transform: translateY(0rem); opacity: 1;}
   }
-  will-change: opacity, transform;
 }
 
 .animSlideRight {
   opacity: 0;
   animation: slide-right-animation 350ms ease-in-out forwards;
+  will-change: opacity, transform;
   @keyframes slide-right-animation {
     0% { transform: translateX(-4rem); opacity: 0;}
     30% { opacity: 0;}
     100% { transform: translateX(0rem); opacity: 1;}
   }
-  will-change: opacity, transform;
 }
 
 .animSlideLeft {
   opacity: 0;
   animation: slide-left-animation 350ms ease-in-out forwards;
+  will-change: opacity, transform;
   @keyframes slide-left-animation {
     0% { transform: translateX(4rem); opacity: 0;}
     30% { opacity: 0;}
     100% { transform: translateX(0rem); opacity: 1;}
   }
-  will-change: opacity, transform;
 }
 
 
