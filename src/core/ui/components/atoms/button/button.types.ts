@@ -1,7 +1,8 @@
-import { PropsWithChildren, MouseEvent, KeyboardEvent, CSSProperties } from 'react'
+import { PropsWithChildren, MouseEvent, KeyboardEvent, CSSProperties, ReactNode } from 'react'
 
 import { Alerts } from '../../../../constants'
 import { CommonProps } from '../../../types/CommonProps'
+import { IconBaseProps } from '../../icon'
 
 
 export type ButtonProps = PropsWithChildren & {
@@ -25,3 +26,9 @@ export type ButtonProps = PropsWithChildren & {
   href?: string
   target?: string
 } & CommonProps
+
+
+export type IconButtonProps = ButtonProps & IconBaseProps
+ & {
+  iconContent?: ReactNode
+ }

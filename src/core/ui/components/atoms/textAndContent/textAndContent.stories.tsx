@@ -53,8 +53,8 @@ TextAndContentComplex.args = {
   boxShadow: '0 0 8px 2px rgba(0, 0, 0, 0.2)',
 }
 
-const leftIconClickHandler = (event?: MouseEvent): void => console.log('Left Icon Click', event)
-const rightIconClickHandler = (event?: MouseEvent): void => console.log('Right Icon Click', event)
+const leftIconClickHandler = (event?: MouseEvent | KeyboardEvent): void => console.log('Left Icon Click', event)
+const rightIconClickHandler = (event?: MouseEvent | KeyboardEvent): void => console.log('Right Icon Click', event)
 
 
 export const TextAndIconsBase: Story<TextAndContentProps> = (args) => (

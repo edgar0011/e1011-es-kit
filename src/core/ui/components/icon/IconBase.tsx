@@ -4,7 +4,7 @@ import classes from './icon.module.scss'
 import { unifyIconUrl } from './unifyIconUrl'
 
 
-export type IconBaseType = PropsWithChildren<unknown> & {
+export type IconBaseProps = PropsWithChildren<unknown> & {
   id?: string
   iconUrl?: string | null
   minWidth?: string | null
@@ -16,13 +16,13 @@ export type IconBaseType = PropsWithChildren<unknown> & {
   color?: string | null
   className?: string | null
   style?: CSSProperties | null
-  onClick?: (event?: MouseEvent<HTMLSpanElement> | undefined) => void
+  onClick?: (event: MouseEvent | KeyboardEvent) => void
 }
 
-export const IconBase: FC<IconBaseType> = memo<IconBaseType>(({
+export const IconBase: FC<IconBaseProps> = memo<IconBaseProps>(({
   iconUrl, minWidth, minHeight, size,
   fontSize, width, height, color = 'currentColor', className = '', children, style, onClick, ...props
-}: IconBaseType) => {
+}: IconBaseProps) => {
   const unifiedIconUrl = iconUrl && unifyIconUrl(iconUrl)
 
   const styles = useMemo(() => (

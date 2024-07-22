@@ -24,6 +24,6 @@ export type TextAndIconsProps = TextAndContentProps & {
   iconRightUrl?: string
   iconRight?: ReactNode
   iconLeft?: ReactNode
-  onLeftIconClick?: (event?: MouseEvent) => void
-  onRightIconClick?: (event?: MouseEvent) => void
+  onLeftIconClick?: (event: MouseEvent | KeyboardEvent) => void
+  onRightIconClick?: (event: MouseEvent | KeyboardEvent) => void
 }

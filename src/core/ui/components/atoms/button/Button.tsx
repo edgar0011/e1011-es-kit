@@ -3,8 +3,9 @@ import { memo, useCallback, MouseEvent, KeyboardEvent, createElement, FC, HTMLAt
 import { classNames, composeId, noop } from '../../../../utils'
 import { Alerts } from '../../../../constants'
 import { AnchorLink } from '../text/anchor-link/AnchorLink'
+import { IconBase, IconBaseProps } from '../../icon'
 
-import type { ButtonProps } from './button.types'
+import type { ButtonProps, IconButtonProps } from './button.types'
 import classes from './button.module.scss'
 
 export const keys = {
@@ -122,3 +123,39 @@ export type ButtonType = typeof Button
 
 // Set display name for the component.
 Button.displayName = 'Button'
+
+const iconBaseProps = [
+  'iconUrl',
+  'minWidth',
+  'minHeight',
+  'width',
+  'height',
+  'size',
+  'fontSize',
+  'color',
+]
+
+export const IconButton: FC<IconButtonProps> = memo<IconButtonProps>((props: IconButtonProps) => {
+  const buttonProps: Record<string, unknown> = {}
+  const iconProps: Record<string, unknown> = {}
+
+  Object.entries(props).forEach(([name, value]: [string, unknown]) => {
+    if (iconBaseProps.includes(name)) {
+      // eslint-disable-next-line no-param-reassign
+      iconProps[name] = value
+    } else {
+      buttonProps[name] = value
+    }
+  })
+
+  iconProps.children = props.children
+
+  return (
+    <Button {...(buttonProps as ButtonProps)} hasIcon>
+      {props.iconContent && props.iconContent}
+      {!props.iconContent && (<IconBase {...(iconProps as IconBaseProps)} />)}
+    </Button>
+  )
+})
+
+IconButton.displayName = 'IconButton'
