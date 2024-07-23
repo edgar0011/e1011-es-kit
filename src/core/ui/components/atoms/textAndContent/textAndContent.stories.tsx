@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react'
+import { MouseEvent, KeyboardEvent } from 'react'
 import { StoryFn as Story, Meta } from '@storybook/react'
 
 import {

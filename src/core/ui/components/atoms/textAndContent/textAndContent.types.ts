@@ -1,5 +1,5 @@
 
-import { FC, MouseEvent, PropsWithChildren, ReactElement, ReactNode } from 'react'
+import { FC, MouseEvent, KeyboardEvent, PropsWithChildren, ReactElement, ReactNode } from 'react'
 
 import { TextProps } from '../text/text.types'
 import { LayoutBoxProps } from '../../container/layoutBox/layoutBox.types'

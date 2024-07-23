@@ -1,4 +1,4 @@
-import { CSSProperties, memo, useMemo, FC, PropsWithChildren, MouseEvent } from 'react'
+import { CSSProperties, memo, useMemo, FC, PropsWithChildren, MouseEvent, KeyboardEvent } from 'react'
 
 import classes from './icon.module.scss'
 import { unifyIconUrl } from './unifyIconUrl'
