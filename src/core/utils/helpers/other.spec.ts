@@ -1,4 +1,4 @@
-import { memoize, memoizeComplex, memoizer } from './other'
+import { AsyncFunctionTemplate, isFunctionAsync, memoize, memoizeComplex, memoizer } from './other'
 
 describe('memoize', () => {
   it('should memoize function product with text primitive args', () => {
@@ -63,5 +63,15 @@ describe('memoize', () => {
     expect(memoized('Linda')).toEqual('Decorated Linda, 0')
 
     expect(tobeMemoized.mock.calls.length).toBe(4)
+  })
+
+  it('Should detect async function', () => {
+    const funcA = async (name: string): Promise<string> => `FuncA ${name}`
+
+    console.log('funcA', funcA)
+    // console.log('funcA[Symbol.toStringTag]', funcA[Symbol.toStringTag])
+    console.log('funcA.constructor', funcA.constructor)
+    console.log('AsyncFunction.prototype.constructor', AsyncFunctionTemplate.prototype.constructor)
+    expect(isFunctionAsync(funcA)).toEqual(true)
   })
 })

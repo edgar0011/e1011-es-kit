@@ -49,5 +49,5 @@ export const delay = (delay: number): Promise<string> => new Promise((resolve) =
 export const AsyncFunctionTemplate = (async (): Promise<void> => {}).constructor
 
 export const isFunctionAsync = (
-  func: () => unknown,
+  func: (...args: any[]) => unknown,
 ): boolean => func.constructor === AsyncFunctionTemplate.prototype.constructor
