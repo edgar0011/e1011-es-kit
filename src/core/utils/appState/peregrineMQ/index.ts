@@ -8,4 +8,4 @@ export default peregrineMQInstance
 
 
 export type * from './peregrineMQ.types'
-export type * from './usePeregrineMQ.react'
+export * from './usePeregrineMQ.react'
