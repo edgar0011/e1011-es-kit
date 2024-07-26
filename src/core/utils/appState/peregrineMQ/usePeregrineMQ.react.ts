@@ -4,7 +4,7 @@ import { PeregrineMQ } from './peregrineMQ'
 import { Callback } from './peregrineMQ.types'
 
 export type usePeregrineMQReturnType = [
-  { current?: () => boolean },
+  (() => boolean) | undefined,
   <T>(channel: string, data?: T) => boolean
 ]
 
@@ -23,5 +23,5 @@ export const usePeregrineMQ = (
     }
   }, [memCallback, channel, peregrineInstance])
 
-  return [unsubscribeRef, peregrineInstance.publish]
+  return [unsubscribeRef.current, peregrineInstance.publish]
 }

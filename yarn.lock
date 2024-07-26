@@ -6859,6 +6859,11 @@ ignore@^5.1.1, ignore@^5.2.0, ignore@^5.2.4, ignore@^5.3.1:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.3.1.tgz#5073e554cd42c5b33b394375f538b8593e34d4ef"
   integrity sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==
 
+immer@^10.1.1:
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-10.1.1.tgz#206f344ea372d8ea176891545ee53ccc062db7bc"
+  integrity sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw==
+
 immutable@^4.0.0:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.3.6.tgz#6a05f7858213238e587fb83586ffa3b4b27f0447"
@@ -9557,9 +9562,9 @@ postcss@^8.3.11, postcss@^8.4.27:
     source-map-js "^1.2.0"
 
 postcss@^8.4.39:
-  version "8.4.39"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.39.tgz#aa3c94998b61d3a9c259efa51db4b392e1bde0e3"
-  integrity sha512-0vzE+lAiG7hZl1/9I8yzKLx3aR9Xbof3fBHKunvMfOCYAtMhrsnccJY2iTURb9EZd5+pLuiNV9/c/GZJOHsgIw==
+  version "8.4.40"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.40.tgz#eb81f2a4dd7668ed869a6db25999e02e9ad909d8"
+  integrity sha512-YF2kKIUzAofPMpfH6hOi2cGnv/HrUlfucspc7pDyvv7kGdqXrfj8SCl/t8owkEgKEuu8ZcRjSOxFxVLqwChZ2Q==
   dependencies:
     nanoid "^3.3.7"
     picocolors "^1.0.1"
@@ -11423,9 +11428,9 @@ vfile@^6.0.0:
     vfile-message "^4.0.0"
 
 vite@^5.2.6:
-  version "5.3.4"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-5.3.4.tgz#b36ebd47c8a5e3a8727046375d5f10bf9fdf8715"
-  integrity sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==
+  version "5.3.5"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-5.3.5.tgz#b847f846fb2b6cb6f6f4ed50a830186138cb83d8"
+  integrity sha512-MdjglKR6AQXQb9JGiS7Rc2wC6uMjcm7Go/NHNO63EwiJXfuk9PgqiP/n5IDJCziMkfw9n4Ubp7lttNwz+8ZVKA==
   dependencies:
     esbuild "^0.21.3"
     postcss "^8.4.39"

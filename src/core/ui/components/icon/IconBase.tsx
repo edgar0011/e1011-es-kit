@@ -1,4 +1,4 @@
-import { CSSProperties, memo, useMemo, FC, PropsWithChildren, MouseEvent, KeyboardEvent } from 'react'
+import { CSSProperties, memo, useMemo, FC, PropsWithChildren, MouseEvent, KeyboardEvent, ReactNode } from 'react'
 
 import classes from './icon.module.scss'
 import { unifyIconUrl } from './unifyIconUrl'
@@ -17,11 +17,12 @@ export type IconBaseProps = PropsWithChildren<unknown> & {
   className?: string | null
   style?: CSSProperties | null
   onClick?: (event: MouseEvent | KeyboardEvent) => void
+  icon?: ReactNode
 }
 
 export const IconBase: FC<IconBaseProps> = memo<IconBaseProps>(({
   iconUrl, minWidth, minHeight, size,
-  fontSize, width, height, color = 'currentColor', className = '', children, style, onClick, ...props
+  fontSize, width, height, color = 'currentColor', className = '', children, icon, style, onClick, ...props
 }: IconBaseProps) => {
   const unifiedIconUrl = iconUrl && unifyIconUrl(iconUrl)
 
@@ -53,6 +54,7 @@ export const IconBase: FC<IconBaseProps> = memo<IconBaseProps>(({
       style={styles as CSSProperties}
     >
       {(!unifiedIconUrl && children) && children}
+      {(!unifiedIconUrl && icon) && icon}
     </span>
   )
 })

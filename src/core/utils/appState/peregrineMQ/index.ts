@@ -4,8 +4,5 @@ export { PeregrineMQ, PeregrineMQClearError } from './peregrineMQ'
 
 export const peregrineMQInstance = new PeregrineMQ()
 
-export default peregrineMQInstance
-
-
 export type * from './peregrineMQ.types'
 export * from './usePeregrineMQ.react'

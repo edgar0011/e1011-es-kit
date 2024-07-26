@@ -7,7 +7,7 @@ import { delay } from '../../..'
 
 import { usePeregrineMQ } from './usePeregrineMQ.react'
 
-import peregrineMQ from './index'
+import { peregrineMQInstance as peregrineMQ } from './index'
 
 export default {
   title: 'e1011/core/utils/appState/peregrineMQ',

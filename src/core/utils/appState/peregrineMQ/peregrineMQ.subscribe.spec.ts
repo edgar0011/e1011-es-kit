@@ -4,7 +4,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import peregrineMQ from './index'
+import { peregrineMQInstance as peregrineMQ } from './index'
 
 describe('PeregrineMQ subscribe method', () => {
   const function1 = (): void => {}
