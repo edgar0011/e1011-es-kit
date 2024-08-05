@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef } from 'react'
 
 import { PeregrineMQ } from './peregrineMQ'
-import { Callback } from './peregrineMQ.types'
+import { Callback, PublishReturnType } from './peregrineMQ.types'
 
 export type usePeregrineMQReturnType = [
   (() => boolean) | undefined,
-  <T>(channel: string, data?: T) => boolean
+  <T>(channel: string, data?: T) => PublishReturnType
 ]
 
 export const usePeregrineMQ = (

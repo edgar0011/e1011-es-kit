@@ -4,13 +4,13 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import { peregrineMQInstance as peregrineMQ } from './index'
+import { NON_EXISTENT_CHANNEL, peregrineMQInstance as peregrineMQ } from './index'
 
 describe('PeregrineMQ publish method', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const function1 = jest.fn((channel, data) => undefined)
+  const function1 = jest.fn((channel, data) => ({ resultFunction1: true }))
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const function2 = jest.fn((channel, data) => undefined)
+  const function2 = jest.fn(async (channel, data) => ({ resultFunction2: true }))
 
   beforeAll(() => {
     peregrineMQ.configure({ allowClear: true })
@@ -70,16 +70,34 @@ describe('PeregrineMQ publish method', () => {
     expect(functionsArray[5].mock.calls).toHaveLength(1)
   })
 
-  it('publish method should return false for nonexisting channel', () => {
+  it('publish method should return false for nonexisting channel', async () => {
     const channels = ['topic', 'topic.login']
 
     peregrineMQ.subscribe(channels[0], function1)
     peregrineMQ.subscribe(channels[1], function2)
 
-    expect(peregrineMQ.publish('nonExistingChannel')).toBeFalsy()
-    expect(peregrineMQ.publish('non.existing.nested.channel')).toBeFalsy()
+    const result1 = peregrineMQ.publish('nonExistingChannel')
+    const result2 = peregrineMQ.publish('non.existing.nested.channel')
+    // @ts-ignore
+    const localResult3 = await Promise.allSettled(peregrineMQ.publish('topic.login.nonExistingChannel'))
+    // @ts-ignore
+    const result3 = localResult3.map(({ value }) => value)
 
-    expect(peregrineMQ.publish('topic.login.nonExistingChannel')).toBeFalsy()
+    expect(result1).toEqual(NON_EXISTENT_CHANNEL)
+    expect(result2).toEqual(
+      [
+        NON_EXISTENT_CHANNEL,
+        NON_EXISTENT_CHANNEL,
+        NON_EXISTENT_CHANNEL,
+        NON_EXISTENT_CHANNEL,
+      ],
+    )
+
+    expect(result3).toEqual([
+      { resultFunction1: true },
+      { resultFunction2: true },
+      NON_EXISTENT_CHANNEL,
+    ])
   })
 
   it('should call all subscribers, even if there are non existing descedants ', () => {
@@ -92,13 +110,18 @@ describe('PeregrineMQ publish method', () => {
     expect(function1.mock.calls).toHaveLength(1)
   })
 
-  it('should call all descedant subscribers, even if channel do not exist', () => {
+  it('should call all descedant subscribers, even if channel do not exist', async () => {
     const channels = ['topic', 'topic.login']
 
     peregrineMQ.subscribe(channels[0], function1)
     peregrineMQ.subscribe(channels[1], function2)
 
-    expect(peregrineMQ.publish('topic.login.nonExistingChannel')).toBeFalsy()
+    const result = peregrineMQ.publish('topic.login.nonExistingChannel')
+
+    // @ts-ignore
+    expect((await Promise.allSettled(result)).map(({ value }) => value)).toEqual(
+      [{ resultFunction1: true }, { resultFunction2: true }, NON_EXISTENT_CHANNEL],
+    )
 
     expect(function1.mock.calls).toHaveLength(1)
     expect(function2.mock.calls).toHaveLength(1)

@@ -1,6 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { Callback, Config, PeregrineMQApi, SubscribersSet, UnsubscribeOptions } from './peregrineMQ.types'
+import {
+  Callback, Config, PeregrineMQApi, PublishToChannelReturnType,
+  PublishReturnType, SubscribersSet,
+  UnsubscribeOptions, NON_EXISTENT_CHANNEL_TYPE,
+  NON_EXISTENT_CHANNEL,
+} from './peregrineMQ.types'
 
 
 export class PeregrineMQClearError extends Error {
@@ -80,22 +85,27 @@ export class PeregrineMQ implements PeregrineMQApi {
    * @param data The data to publish.
    * @returns A boolean indicating if the publication was successful.
    */
-  private publishToChannel = (channel: string, isParent: boolean, data?: unknown): boolean => {
+  private publishToChannel = (
+    channel: string, isParent: boolean, data?: unknown,
+  ): PublishToChannelReturnType => {
     const subscribersSet = this.channels.get(channel)
 
     if (!subscribersSet) {
-      return isParent
+      return NON_EXISTENT_CHANNEL as NON_EXISTENT_CHANNEL_TYPE
     }
 
     const iterator = subscribersSet[Symbol.iterator]()
     let subscriberFunc = iterator.next().value
 
+    const results = []
+
     // eslint-disable-next-line no-plusplus
     while (subscriberFunc) {
-      subscriberFunc(channel, data)
+      // eslint-disable-next-line no-await-in-loop
+      results.push(subscriberFunc(channel, data))
       subscriberFunc = iterator.next().value
     }
-    return true
+    return results?.length === 1 ? results[0] : results
   }
 
   /**
@@ -212,26 +222,27 @@ export class PeregrineMQ implements PeregrineMQApi {
    * @param data The data to publish.
    * @returns A boolean indicating if the publication was successful.
    */
-  publish = <T>(channel: string, data?: T): boolean => {
+  publish = <T>(channel: string, data?: T): PublishReturnType => {
     if (channel.includes('.')) {
       const nestedChannels = channel.split('.')
 
       let { length } = nestedChannels
-      let failed = false
+      let it = 0
+      const results = []
 
       // eslint-disable-next-line no-plusplus
       while (length--) {
+        // eslint-disable-next-line no-await-in-loop
         const result = this.publishToChannel(
-          nestedChannels.slice(0, length + 1).join('.'),
+          nestedChannels.slice(0, it + 1).join('.'),
           length !== nestedChannels.length - 1,
           data,
         )
 
-        if (!result) {
-          failed = true
-        }
+        it += 1
+        results.push(result)
       }
-      return !failed
+      return results
     }
 
     return this.publishToChannel(channel, false, data)

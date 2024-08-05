@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 
 import { delay } from '../../helpers/other'
 
-import { Listener, Store, StoreWithActions, createStore } from './store.vanillajs'
+import { Listener, StoreWithActions, createStore } from './store.vanillajs'
 
 
 type CommentsState = {
@@ -25,7 +25,8 @@ const prioritySelector = createSelector(
 )
 
 describe('Simple Tiny Store', () => {
-  let initialState: CommentsState
+  let initialState: Partial<CommentsState>
+
 
   beforeEach(() => {
     initialState = {
@@ -37,13 +38,13 @@ describe('Simple Tiny Store', () => {
         'message 3',
       ],
       priority: 0,
-    }
+    } as Partial<CommentsState>
   })
 
 
 
   it('should have state', () => {
-    const store: Store<CommentsState> = createStore<CommentsState>(initialState)
+    const store = createStore(initialState)
 
     console.log('store', store)
     console.log('store.getState()', store.getState())

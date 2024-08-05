@@ -70,7 +70,7 @@ export interface PeregrineMQApi {
    * @param {unknown} [data] - The data to pass to subscribers.
    * @return {boolean} - Returns true if the message was successfully published, otherwise false.
    */
-  publish: (channel: string, data?: unknown) => boolean
+  publish: (channel: string, data?: unknown) => PublishReturnType
 
   /**
    * Subscribes a function to a specified channel.
@@ -116,3 +116,11 @@ export interface PeregrineMQApi {
    */
   getId: () => string
 }
+export const NON_EXISTENT_CHANNEL = 'NON_EXISTENT_CHANNEL'
+
+export type NON_EXISTENT_CHANNEL_TYPE = typeof NON_EXISTENT_CHANNEL
+
+export type PublishToChannelReturnType = NON_EXISTENT_CHANNEL_TYPE
+  | undefined | boolean | unknown | Array<undefined | boolean | unknown>
+
+export type PublishReturnType = PublishToChannelReturnType | PublishToChannelReturnType[]

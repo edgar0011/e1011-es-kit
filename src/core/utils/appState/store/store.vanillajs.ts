@@ -61,52 +61,6 @@ export type Store<T> = {
  */
 export type StoreWithActions<T> = Store<T> & { actions: { [actionName: string]: ActionHandlerCaller<T> } }
 
-// export type PendingAction<A> = `${A}Pending`
-// export type ErrorAction<A> = `${A}Error`
-// export type ActionName<A> = `${A}`
-
-// export type ActionsReturnType<A, TActionHandler> = Record<ActionName<A>, TActionHandler>
-
-// export type ActionsStateReturnType<A>
-//   = Partial<Record<PendingAction<A>, boolean>> & Partial<Record<ErrorAction<A>, boolean>>
-
-
-// function invert<T, ActionName extends string>(
-//   arr: ActionName[], state: Partial<T>, actionHandler: ActionHandlerCaller<T>,
-// ): Partial<T> & ActionsStateReturnType<ActionName> {
-//   arr.forEach((x) => {
-//     state[`${x}Error`] = true
-//     state[`${x}Pending`] = true
-//   })
-
-//   return state as (Partial<T> & ActionsStateReturnType<ActionName>)
-// }
-
-// function invert2<T, A extends string>(
-//   arr: A[], actions: ActionsReturnType<A>, actionHandler: ActionHandlerCaller<T>,
-// ): ActionsReturnType<A, ActionHandlerCaller<T>> {
-//   arr.forEach((x) => {
-//     actions[`${x}`] = actionHandler
-//   })
-
-//   return actions as ActionsReturnType<A>
-// }
-
-// function invert3<T, A extends string>(
-//   arr: A[], actions: ActionsReturnType<A>, state: Partial<T>, actionHandler: ActionHandlerCaller<T>,
-// ): [Partial<T> & ActionsStateReturnType<A>, ActionsReturnType<A, ActionHandlerCaller<T>>] {
-//   arr.forEach((x) => {
-//     state[`${x}Error`] = actionHandler
-//     state[`${x}Pending`] = actionHandler
-//     actions[`${x}`] = actionHandler
-//   })
-
-//   return [state, actions] as [Partial<T> & ActionsStateReturnType<A>, ActionsReturnType<A, ActionHandlerCaller<T>>]
-// }
-
-// const example = invert(['foo', 'bar', 'baz'], {}, () => {})
-// const example2 = invert2(['foo', 'bar', 'baz'], {}, () => {})
-// const example3 = invert3(['foo', 'bar', 'baz'], {}, () => {})
 
 
 
