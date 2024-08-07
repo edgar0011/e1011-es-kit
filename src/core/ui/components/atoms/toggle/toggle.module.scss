@@ -49,12 +49,12 @@ $zIndex_lower_negative: -1;
   }
 
   input:checked + .slider {
-    background-color: $blue-500;
-    border-color: $blue-500;
+    background-color: $gray-500;
+    border-color: $gray-500;
   }
 
   input:focus + .slider {
-    box-shadow: 0 0 1px 1px $blue-500;
+    box-shadow: 0 0 1px 1px $gray-500;
   }
 
   input:checked + .slider:before {
@@ -88,7 +88,7 @@ $zIndex_lower_negative: -1;
 
 :global {
   // Apply dark theme
-  .theme-dark {
+  .cui-theme-dark {
     :local {
       .toggle {
         input:enabled + .slider {
@@ -98,7 +98,7 @@ $zIndex_lower_negative: -1;
         }
         input:checked:enabled + .slider {
           &:hover {
-            background-color: color.scale($blue-500, $lightness: -5%, $saturation: -5%);
+            background-color: color.scale($gray-500, $lightness: -5%, $saturation: -5%);
           }
         }
       }
@@ -106,19 +106,19 @@ $zIndex_lower_negative: -1;
   }
 
   // Apply light theme
-  .theme-light {
+  .cui-theme-light {
     :local {
       .toggle {
 
 
         input + .slider {
-          border-color: color.scale($blue-500, $lightness: -10%, $saturation: 10%);
+          border-color: color.scale($gray-500, $lightness: -10%, $saturation: 10%);
           &:hover {
-            background-color: color.scale($blue-500, $alpha: -95%);
+            background-color: color.scale($gray-500, $alpha: -95%);
           }
 
           &:before {
-            background-color: $blue-500;
+            background-color: $gray-500;
           }
         }
 
@@ -128,7 +128,7 @@ $zIndex_lower_negative: -1;
           }
 
           &:hover {
-            background-color: color.scale($blue-500, $lightness: 10%, $saturation: 10%);
+            background-color: color.scale($gray-500, $lightness: 10%, $saturation: 10%);
           }
         }
       }
