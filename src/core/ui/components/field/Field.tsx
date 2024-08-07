@@ -43,6 +43,7 @@ export interface FieldProps {
   errors?: FieldError
   disabled?: boolean
   userDisabled?: boolean
+  checked?: boolean
   helpTextInfo?: string
   helpText?: string
   iconLeft?: string

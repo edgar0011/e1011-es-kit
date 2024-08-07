@@ -1,0 +1,137 @@
+@use "sass:color";
+
+@import 'src/styles/common.scss';
+
+$zIndex_lower_negative: -1;
+
+.toggle {
+  display: inline-block;
+  position: relative;
+  max-width: 48px;
+  max-height: 24px;
+  width: 48px;
+  height: 24px;
+  border-radius: 16px !important;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+
+  .slider {
+    box-sizing: border-box;
+    position: absolute;
+    cursor: pointer;
+    width: 48px;
+    height: 24px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    border: 1px solid $white-100;
+    transition: transform, background-color .4s ease;
+    border-radius: 16px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 1px;
+    bottom: 1px;
+    background-color: $white-100;
+    transition: transform .4s ease;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: $blue-500;
+    border-color: $blue-500;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px 1px $blue-500;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(24px);
+  }
+
+  &.disabled {
+    opacity: 0.65;
+
+    input {
+      pointer-events: none;
+    }
+
+    .slider{
+      cursor: not-allowed;
+    }
+
+    .slider:after {
+      content: " ";
+      z-index: $zIndex_lower_negative;
+      display: block;
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+
+    }
+  }
+}
+
+:global {
+  // Apply dark theme
+  .theme-dark {
+    :local {
+      .toggle {
+        input:enabled + .slider {
+          &:hover {
+            background-color: $dark-teal-400;
+          }
+        }
+        input:checked:enabled + .slider {
+          &:hover {
+            background-color: color.scale($blue-500, $lightness: -5%, $saturation: -5%);
+          }
+        }
+      }
+    }
+  }
+
+  // Apply light theme
+  .theme-light {
+    :local {
+      .toggle {
+
+
+        input + .slider {
+          border-color: color.scale($blue-500, $lightness: -10%, $saturation: 10%);
+          &:hover {
+            background-color: color.scale($blue-500, $alpha: -95%);
+          }
+
+          &:before {
+            background-color: $blue-500;
+          }
+        }
+
+        input:checked + .slider {
+          &:before {
+            background-color: $white-100;
+          }
+
+          &:hover {
+            background-color: color.scale($blue-500, $lightness: 10%, $saturation: 10%);
+          }
+        }
+      }
+    }
+  }
+}

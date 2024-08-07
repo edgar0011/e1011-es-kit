@@ -2,7 +2,7 @@ import { PropsWithChildren, FC, MouseEvent } from 'react'
 
 import { TextAndIconsProps } from '../textAndContent/textAndContent.types'
 import { LayoutBoxProps } from '../../container/layoutBox/layoutBox.types'
-import { CommonProps } from '../../../../types/CommonProps'
+import { CommonProps } from '../../../types/CommonProps'
 import { TextProps } from '../text/text.types'
 
 

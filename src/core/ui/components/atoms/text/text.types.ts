@@ -1,8 +1,6 @@
-
-
 import { PropsWithChildren, CSSProperties, FC, MouseEventHandler } from 'react'
 
-import { CommonProps } from '../../../../types/CommonProps'
+import { CommonProps } from '../../../types/CommonProps'
 
 
 export interface ITextProps extends PropsWithChildren, CSSProperties, CommonProps {
