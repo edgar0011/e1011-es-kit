@@ -8,23 +8,12 @@ import { DividerHorizontal } from '../../dividers'
 import { LayoutBox } from '../../container'
 import { IconBase } from '../../icon'
 import { infoIconJSX } from '../../atoms/icons'
+import { classNames } from '../../../../utils'
 
 import { Popover } from './PopoverLite'
 import { PopoverPlacement, PopoverProps } from './popover.types'
 import classes from './tooltip.module.scss'
 
-
-/**
-
-Props for the Tooltip component, extends PopoverProps.
-@typedef {Object} TooltipProps
-@property {Record<string, unknown>} [tooltipProps] - Additional props to be passed to the underlying Popover component.
-@extends PopoverProps
-*/
-export type TooltipProps = PopoverProps & {
-  tooltipProps?: Record<string, unknown>
-  infoIconUrl?: string
-}
 
 /**
 
@@ -54,6 +43,11 @@ Props for the TooltipContent component.
 type TooltipContentProps = PropsWithChildren<any> & {
   forwardedRef: ForwardedRef
   closeIconUrl?: string
+  className?: string
+  title?: string
+  text?: string
+  hide: () => void
+  showClose?: boolean
 }
 
 /**
@@ -63,11 +57,11 @@ type TooltipContentProps = PropsWithChildren<any> & {
   @returns {JSX.Element} - Returns the JSX element for the TooltipContent component.
   */
 const TooltipContent = ({
-  forwardedRef, title, text, hide, showClose, closeIconUrl,
+  forwardedRef, title, text, hide, showClose, closeIconUrl, className = '',
 }: TooltipContentProps): JSX.Element => (
   <div
     ref={forwardedRef}
-    className={classes['popover-tooltip']}
+    className={classNames(classes['popover-tooltip'], className)}
   >
     <div id='arrow' data-popper-arrow className={classes.arrow}>
       <div className={classes['arrow-inner']} />
@@ -105,6 +99,21 @@ const TooltipContent = ({
     </LayoutBox>
   </div>
 )
+
+
+
+/**
+
+Props for the Tooltip component, extends PopoverProps.
+@typedef {Object} TooltipProps
+@property {Record<string, unknown>} [tooltipProps] - Additional props to be passed to the underlying Popover component.
+@extends PopoverProps
+*/
+export type TooltipProps = PopoverProps & TooltipContentProps & {
+  tooltipProps?: Record<string, unknown>
+  infoIconUrl?: string
+}
+
 
 /**
  * A tooltip component that displays a short message when the user hovers or clicks on a target element.

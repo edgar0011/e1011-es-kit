@@ -10,6 +10,7 @@ import { Popover as PopoverLite } from './PopoverLite'
 import { PopoverPlacement, PopoverProps } from './popover.types'
 import { Tooltip } from './Tooltip'
 import classes from './popover.module.scss'
+import classesStory from './stories.test.module.scss'
 
 export default {
   title: 'e1011/molecules/Popover',
@@ -95,7 +96,12 @@ export const TooltipPopoverCompact = ({ data, ...args }: Props): ReactNode => (
       ))}
     </LayoutBox>
     <LayoutBox width='100%' height='2rem' align='center' justify='space-around'>
-      <Tooltip infoTip title='Info' text='Here are some tooltip example' />
+      <Tooltip
+        infoTip
+        title='Info'
+        text='Here are some tooltip example'
+        className={classesStory['test-tooltip-class']}
+      />
     </LayoutBox>
     <LayoutBox width='100%' height='10rem' align='center' justify='space-between'>
       <Tooltip infoTip text='Here is info tooltip example' title='Info' clickable />
