@@ -1,5 +1,6 @@
 export * from './useApi'
 export * from './useToggle'
+export * from './useToggle2'
 export * from './useOutsideClick'
 export * from './useResize'
 export * from './useClassNames'
