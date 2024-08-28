@@ -1,9 +1,5 @@
 export type Styles = {
-  arrow: string
-  'arrow-inner': string
-  'close-button': string
   'overflow-hidden': string
-  'popover-tooltip': string
   'text-ellipsis': string
   'text-nowrap': string
   'text-truncate': string

@@ -19,9 +19,9 @@ export type Styles = {
   'text-truncate': string
   'very-low': string
   warning: string
-}
+};
 
-export type ClassNames = keyof Styles
+export type ClassNames = keyof Styles;
 
 declare const styles: Styles
 

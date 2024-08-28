@@ -1,5 +1,5 @@
 export type Styles = {
-  'popup-modal-overlay': string
+  'test-tooltip-class': string
 };
 
 export type ClassNames = keyof Styles;

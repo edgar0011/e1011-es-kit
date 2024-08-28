@@ -1,12 +1,11 @@
 export type Styles = {
-  arrow: string
-  'arrow-inner': string
-  'close-button': string
+  disabled: string
   'overflow-hidden': string
-  'popover-tooltip': string
+  slider: string
   'text-ellipsis': string
   'text-nowrap': string
   'text-truncate': string
+  toggle: string
 };
 
 export type ClassNames = keyof Styles;

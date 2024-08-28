@@ -7,6 +7,7 @@ export type Styles = {
   hasIcon: string
   hasShadow: string
   info: string
+  link: string
   'overflow-hidden': string
   success: string
   'text-ellipsis': string
@@ -16,9 +17,9 @@ export type Styles = {
   transparent: string
   truncate: string
   warning: string
-}
+};
 
-export type ClassNames = keyof Styles
+export type ClassNames = keyof Styles;
 
 declare const styles: Styles
 

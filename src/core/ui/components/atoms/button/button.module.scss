@@ -52,6 +52,20 @@
     }
   }
 
+  &.link {
+    border: none !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    &:hover {
+      * {
+        text-decoration: underline !important;
+      }
+      border: none !important;
+      background-color: transparent !important;
+      background: transparent !important;
+    }
+  }
+
   &.transparent {
     border: none !important;
     background-color: transparent !important;
@@ -99,6 +113,9 @@
       transform: scale(1.2);
     }
     background-color: #c5c5c5 !important;
+    &.transparent {
+      background-color: #c5c5c520 !important;
+    }
   }
 
   user-select: all;

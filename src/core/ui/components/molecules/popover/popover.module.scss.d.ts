@@ -5,9 +5,9 @@ export type Styles = {
   'popover-container-inner': string
   'popover-container-lite': string
   'popover-tooltip': string
-}
+};
 
-export type ClassNames = keyof Styles
+export type ClassNames = keyof Styles;
 
 declare const styles: Styles
 

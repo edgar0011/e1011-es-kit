@@ -12,6 +12,7 @@ import {
   HeadlineTertiary,
   Text,
   Link,
+  AnchorLink,
 } from './index'
 
 
@@ -82,6 +83,12 @@ export const Typography: Story = ({ text, width, backgroundColor, ...props }) =>
         <Link href='www.google.com' target='_cui'>
           Loooong Link to Loooong Link to Loooong Link to Loooong Link to
         </Link>
+      </LayoutBox>
+
+      <LayoutBox border='1px solid blue' maxWidth='200px'>
+        <AnchorLink href='www.google.com' target='_cui'>
+          Loooong Link to Loooong Link to Loooong Link to Loooong Link to
+        </AnchorLink>
       </LayoutBox>
     </LayoutBox>
   )

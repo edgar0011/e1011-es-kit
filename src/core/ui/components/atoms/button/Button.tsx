@@ -2,11 +2,12 @@ import { memo, useCallback, MouseEvent, KeyboardEvent, createElement, FC, HTMLAt
 
 import { classNames, composeId, noop } from '../../../../utils'
 import { Alerts } from '../../../../constants'
-import { AnchorLink } from '../text/anchor-link/AnchorLink'
+import { Link } from '../text'
 import { IconBase, IconBaseProps } from '../../icon'
 
 import type { ButtonProps, IconButtonProps } from './button.types'
 import classes from './button.module.scss'
+
 
 export const keys = {
   ENTER: {
@@ -21,7 +22,7 @@ const InnerElement: FC<InnerElementsProps> = memo(({
   variant, href, target, children, ...props
 }: Omit<InnerElementsProps, 'onClick'>) => {
   if (variant === 'link') {
-    return createElement(AnchorLink, { href, target, ...props, onClick: noop }, children)
+    return createElement(Link, { width: '100%', href, target, ...props, onClick: noop }, children)
   }
   return createElement('span', {}, children)
 })

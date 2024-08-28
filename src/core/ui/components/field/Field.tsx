@@ -166,7 +166,7 @@ export const Field: FC<FieldProps> = memo<FieldProps>(({
     <div
       className={classNames(
         classes.field,
-        (disabled || userDisabled) && classes.disable,
+        (disabled || userDisabled) && classes.disabled,
         className,
       )}
       // TODO fix

@@ -28,6 +28,11 @@ const ButtonTemplate: Story<ButtonProps> = (args) => (
       <Button variant={Alerts.error} {...args}>0909</Button>
       <Button variant={Alerts.error} {...args}>Can it handle long text?</Button>
 
+      <Button variant='link' {...args}>Link to some url</Button>
+      <LayoutBox width='100px'>
+        <Button variant='link' truncate {...args}>Very long Link to some url</Button>
+      </LayoutBox>
+
       <LayoutBox width='100px'>
         <Button variant={Alerts.error} truncate fluid {...args}>
           Can it handle long text and be truncated?
