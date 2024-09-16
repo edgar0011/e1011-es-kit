@@ -11,11 +11,12 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
  * @property {boolean} [rounded] - Flag to determine if the value should be rounded during the animation.
  */
 export type UseAnimationType = {
-  start: number
+  start?: number
   end: number
-  duration: number
+  duration?: number
   ease?: string
   rounded?: boolean
+  roundingFn?: (value: number | string) => number | string
 }
 
 /**
@@ -23,10 +24,17 @@ export type UseAnimationType = {
  * @param {UseAnimationType} params - The parameters for the animation.
  * @returns {number} The current value of the animation.
  */
-export const useAnimation = ({ start, end, duration, ease = 'expo.inOut', rounded }: UseAnimationType): number => {
-  const [val, setVal] = useState(end)
+export const useAnimation = ({
+  start = 0,
+  end,
+  duration = 2,
+  ease = 'expo.inOut',
+  rounded,
+  roundingFn,
+}: UseAnimationType): number | string => {
+  const [val, setVal] = useState<number | string>(end)
 
-  const startValueRef = useRef(start)
+  const startValueRef = useRef<number | string>(start)
 
   useEffect(() => {
     startValueRef.current = val
@@ -42,13 +50,16 @@ export const useAnimation = ({ start, end, duration, ease = 'expo.inOut', rounde
         duration,
         ...(rounded ? { roundProps: 'val' } : {}),
         onUpdate () {
-          setVal(valObj.val)
+          setVal(roundingFn ? roundingFn(valObj.val) : valObj.val)
+        },
+        onComplete () {
+          setVal(roundingFn ? roundingFn(valObj.val) : valObj.val)
         },
       })
     })
 
     return (): void => gsapCtx.revert()
-  }, [duration, ease, end, rounded, start])
+  }, [duration, ease, end, rounded, roundingFn, start])
 
   return val
 }

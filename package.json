@@ -15,24 +15,24 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/types/src/index.d.ts",
       "import": "./dist/lib/esm/src/index.js",
-      "require": "./dist/lib/cjs/src/index.js",
-      "types": "./dist/types/src/index.d.ts"
+      "require": "./dist/lib/cjs/src/index.js"
     },
     "./hooks": {
+      "types": "./dist/types/src/core/hooks/index.d.ts",
       "import": "./dist/hooks/esm/src/core/hooks/index.js",
-      "require": "./dist/hooks/src/core/hooks/index.js",
-      "types": "./dist/types/src/core/hooks/index.d.ts"
+      "require": "./dist/hooks/src/core/hooks/index.js"
     },
     "./utils": {
+      "types": "./dist/types/src/core/utils/index.d.ts",
       "import": "./dist/utils/esm/src/core/utils/index.js",
-      "require": "./dist/utils/src/core/utils/index.js",
-      "types": "./dist/types/src/core/utils/index.d.ts"
+      "require": "./dist/utils/src/core/utils/index.js"
     },
     "./ui": {
+      "types": "./dist/types/src/core/ui/index.d.ts",
       "import": "./dist/ui/esm/src/core/ui/index.js",
-      "require": "./dist/ui/src/core/ui/index.js",
-      "types": "./dist/types/src/core/ui/index.d.ts"
+      "require": "./dist/ui/src/core/ui/index.js"
     },
     "./dist/*": "./dist/*",
     "./css/*": "./dist/ui/styles/*",

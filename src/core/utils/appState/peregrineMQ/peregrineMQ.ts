@@ -5,6 +5,7 @@ import {
   PublishReturnType, SubscribersSet,
   UnsubscribeOptions, NON_EXISTENT_CHANNEL_TYPE,
   NON_EXISTENT_CHANNEL,
+  CallbackPayload,
 } from './peregrineMQ.types'
 
 
@@ -102,7 +103,7 @@ export class PeregrineMQ implements PeregrineMQApi {
     // eslint-disable-next-line no-plusplus
     while (subscriberFunc) {
       // eslint-disable-next-line no-await-in-loop
-      results.push(subscriberFunc(channel, data))
+      results.push(subscriberFunc(channel, data as CallbackPayload))
       subscriberFunc = iterator.next().value
     }
     return results?.length === 1 ? results[0] : results

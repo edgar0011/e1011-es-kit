@@ -5,6 +5,8 @@ export type CommonProps = {
   'data-testid'?: string
   dataTestId?: string
   className?: string
+  // TODO investigate further, might not be needed here
+  [key: PropertyKey]: any
 }
 
 
