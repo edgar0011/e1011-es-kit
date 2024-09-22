@@ -14,7 +14,7 @@ export default {
 
 const AnimatedSnippetTemplate: Story<any> = () => (
   <LayoutBox column width='100%' gap='10rem'>
-    <AnimatedSnippet end={10} roundingFn={valToFixed2} />
+    <AnimatedSnippet end={240} roundingFn={valToFixed2} />
   </LayoutBox>
 )
 

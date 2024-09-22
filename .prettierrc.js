@@ -1,5 +1,5 @@
 module.exports = {
-  ...require("@earlorg/eslint-config/prettier"),
+  ...require("@e1011/eslint-config/prettier"),
   "semi": true,
   "singleQuote": true,
   "trailingComma": "all",
