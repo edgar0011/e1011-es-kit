@@ -3,6 +3,16 @@
 
 import { isFunctionAsync } from '../../helpers'
 
+
+let SET_STATE_MERGE: boolean = true
+
+
+export const canSetStateMerge = (value: boolean): void => {
+  SET_STATE_MERGE = !!value
+}
+
+export const getSetStateMerge = (): boolean => SET_STATE_MERGE
+
 /**
  * Represents the callback function for a store listener.
  */
@@ -117,7 +127,7 @@ export const createStore = <T>(
    * @returns A promise that resolves to the new state.
    */
   const setState = async (newState: Partial<T>): Promise<Partial<T>> => {
-    currentState = newState
+    currentState = SET_STATE_MERGE ? { ...getState(), ...newState } : newState
 
     // eslint-disable-next-line no-restricted-syntax
     for (const listener of listeners) {
