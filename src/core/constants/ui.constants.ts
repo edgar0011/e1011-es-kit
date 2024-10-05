@@ -1,11 +1,15 @@
 export enum EventName {
   MouseEnter = 'mouseenter',
   MouseLeave = 'mouseleave',
+  MouseUp = 'mouseup',
+  MouseDown = 'mousedown',
   Hover = 'hover',
+  DoubleClick = 'dblclick',
   Click = 'click',
   Focus = 'focus',
   Blur = 'blur',
   KeyDown = 'keydown',
+  KeyUp = 'keyup',
   Scroll = 'scroll',
 }
 
