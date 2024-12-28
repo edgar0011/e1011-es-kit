@@ -9,6 +9,12 @@ export type CommonProps = {
   [key: PropertyKey]: any
 }
 
+export type CommonPropsExact = {
+  id?: string
+  'data-testid'?: string
+  dataTestId?: string
+  className?: string
+}
 
 export type ForwardedRefContainer = {
   forwardedRef?: RefObject<HTMLDivElement> | Ref<HTMLDivElement> | null

@@ -43,7 +43,8 @@ export const useToggle = (defaultValue: boolean, async = true): useToggleReturnT
    * If not provided, the state will be set to true.
    */
   const handleToggleTrue = useCallback(
-    (forceValue?: boolean) => handleToggle(forceValue === undefined ? true : forceValue), [handleToggle],
+    (forceValue?: boolean) => handleToggle(forceValue === undefined
+      || typeof forceValue !== 'boolean' ? true : forceValue), [handleToggle],
   )
 
   /**
@@ -52,7 +53,8 @@ export const useToggle = (defaultValue: boolean, async = true): useToggleReturnT
    * If not provided, the state will be set to false.
    */
   const handleToggleFalse = useCallback(
-    (forceValue?: boolean) => handleToggle(forceValue === undefined ? false : forceValue), [handleToggle],
+    (forceValue?: boolean) => handleToggle(forceValue === undefined
+      || typeof forceValue !== 'boolean' ? false : forceValue === true), [handleToggle],
   )
 
   return [toggled, handleToggle, handleToggleTrue, handleToggleFalse]
