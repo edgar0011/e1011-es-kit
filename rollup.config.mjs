@@ -42,7 +42,7 @@ const commonConfig = {
     // 'ramda',
     // 'lodash-es',
     // 'dayjs',
-    // 'core-js',
+    'core-js',
     // 'sanitize-html',
   ],
   watch: {
