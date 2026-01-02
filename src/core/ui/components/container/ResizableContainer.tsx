@@ -1,4 +1,4 @@
-import { memo, RefObject, PropsWithChildren, ReactElement, FC } from 'react'
+import { memo, RefObject, PropsWithChildren, ReactElement, FC, CSSProperties } from 'react'
 
 import { useResize } from '../../../hooks/useResize'
 
@@ -43,7 +43,7 @@ export const ResizableContainer: FC<ResizableContainerProps> = memo<ResizableCon
         {...props}
       >
         <LayoutBox
-          style={styles.main}
+          style={styles.main as CSSProperties}
           width='100%'
           height='100%'
           ref={containerRef as RefObject<HTMLDivElement>}
@@ -52,7 +52,7 @@ export const ResizableContainer: FC<ResizableContainerProps> = memo<ResizableCon
         <LayoutBox
           width={`${Math.max(containerSize?.width || 200, 200) || 200}px`}
           height={`${Math.max(containerSize?.height || 200, 200) || 200}px`}
-          style={styles.empty}
+          style={styles.empty as CSSProperties}
         />
         )}
         {children && children?.({

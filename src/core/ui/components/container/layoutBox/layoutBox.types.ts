@@ -1,4 +1,4 @@
-import { CSSProperties, LegacyRef, PropsWithChildren } from 'react'
+import { CSSProperties, LegacyRef, HtmlHTMLAttributes } from 'react'
 
 /**
  * Enum representing the possible layout directions.
@@ -12,9 +12,7 @@ export enum LayoutDirection {
  * Props for the LayoutBox component.
  */
 // TODO replace with & React.DIVHtmlAttributes<HTMLDivElement>
-export type LayoutBoxProps = PropsWithChildren & {
-  /** Unique identifier for the component. */
-  id?: string | number
+export type LayoutBoxProps = HtmlHTMLAttributes<HTMLDivElement> & {
   /** CSS flex property. Can be string, boolean (true = flex-1), or number. */
   flex?: string | boolean | number
   /** CSS flexGrow property. */
@@ -57,12 +55,6 @@ export type LayoutBoxProps = PropsWithChildren & {
   borderRadius?: string
   /** CSS background property. */
   background?: string
-  /** Additional inline styles for the component. */
-  style?: Record<string, unknown> | null
-  /** Additional class name(s) for the component. */
-  className?: string
-  /** Tab index for keyboard navigation. */
-  tabIndex?: number
   /** Ref for accessing the underlying DOM element. */
   ref?: LegacyRef<HTMLDivElement> | undefined | null
   /** Callback function for click event. */

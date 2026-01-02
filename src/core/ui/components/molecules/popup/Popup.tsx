@@ -157,7 +157,7 @@ const PopupContent = memo(({
     <div className={`${classes['popup-container']}`} ref={forwardedRef} style={popupStyle}>
       <LayoutBox
         className={`${classes['popup-container-inner']}`}
-        style={animateVariant ? styles.popup.inner[animateVariant] : null}
+        style={animateVariant ? styles.popup.inner[animateVariant] as CSSProperties : {}}
       >
         {hasHeader && (
           <>
