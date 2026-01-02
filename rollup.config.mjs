@@ -38,12 +38,12 @@ const commonConfig = {
     terserPlugin(),
   ],
   external: [
-    // 'react',
-    // 'ramda',
-    // 'lodash-es',
-    // 'dayjs',
+    'react',
+    'ramda',
+    'lodash-es',
+    'dayjs',
     'core-js',
-    // 'sanitize-html',
+    'sanitize-html',
   ],
   watch: {
     include: 'src/**',
