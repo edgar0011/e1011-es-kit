@@ -36,7 +36,6 @@ const LayoutBoxRefForwarded = forwardRef(({
   children,
   tabIndex,
   className = '',
-  onClick,
   column,
   asGrid = false,
   wFull = false,
@@ -50,17 +49,6 @@ const LayoutBoxRefForwarded = forwardRef(({
   ...props
 }: LayoutBoxProps, ref: LegacyRef<HTMLDivElement> | undefined | null) => {
   const { dataProps, restProps } = useParseProps(props)
-
-  /**
-   * Memoized onClick event properties.
-   * @type {{ onClick?: () => void; onKeyDown?: () => void; role?: string; tabIndex?: number }}
-   */
-  const onClickProps = useMemo(() => (onClick ? ({
-    onClick,
-    onKeyDown: onClick,
-    role: 'button',
-    tabIndex: -1,
-  }) : {}), [onClick])
 
   /**
    * Memoized resolved direction based on the column prop.
@@ -171,7 +159,6 @@ const LayoutBoxRefForwarded = forwardRef(({
       style={styles as CSSProperties}
       {...dataProps}
       data-testid={dataProps.dataTestId || dataProps['data-testid'] || id}
-      {...onClickProps}
     >
       {children}
     </div>

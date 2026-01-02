@@ -1,4 +1,4 @@
-import { CSSProperties, LegacyRef, HtmlHTMLAttributes } from 'react'
+import { CSSProperties, LegacyRef, HTMLAttributes } from 'react'
 
 /**
  * Enum representing the possible layout directions.
@@ -12,7 +12,7 @@ export enum LayoutDirection {
  * Props for the LayoutBox component.
  */
 // TODO replace with & React.DIVHtmlAttributes<HTMLDivElement>
-export type LayoutBoxProps = HtmlHTMLAttributes<HTMLDivElement> & {
+export type LayoutBoxProps = Omit<HTMLAttributes<HTMLDivElement>, 'onKeyDown'> & {
   /** CSS flex property. Can be string, boolean (true = flex-1), or number. */
   flex?: string | boolean | number
   /** CSS flexGrow property. */
@@ -57,8 +57,6 @@ export type LayoutBoxProps = HtmlHTMLAttributes<HTMLDivElement> & {
   background?: string
   /** Ref for accessing the underlying DOM element. */
   ref?: LegacyRef<HTMLDivElement> | undefined | null
-  /** Callback function for click event. */
-  onClick?: () => void
   /** If true, sets the layout direction to column. */
   column?: boolean
   /** If true, uses CSS Grid instead of Flexbox. */
