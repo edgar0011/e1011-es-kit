@@ -1,6 +1,6 @@
 
-import React, { FC, memo, useRef, useEffect, useState, useCallback, useMemo,
-  CSSProperties, ReactNode, ReactElement } from 'react'
+import { FC, memo, useRef, useEffect, useState, useCallback, useMemo, cloneElement,
+  CSSProperties, ReactNode, ReactElement, Component } from 'react'
 import { createPopper, Instance, ModifierArguments } from '@popperjs/core'
 
 import { EventName, KeyCode } from '../../../../constants'
@@ -280,13 +280,13 @@ export const Popover: FC<PopoverProps> = memo<PopoverProps>(
           ref={typeof ContentComponent !== 'function' ? setContent : null}
           data={data}
           hide={hide}
-          components={contentComponents as { [key: string]: FC | React.Component<any> }}
+          components={contentComponents as { [key: string]: FC | Component<any> }}
           {...props}
         />
         )}
         {(!targetRef && childrenAreElements) && <span ref={setTarget}>{children[0]}</span>}
         {(childrenAreElements && children?.[1] && typeof children?.[1] === 'object')
-        && React.cloneElement(children[1] as ReactElement, {
+        && cloneElement(children[1] as ReactElement, {
           ...((children?.[1] as ReactElement)?.props),
           placement,
           forwardedRef: setContent,
@@ -294,7 +294,7 @@ export const Popover: FC<PopoverProps> = memo<PopoverProps>(
           ref: setContent,
           data,
           hide,
-          components: contentComponents as { [key: string]: FC | React.Component<any> },
+          components: contentComponents as { [key: string]: FC | Component<any> },
           ...props,
         })}
       </>

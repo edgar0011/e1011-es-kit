@@ -1,4 +1,4 @@
-import React, { memo, FC, useMemo } from 'react'
+import { createElement, memo, FC, useMemo } from 'react'
 
 import { composeId } from '../../../../utils'
 import { useParseProps } from '../../../../hooks'
@@ -19,7 +19,7 @@ export const Text: FC<TextProps> = memo<ITextProps>((
     tabIndex: -1,
   }) : {}), [onClick])
 
-  return React.createElement<TextProps>(
+  return createElement<TextProps>(
     element,
     {
       id: `${id || (textFromChildren && composeId(textFromChildren))}`,

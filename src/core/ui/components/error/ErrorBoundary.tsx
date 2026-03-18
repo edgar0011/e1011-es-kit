@@ -1,4 +1,4 @@
-import { FC, memo, PureComponent, ReactNode } from 'react'
+import { ErrorInfo, FC, memo, PureComponent, ReactNode } from 'react'
 
 import { IconBase } from '../icon'
 import { LayoutBox } from '../container/layoutBox/LayoutBox'
@@ -49,7 +49,7 @@ export class ErrorBoundary extends PureComponent<ErrorBoundaryProps, State> {
     return { hasError: true, error }
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     // eslint-disable-next-line no-console
     !this.props.muted && error && console.error(error)
     // eslint-disable-next-line no-console
