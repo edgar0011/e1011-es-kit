@@ -11,5 +11,8 @@ export const useThemePreference = (
   getHtmlElement: () => HTMLElement = (): HTMLElement => document.body,
   switchCallback: (isDark: boolean) => void = (isDark: boolean): boolean => isDark,
 ): void => {
-  useEffect(() => observeThemePreference(getHtmlElement, switchCallback), [getHtmlElement, switchCallback])
+  useEffect(
+    () => observeThemePreference(getHtmlElement, switchCallback),
+    [getHtmlElement, switchCallback],
+  )
 }

@@ -116,23 +116,37 @@ export type ThemeMap = {
   light: string
 }
 
-let baseThemes: ThemeMap = {
+const THEME_PROP = '__eskit_themes__'
+
+const defaultThemes: ThemeMap = {
   dark: 'theme-dark',
   light: 'theme-light',
 }
 
 /**
- * Gets the base themes.
- * @returns {ThemeMap} The current base themes.
+ * Reads the theme config stored on the given element.
+ * Falls back to defaultThemes when no config has been set.
+ * Scoping to the element means different microfrontends (different roots) are isolated,
+ * while all bundles targeting the same element share one config.
+ * @param {HTMLElement} [element] - The element to read from. Defaults to document.body.
+ * @returns {ThemeMap} The current base themes for the element.
  */
-export const getBaseThemes = (): ThemeMap => baseThemes
+export const getBaseThemes = (element?: HTMLElement): ThemeMap => {
+  const el = element ?? document.body
+
+  return (el as unknown as Record<string, unknown>)[THEME_PROP] as ThemeMap ?? defaultThemes
+}
 
 /**
- * Sets the base theme class names.
- * @param {ThemeMap} themes - Object containing the CSS classes for dark and light themes.
+ * Sets the base theme class names on the given element.
+ * @param {ThemeMap} themes - CSS classes for dark and light themes.
+ * @param {HTMLElement} [element] - The element to store config on. Defaults to document.body.
  */
-export const setThemeClassNames = (themes: ThemeMap): void => {
-  baseThemes = themes
+export const setThemeClassNames = (themes: ThemeMap, element?: HTMLElement): void => {
+  const el = element ?? document.body
+  const store = el as unknown as Record<string, unknown>
+
+  store[THEME_PROP] = themes
 }
 
 /**
@@ -141,9 +155,12 @@ export const setThemeClassNames = (themes: ThemeMap): void => {
  * @param {HTMLElement} [htmlElement] - The HTML element to which the theme will be applied.
  * @param {boolean} [findShadows=true] - Flag to determine if shadow DOM elements should also be themed.
  */
-export const switchColorTheme = (isDark: boolean, htmlElement?: HTMLElement, findShadows = true): void => {
-  const oldClass = isDark ? baseThemes.light : baseThemes.dark
-  const newClass = isDark ? baseThemes.dark : baseThemes.light
+export const switchColorTheme = (
+  isDark: boolean, htmlElement?: HTMLElement, findShadows = true,
+): void => {
+  const themes = getBaseThemes(htmlElement)
+  const oldClass = isDark ? themes.light : themes.dark
+  const newClass = isDark ? themes.dark : themes.light
 
   if (htmlElement) {
     htmlElement.classList.remove(oldClass)
@@ -184,12 +201,13 @@ export const switchColorTheme = (isDark: boolean, htmlElement?: HTMLElement, fin
  * @param {HTMLElement} [htmlElement] - The HTML element to which the theme will be applied.
  */
 export const updateColorTheme = (isDark?: boolean, htmlElement?: HTMLElement): void => {
+  const el = htmlElement || document.body
   let resolvedIsDark: boolean = isDark || false
 
   if (typeof document !== 'undefined' && isDark === undefined) {
-    resolvedIsDark = document.body.classList.contains(baseThemes.dark)
+    resolvedIsDark = document.body.classList.contains(getBaseThemes(el).dark)
   }
-  switchColorTheme(resolvedIsDark, htmlElement || document.body)
+  switchColorTheme(resolvedIsDark, el)
 }
 
 const windowMatchMediaChangeEventType = 'change'
