@@ -55,7 +55,7 @@
     "prepare": "husky install",
     "prepublish": "yarn clean && yarn build:lib",
     "clean": "rimraf ./dist ./es ./coverage",
-    "build:lib": "yarn tsc && BABEL_ENV=production NODE_ENV=production rollup --config --environment INCLUDE_DEPS,BUILD:production",
+    "build:lib": "yarn tsc -b && BABEL_ENV=production NODE_ENV=production rollup --config --environment INCLUDE_DEPS,BUILD:production",
     "build:css": "sass src/core/ui/styles:dist/ui/styles",
     "build": "rm -rf dist && yarn prepush && yarn build:lib && yarn build:css",
     "build:test": "rm -rf dist && yarn build:lib && yarn build:css",
@@ -68,7 +68,8 @@
     "test:coverage": "jest ./src --coverage  --verbose",
     "test:watch": "jest ./src --watch  --verbose",
     "tsc": "tsc",
-    "prepush": "yarn lint && yarn test && yarn tsc",
+    "prepush": "yarn lint && yarn tsc -b && yarn test ",
+    "validate": "yarn lint:fix && yarn tsc -b && yarn test",
     "generate:scss:types": "ts-node --esm ./scripts/typed-scss-modules/index.mts src",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
