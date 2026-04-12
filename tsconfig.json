@@ -40,7 +40,8 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "noUnusedParameters": false,
-    "strictBindCallApply": true
+    "strictBindCallApply": true,
+    "types": ["jest", "@testing-library/jest-dom"]
    },
    "paths": {
       "components": [
