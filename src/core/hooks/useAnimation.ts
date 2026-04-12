@@ -44,7 +44,7 @@ export const useAnimation = ({
     const valObj = { val: startValueRef.current }
 
     const gsapCtx = gsap.context(() => {
-      gsap.to(valObj, duration, {
+      gsap.to(valObj, {
         val: end,
         ease,
         duration,
