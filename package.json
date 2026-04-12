@@ -29,6 +29,11 @@
       "import": "./dist/utils/esm/src/core/utils/index.js",
       "require": "./dist/utils/src/core/utils/index.js"
     },
+    "./utils/ui": {
+      "types": "./dist/types/src/core/utils/helpers/ui.d.ts",
+      "import": "./dist/utils/esm/src/core/utils/helpers/ui.js",
+      "require": "./dist/utils/src/core/utils/helpers/ui.js"
+    },
     "./ui": {
       "types": "./dist/types/src/core/ui/index.d.ts",
       "import": "./dist/ui/esm/src/core/ui/index.js",
@@ -45,6 +50,9 @@
       ],
       "utils": [
         "./dist/types/src/core/utils/index.d.ts"
+      ],
+      "utils/ui": [
+        "./dist/types/src/core/utils/helpers/ui.d.ts"
       ],
       "ui": [
         "./dist/types/src/core/ui/index.d.ts"
