@@ -5,6 +5,8 @@
 
 A tree-shakeable utility library for **Vanilla JS** and **React** projects. Provides hooks, UI components, state management, and general-purpose helpers through granular entry points — import only what you need.
 
+Built with **Vite** + **TypeScript**. ESM and CJS outputs with full type declarations.
+
 ## Installation
 
 ```sh
@@ -20,19 +22,27 @@ The library is fully tree-shakeable with `"sideEffects": false` and exposes mult
 | Import path | Description | React required |
 |---|---|---|
 | `@e1011/es-kit` | Everything (hooks + utils + ui + constants) | Yes |
-| `@e1011/es-kit/hooks` | React hooks | Yes |
-| `@e1011/es-kit/utils` | Utility functions, state management, helpers | Partial (store hooks) |
+| `@e1011/es-kit/hooks` | React hooks (including store/MQ hooks) | Yes |
+| `@e1011/es-kit/utils` | Utility functions, state management, helpers | No |
 | `@e1011/es-kit/utils/ui` | UI helpers only (theme, classNames, noop, etc.) | No |
 | `@e1011/es-kit/ui` | React UI components + style utilities | Yes |
 
 ### Vanilla JS usage
 
-For projects without React, use the framework-agnostic entry points:
+The `utils` entry point is fully React-free. Use it in any JavaScript project:
 
 ```js
 import { observeThemePreference, setThemeClassNames } from '@e1011/es-kit/utils/ui'
 import { createStore } from '@e1011/es-kit/utils'
 import { debounce, memoize } from '@e1011/es-kit/utils'
+import { PeregrineMQ } from '@e1011/es-kit/utils'
+import { customElementDefine } from '@e1011/es-kit/utils'
+```
+
+React hooks for stores and message queues live in the `hooks` entry point:
+
+```js
+import { useStore, useStoreApi, usePeregrineMQ } from '@e1011/es-kit/hooks'
 ```
 
 ## Exports
@@ -51,8 +61,12 @@ import { debounce, memoize } from '@e1011/es-kit/utils'
 | `useAnimation` | GSAP-powered animated number transitions |
 | `useIntersectionObserver` | Observes element visibility in the viewport |
 | `useTimeoutFn` | Managed `setTimeout` with ready/clear/set controls |
+| `useStore`, `useStoreApi` | React hooks for subscribing to vanilla stores |
+| `usePeregrineMQ` | React hook for PeregrineMQ pub/sub |
 
 ### Utils (`@e1011/es-kit/utils`)
+
+All utils are **React-free** and safe to use in any JavaScript environment.
 
 #### UI Helpers (`@e1011/es-kit/utils/ui`)
 
@@ -136,9 +150,8 @@ import { debounce, memoize } from '@e1011/es-kit/utils'
 |---|---|
 | `createStore` | Create a vanilla JS reactive store |
 | `createDataStore` | Store with built-in data loading state |
-| `useStore`, `useStoreApi` | React hooks for subscribing to stores |
 | `PeregrineMQ` | Pub/sub message queue |
-| `usePeregrineMQ` | React hook for PeregrineMQ |
+| `peregrineMQInstance` | Global shared PeregrineMQ instance |
 | `TinyStateMachine` | Lightweight state machine |
 
 #### Key Extraction
@@ -176,10 +189,12 @@ import { debounce, memoize } from '@e1011/es-kit/utils'
 
 ```sh
 yarn install       # install dependencies
-yarn build         # full build (lint + typecheck + test + rollup + sass)
-yarn test          # run tests
-yarn lint          # lint source
+yarn build         # full build (lint + typecheck + test + vite + sass)
+yarn build:lib     # typecheck + vite build only
+yarn test          # run tests (Jest)
+yarn lint          # lint source (ESLint)
 yarn storybook     # launch Storybook dev server
+yarn watch         # vite build in watch mode
 ```
 
 ## Author

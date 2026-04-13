@@ -11,6 +11,7 @@ export default {
     '^utils/(.*)$': '<rootDir>/src/utils/$1',
     '^core/(.*)$': '<rootDir>/src/core/$1',
   },
+  roots: ['<rootDir>/src'],
   moduleDirectories: [
     'node_modules',
   ],
