@@ -28,11 +28,43 @@ export type Selector<T> = (state: Partial<T>) => SelectedValueType<T>;
 
 
 /**
+ * Represents an equality function for comparing selected values.
+ */
+export type EqualityFn<T> = (a: SelectedValueType<T>, b: SelectedValueType<T>) => boolean
+
+
+/**
+ * Shallow equality check for selector results.
+ * Handles primitives (===), null/undefined, arrays (element-wise ===), and plain objects (own-key ===).
+ */
+export const shallowEqual = <T>(a: SelectedValueType<T>, b: SelectedValueType<T>): boolean => {
+  if (Object.is(a, b)) { return true }
+  if (typeof a !== 'object' || typeof b !== 'object' || a == null || b == null) { return false }
+
+  if (Array.isArray(a) && Array.isArray(b)) {
+    if (a.length !== b.length) { return false }
+    return a.every((val, i) => Object.is(val, (b as unknown[])[i]))
+  }
+
+  const keysA = Object.keys(a as object)
+  const keysB = Object.keys(b as object)
+
+  if (keysA.length !== keysB.length) { return false }
+  return keysA.every(
+    (key) => Object.is(
+      (a as Record<string, unknown>)[key],
+      (b as Record<string, unknown>)[key],
+    ),
+  )
+}
+
+/**
  * Represents a listener for the store.
  */
 export type Listener<T> = {
   selector?: Selector<T>
   previousValue?: SelectedValueType<T>
+  equalityFn?: EqualityFn<T>
 } & ListenerCallBack<T>
 
 /**
@@ -56,7 +88,7 @@ export type Store<T> = {
    * @param selector - Optional selector function to transform the store state.
    * @returns A function to unsubscribe the listener.
    */
-  subscribe: (listener: Listener<T>, selector?: Selector<T>) => () => void
+  subscribe: (listener: Listener<T>, selector?: Selector<T>, equalityFn?: EqualityFn<T>) => () => void
   /**
    * Unubscribe a listener from the store.
    * @param listener - The listener function to be unsubscribed.
@@ -129,24 +161,34 @@ export const createStore = <T>(
   const setState = async (newState: Partial<T>): Promise<Partial<T>> => {
     currentState = SET_STATE_MERGE ? { ...getState(), ...newState } : newState
 
+    const errors: unknown[] = []
+
     // eslint-disable-next-line no-restricted-syntax
     for (const listener of listeners) {
-      // has Listener selector?
-      const selector: Selector<T> | undefined = listener?.selector
+      try {
+        // has Listener selector?
+        const selector: Selector<T> | undefined = listener?.selector
+        const newValue: SelectedValueType<T> = selector ? selector(currentState) : currentState
 
-      // TODO compare selected value to the previous values of that listener/selector pair
-      // if listener.previousValue === selector(currentState) no call
-      // else listener.previousValue = selector(currentState) and call
-      // l1 cache, weak references?
-      const newValue: SelectedValueType<T> = selector ? selector(currentState) : currentState
+        const effectiveEqualityFn = listener.equalityFn ?? (selector ? shallowEqual : undefined)
+        const isEqual = effectiveEqualityFn
+          ? effectiveEqualityFn(listener.previousValue as SelectedValueType<T>, newValue)
+          : listener.previousValue !== undefined && listener.previousValue === newValue
 
-      // TODO plugin equality
-      if (listener.previousValue === undefined || listener.previousValue !== newValue) {
-        listener.previousValue = newValue
-        // eslint-disable-next-line no-await-in-loop
-        await listener(newValue as Partial<T>)
+        if (!isEqual) {
+          listener.previousValue = newValue
+          // eslint-disable-next-line no-await-in-loop
+          await listener(newValue as Partial<T>)
+        }
+      } catch (error) {
+        errors.push(error)
       }
     }
+
+    if (errors.length > 0) {
+      throw errors[0]
+    }
+
     return currentState
   }
 
@@ -170,13 +212,17 @@ export const createStore = <T>(
      * @param listener - The listener function to be subscribed.
      * @returns A function to unsubscribe the listener.
      */
-    subscribe: (listener: Listener<T>, selector?: Selector<T>) => {
+    subscribe: (listener: Listener<T>, selector?: Selector<T>, equalityFn?: EqualityFn<T>) => {
       if (selector && listener.selector && listener.selector !== selector) {
         throw new Error('Error, mismatch selector, listener.selector !== selector.')
       }
       if (selector && !listener.selector) {
         // eslint-disable-next-line no-param-reassign
         listener.selector = selector
+      }
+      if (equalityFn && !listener.equalityFn) {
+        // eslint-disable-next-line no-param-reassign
+        listener.equalityFn = equalityFn
       }
 
       if (listener.selector) {
