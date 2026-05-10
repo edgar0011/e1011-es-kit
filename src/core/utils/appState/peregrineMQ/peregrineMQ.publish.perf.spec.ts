@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import { PeregrineMQ } from './index'
+
 const peregrineMQ = new PeregrineMQ()
 
 const randomNumber = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1)) + min

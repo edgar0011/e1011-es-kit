@@ -5,6 +5,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import { PeregrineMQ } from './index'
+
 const peregrineMQ = new PeregrineMQ()
 
 describe.skip('PeregrineMQ subscribe method performance', () => {

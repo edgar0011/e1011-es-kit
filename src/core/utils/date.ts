@@ -64,10 +64,11 @@ const relativeTimeCZ = {
   yy: '%d roky',
 }
 
-let _dayjsInitialized = false
-function initDayjs() {
-  if (_dayjsInitialized) return
-  _dayjsInitialized = true
+let dayjsInitialized = false
+
+function initDayjs(): void {
+  if (dayjsInitialized) { return }
+  dayjsInitialized = true
   dayjs.extend(customParseFormat)
   dayjs.extend(relativeTime, relativeTimeConfig)
   dayjs.extend(updateLocale)

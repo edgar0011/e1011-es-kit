@@ -9,6 +9,7 @@ import { delay } from '../../helpers'
 import { PeregrineMQClearError } from './peregrineMQ'
 
 import { PeregrineMQ } from './index'
+
 const peregrineMQ = new PeregrineMQ()
 
 
