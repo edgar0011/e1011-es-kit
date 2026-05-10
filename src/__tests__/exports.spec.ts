@@ -249,13 +249,12 @@ describe('utils entry point', () => {
   })
 
   describe('appState/peregrineMQ', () => {
-    const expected = ['PeregrineMQ', 'PeregrineMQClearError', 'peregrineMQInstance', 'NON_EXISTENT_CHANNEL']
+    const expected = ['PeregrineMQ', 'PeregrineMQClearError', 'NON_EXISTENT_CHANNEL']
 
-    it('exports PeregrineMQ class and instance', () => {
+    it('exports PeregrineMQ class', () => {
       expect(Object.keys(utils)).toEqual(expect.arrayContaining(expected))
       expect(typeof (utils as Record<string, unknown>).PeregrineMQ).toBe('function')
       expect(typeof (utils as Record<string, unknown>).PeregrineMQClearError).toBe('function')
-      expect(typeof (utils as Record<string, unknown>).peregrineMQInstance).toBe('object')
       expect(typeof (utils as Record<string, unknown>).NON_EXISTENT_CHANNEL).toBe('string')
     })
   })

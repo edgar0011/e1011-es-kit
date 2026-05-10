@@ -4,7 +4,9 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import { NON_EXISTENT_CHANNEL, peregrineMQInstance as peregrineMQ } from './index'
+import { NON_EXISTENT_CHANNEL, PeregrineMQ } from './index'
+
+const peregrineMQ = new PeregrineMQ()
 
 describe('PeregrineMQ publish method', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -8,7 +8,8 @@ import { delay } from '../../helpers'
 
 import { PeregrineMQClearError } from './peregrineMQ'
 
-import { peregrineMQInstance as peregrineMQ } from './index'
+import { PeregrineMQ } from './index'
+const peregrineMQ = new PeregrineMQ()
 
 
 describe('PeregrineMQ main spec', () => {

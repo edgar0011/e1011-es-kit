@@ -64,22 +64,23 @@ const relativeTimeCZ = {
   yy: '%d roky',
 }
 
-dayjs.extend(customParseFormat)
-dayjs.extend(relativeTime, relativeTimeConfig)
-dayjs.extend(updateLocale)
-
-dayjs.updateLocale('cz', {
-  relativeTime: {
-    ...relativeTimeCZ,
-  },
-})
-dayjs.updateLocale('en', {
-  relativeTime: {
-    ...relativeTimeEN,
-  },
-})
+let _dayjsInitialized = false
+function initDayjs() {
+  if (_dayjsInitialized) return
+  _dayjsInitialized = true
+  dayjs.extend(customParseFormat)
+  dayjs.extend(relativeTime, relativeTimeConfig)
+  dayjs.extend(updateLocale)
+  dayjs.updateLocale('cz', {
+    relativeTime: { ...relativeTimeCZ },
+  })
+  dayjs.updateLocale('en', {
+    relativeTime: { ...relativeTimeEN },
+  })
+}
 
 export const getTimeFromNowOriginal = (value: string, language: string): string => {
+  initDayjs()
   dayjs.updateLocale('en', {
     relativeTime: {
       ...(language === 'cz' ? relativeTimeCZ : relativeTimeEN),
@@ -111,6 +112,7 @@ export const getDateTime = ({
   shouldSubtractDay = false,
   showPreffix = false,
 }: DateTimeFormat): string => {
+  initDayjs()
   dayjs.updateLocale('en', {
     relativeTime: {
       ...(language === 'cz' ? relativeTimeCZ : relativeTimeEN),
@@ -139,6 +141,7 @@ export const dateRangeFormat = (
   dateFrom: Date, dateTo: Date, shortFormat: string, longFormat: string,
   delimiter = ' - ', datePeriod: UnitType = 'month',
 ) : string => {
+  initDayjs()
   const dayJSFrom = dayjs(dateFrom)
   const dayJSTo = dayjs(dateTo)
 
