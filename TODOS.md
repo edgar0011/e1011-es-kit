@@ -8,7 +8,8 @@
 - [ ] **Missing `"type": "module"` field**: Package doesn't declare module type. ESM-first libraries should set `"type": "module"` and use `.cjs` extension for CommonJS fallback.
 - [ ] **`"./dist/*"` wildcard export is a tree-shaking escape hatch**: Consumers can deep-import anything, bypassing the public API. Remove or restrict once subpath exports are correct.
 - [ ] **`typesVersions` duplicates `exports` conditions**: With modern TypeScript (5+) and `"exports"` with `"types"` conditions, `typesVersions` is redundant. Keep only if supporting TS < 4.7.
-- [ ] **No `./appState`, `./store`, `./peregrineMQ` subpath exports**: These are significant standalone modules but aren't independently importable without pulling in the entire `utils` entry.
+- [x] **Added `./utils/ced` and `./utils/state-machine` subpath exports**: Consumers can now import `ced` without pulling in the entire `utils` barrel. `./utils/store` and `./utils/mq` still need separate build entries since rollup inlines their barrel index.
+- [ ] **No `./utils/store`, `./utils/mq` subpath exports yet**: These need dedicated build entries in `scripts/build.mjs` since rollup inlines their barrel index.js.
 - [ ] **`sideEffects: false` is correct** — keep it.
 
 ### A2. TypeScript Configuration
@@ -28,14 +29,18 @@
 
 ### A4. Dependencies
 
-- [ ] **Heavy runtime deps for a utility library**: `gsap`, `sanitize-html`, `@popperjs/core`, `immer`, `ramda`, `lodash-es` — these should NOT be bundled. Verify they are all externalized correctly. For the extracted store/MQ library, none of these should be present.
+- [x] **Removed `ramda` from utils helpers**: `helpers/other.ts` (memoize) and `helpers/textValueOperations.ts` (toLower/toUpper) now use inline implementations. `ramda` still used in `core/ui/components/icon/unifyIconUrl.ts`.
+- [x] **Removed `uuid` from peregrineMQ**: Replaced with `crypto.randomUUID()` + fallback for non-crypto environments.
+- [ ] **Heavy runtime deps for a utility library**: `gsap`, `sanitize-html`, `@popperjs/core`, `immer`, `lodash-es` — these should NOT be bundled. Verify they are all externalized correctly.
 - [ ] **`core-js` as dependency AND peer dependency**: Pick one. For a library, it should be a peer dependency or removed entirely (let the consumer polyfill).
 - [ ] **`uuid` dependency in peregrineMQ**: `crypto.randomUUID()` is available in all modern runtimes (Node 19+, all browsers). For a new standalone library, replace `uuid` with `crypto.randomUUID()` to eliminate the dependency.
 
 ### A5. Tree-Shaking Concerns
 
 - [ ] **Deep barrel re-exports chain**: `src/index.ts` → `src/core/index.ts` → `src/core/utils/index.ts` → `src/core/utils/appState/store/index.ts`. Every `export *` at each level pulls in the entire subtree. While `sideEffects: false` helps, bundlers still struggle with deeply nested barrels. The extracted library should have flat, explicit exports.
-- [ ] **`peregrineMQInstance` singleton exported from barrel**: `peregrineMQ/index.ts` instantiates `new PeregrineMQ()` at module level. This is a side effect that defeats tree-shaking — if any consumer imports anything from `utils`, they get this instance allocated. Move to a separate `createDefaultInstance()` or a dedicated entry point.
+- [x] **Removed `peregrineMQInstance` singleton from barrel**: Consumers now create their own instances via `new PeregrineMQ()`.
+- [x] **Removed `Array.prototype` mutation from `array.ts`**: Replaced with standalone `ArrayFirst(arr)` / `ArrayLast(arr)` functions.
+- [x] **Wrapped dayjs plugin registration in `date.ts`**: Plugins now registered lazily on first function call via `initDayjs()`.
 - [ ] **React hooks re-exported from non-React entry points**: `hooks/index.ts` re-exports `useStore.react` and `usePeregrineMQ.react`. The `utils` barrel also re-exports store (which includes vanilla + React code). This means importing from `@e1011/es-kit/utils` pulls in React as a dependency even for vanilla JS consumers.
 
 ### A6. Type Safety Issues

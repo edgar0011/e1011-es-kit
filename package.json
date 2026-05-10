@@ -26,13 +26,23 @@
     },
     "./utils": {
       "types": "./dist/types/src/core/utils/index.d.ts",
-      "import": "./dist/utils/esm/src/core/utils/index.js",
-      "require": "./dist/utils/src/core/utils/index.js"
+      "import": "./dist/utils/esm/index.js",
+      "require": "./dist/utils/index.js"
     },
     "./utils/ui": {
       "types": "./dist/types/src/core/utils/helpers/ui.d.ts",
-      "import": "./dist/utils/esm/src/core/utils/helpers/ui.js",
-      "require": "./dist/utils/src/core/utils/helpers/ui.js"
+      "import": "./dist/utils/esm/helpers/ui.js",
+      "require": "./dist/utils/helpers/ui.js"
+    },
+    "./utils/ced": {
+      "types": "./dist/types/src/core/utils/webComponents/webComponent.utils.d.ts",
+      "import": "./dist/utils/esm/webComponents/webComponent.utils.js",
+      "require": "./dist/utils/webComponents/webComponent.utils.js"
+    },
+    "./utils/state-machine": {
+      "types": "./dist/types/src/core/utils/appState/stateMachine/tiny-state-machine.base.d.ts",
+      "import": "./dist/utils/esm/appState/stateMachine/tiny-state-machine.base.js",
+      "require": "./dist/utils/appState/stateMachine/tiny-state-machine.base.js"
     },
     "./ui": {
       "types": "./dist/types/src/core/ui/index.d.ts",
@@ -53,6 +63,12 @@
       ],
       "utils/ui": [
         "./dist/types/src/core/utils/helpers/ui.d.ts"
+      ],
+      "utils/ced": [
+        "./dist/types/src/core/utils/webComponents/webComponent.utils.d.ts"
+      ],
+      "utils/state-machine": [
+        "./dist/types/src/core/utils/appState/stateMachine/tiny-state-machine.base.d.ts"
       ],
       "ui": [
         "./dist/types/src/core/ui/index.d.ts"
