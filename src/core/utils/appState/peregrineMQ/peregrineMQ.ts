@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
-
 import {
   Callback, Config, PeregrineMQApi, PublishToChannelReturnType,
   PublishReturnType, SubscribersSet,
@@ -115,7 +113,9 @@ export class PeregrineMQ implements PeregrineMQApi {
    * @param config The configuration options for PeregrineMQ.
    */
   constructor(id?: string, config?: Config) {
-    this.id = id || uuidv4()
+    this.id = id || (typeof crypto !== 'undefined' && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`)
     this.configure(config || {})
   }
 

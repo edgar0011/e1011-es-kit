@@ -1,12 +1,8 @@
-import {
-  toLower, toUpper,
-} from 'ramda'
+// todo memoize
+export const toLowerCase = (str: string | number): string | number => (str ? (str as string).toLowerCase() : '')
 
 // todo memoize
-export const toLowerCase = (str: string | number): string | number => (str ? toLower(str as string) as string : '')
-
-// todo memoize
-export const toUpperCase = (str: string): string => (str ? toUpper(str) as string : '')
+export const toUpperCase = (str: string): string => (str ? str.toUpperCase() : '')
 
 // todo memoize
 export const removeWhitespaces = (str: string | number): string | number => (str ? str.toString()

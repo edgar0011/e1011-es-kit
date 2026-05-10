@@ -1,21 +1,29 @@
-import { memoizeWith, identity } from 'ramda'
-
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const nestedTernary = (condition: boolean, branchA: any, branchB: any): any => (condition ? branchA : branchB)
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-export const memoize = memoizeWith(identity)
+/**
+ * Creates a memoized version of a function using a custom key function.
+ * Replaces ramda's memoizeWith — same API contract.
+ */
+const memoizeWith = (keyFn: (...args: any[]) => string) =>
+  <T extends (...args: any[]) => any>(fn: T): T => {
+    const cache: Record<string, any> = {}
+    return ((...args: any[]) => {
+      const key = keyFn(...args)
+      if (!(key in cache)) {
+        cache[key] = fn(...args)
+      }
+      return cache[key]
+    }) as unknown as T
+  }
+
+export const memoize = memoizeWith((...args) => String(args[0]))
 
 // Beware fellow developer, this is to be used with caution and precison
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 export const memoizeComplex = memoizeWith((...args) => JSON.stringify(args))
 
 export const memoizer
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-= (memoizeFunc = (...args): string => JSON.stringify(args)): ReturnType<typeof memoizeWith> => memoizeWith(memoizeFunc)
+= (memoizeFunc = (...args: any[]): string => JSON.stringify(args)) => memoizeWith(memoizeFunc)
 
 export const debounce = (func: () => void, wait = 100, immediate = false): () => void => {
   let timeout: any
